@@ -1,0 +1,16 @@
+read()	Lee y retorna todo el contenido del archivo
+readlines()	Lee todo el contenido del archivo y retorna una lista con cada línea.
+write()	Escribe contenidos en un archivo.
+close()	Cierra el archivo
+detach()	toma los datos que están almacenados temporalmente en el búfer y los proporciona tal como están, sin realizar ningún tipo de procesamiento adicional sobre ellos
+fileno()	Devuelve un número que representa el flujo de datos desde la perspectiva del sistema operativo
+flush()	Descarga el búfer interno
+isatty()	Retorna si el flujo de datos del archivo es interactivo o no
+readable()	Retorna si el flujo de datos del archivo pueden ser leídos o no
+readline()	Lee y retorna una línea del archivo
+seek()	Cambia la posición del archivo
+seekable()	Retorna si el archivo nos permite cambiar su posición
+tell()	Retorna la posición actual del archivo
+truncate()	Ajusta el archivo a un tamaño específico
+writable()	Retorna si se puede escribir en el archivo o no
+writelines()	Escribe una lista de strings en el archivo

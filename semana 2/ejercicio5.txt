@@ -1,0 +1,12 @@
+1. Inicio
+2. Definir `velocidad_KMh`
+3. Definir `metros`
+4. Definir `segundos`
+5. `metros` = 1000 / 1
+6. `segundos` = 1 / 3600
+7. Mostrar “Digite su velocidad en km/h”
+8. Pedir `velocidad_KMh` 
+9. `velocidad_KMh` = `velocidad_KMh` * `metros` * `segundos`
+10. Mostrar “Su conversión final es de ”
+11. Mostrar `velocidad_KMh` ” metros por segundo”
+12. Fin

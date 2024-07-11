@@ -1,0 +1,12 @@
+1. Inicio
+2. Definir `tiempo_en_segundos` 
+3. Definir `tiempo_faltante`
+4. Mostrar “Digite el tiempo en segundos”
+5. Pedir `tiempo_en_segundos`
+6. Si (`tiempo_en_segundos` > 600) entonces:
+    1. Mostrar “Mayor”
+    2. Sino
+        1. `tiempo_faltante` = 600 - `tiempo_en_segundos`
+        2. Mostrar `tiempo_faltante`
+7. FinSi
+8. Fin

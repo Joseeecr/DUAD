@@ -1,0 +1,52 @@
+## Algoritmo para rutina diaria
+
+1. Inicio
+2. Despertar
+    1. apagar la alarma
+    2. levantarse de la cama
+    3. recoger la cama
+        1. doblar las cobijas
+        2. acomodar las almohadas y sabanas
+3. si ya se levantó de la cama y recogió la cama 
+    1. Tomar una ducha 
+    2. lavarse los dientes
+4. si ya se tomó una ducha y lavó los dientes
+    1. vestirse
+5. Comenzar a trabajar
+    1. encender la pc del trabajo
+    2. abrir app de trabajo
+    3. revisar que todo esté funcionando bien antes de empezar
+6. mientras no haya terminado las horas de trabajo o tenga hambre
+    1. seguir trabajando
+7. si tengo hambre y es de mañana
+    1. preparo desayuno
+8. sino, si es medio día
+    1. preparo almuerzo
+9. si termino de trabajar
+    1. registrar las horas laboradas
+    2. apagar pc de trabajo
+10. sino
+    1. seguir trabajando
+11. si terminé de trabajar y apague la pc de trabajo
+    1. hacer ejercicio
+12. si termina de hacer ejercicio y ya se refrescó
+    1. ducharse
+13. sino
+    1. esperar a estar fresco
+14. si ya se duchó
+    1. preparar café
+        1. calentar agua
+        2. echar café en la bolsa
+    2. si el agua está caliente
+        1. chorrear café
+    3. si el café está chorreado
+        1. agregar azucar
+    4. si le gusta la leche
+        1. agregar leche
+15. si ya tomó café
+    1. prender pc personal
+    2. comenzar a estudiar
+16. si ya terminó de estudiar
+    1. apagar pc personal
+    2. convivir con familia o novia
+17. fin
