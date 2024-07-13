@@ -1,0 +1,16 @@
+1. Inicio
+2. Definir `numero` 
+3. Definir `suma`
+4. Definir `contador`
+5. `contador` = 1
+6. `suma`= 0
+7. Mostrar “Digite su número”
+8. Pedir `numero`
+9. Mientras(`contador` ≤ `numero`) entonces
+    1. repetir:
+        1. `suma`= `suma`+ `contador` 
+        2. `contador`  = `contador`  + 1
+    2. FinMientras
+10. Mostrar “La suma de todos sus números es ”
+11. Mostrar `suma`
+12. Fin

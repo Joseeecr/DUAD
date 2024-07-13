@@ -1,0 +1,21 @@
+1. Inicio
+2. Definir `primer_numero`
+3. Definir `segundo_numero`
+4. `primer_numero`= 0
+5. `segundo_numero`= 0
+6. Mostrar “Escriba su primer número”
+7. Pedir `primer_numero`
+8. Mostrar “Escriba su segundo número”
+9. Pedir `segundo_numero`
+10. Si(`primer_numero` > `segundo_numero`) entonces
+    1. Mostrar “Su número menor es ”
+        1. Mostrar `segundo_numero`
+    2. Mostrar “Su número mayor es ” 
+        1. Mostrar `primer_numero` 
+    3. Sino
+        1. Mostrar “Su número menor es ”
+            1. Mostrar `primer_numero` 
+        2. Mostrar “Su número mayor es ” 
+            1. Mostrar `segundo_numero`
+    4. FinSi
+11. Fin

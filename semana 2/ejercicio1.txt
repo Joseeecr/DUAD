@@ -1,0 +1,15 @@
+1. Inicio
+2. Definir `precio_de_producto`
+3. Definir `descuento`
+4. Definir `precio_total`
+5. Mostrar “Digite el precio del producto”
+6. Pedir `precio_de_producto`
+7. Si (`precio_de_producto` < 100) entonces:
+    1. `descuento` = 0.98 * `precio_de_producto`
+    2. Sino
+        1. `descuento` =  0.9 * `precio_de_producto`
+    3. FinSi
+8. `precio_total` = `descuento`
+9. Mostrar “El valor total de su producto es”
+10. Mostrar `precio_total`
+11. Fin
