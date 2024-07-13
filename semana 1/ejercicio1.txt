@@ -1,0 +1,35 @@
+## Algoritmo para ver un video de YT
+
+1. Inicio
+2. Si quiere ver el video en PC y tiene PC
+    1. encienda la PC
+    2. abra el navegador de preferencia
+        1. busque yt en el navegador
+        2. ingrese a yt
+3. Si va a buscar un video o canal en específico
+    1. utilizar motor de búsqueda para buscar el nombre del video o del canal
+4. si ya encontró canal
+    1. clickear en el canal
+        1. buscar un video
+        2. clickear el video
+        3. ver el video
+
+5. si no buscó canal pero sí video
+
+    1. clickear en el video
+    2. ver el video
+1. Si no tiene pc pero si tiene celular o tablet
+    1. abrir la app de yt
+    2. buscar un canal de yt
+        1. si encontró el canal
+            1. buscar video
+            2. clickear video
+            3. ver video
+        2. si no encontró canal pero sí video
+            
+            
+            1. clickear video
+            2. ver video
+2. si termina de ver el video
+    1. buscar otro video o cerrar aplicación o navegador de internet
+3. Fin
