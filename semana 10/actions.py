@@ -1,31 +1,6 @@
-import re
+from validators import validate_student_name_using_re, validate_student_grade, validate_student_score
 
-def validate_student_name_using_re(name):
-    pattern = r'^[A-Za-z][A-Za-z ]*$'
-    if re.match(pattern, name):
-        return True 
-    return  False
-
-
-def validate_student_score(score):
-    try:
-        user_score = int(score)
-        if user_score >= 0 and user_score <= 100:
-            return user_score
-        else: 
-            print("Choose a number between 0 and 100!")
-    except ValueError:
-        print("Choose a number between 0 and 100!")
-
-
-def validate_student_grade(grade):
-    pattern = r'^\S+\s*\S$'
-    if re.match(pattern, grade):
-        return True 
-    return  False
-
-
-def get_correct_input_name(prompt, validator):
+def get_correct_student_name_or_grade(prompt, validator):
     while True:
         user_input = input(prompt)
         if validator(user_input):
@@ -43,20 +18,11 @@ def get_correct_input_score(prompt, validator):
             continue
 
 
-def get_correct_input_grade(prompt, validator):
-    while True:
-        user_input = input(prompt)
-        if validator(user_input):
-            return user_input
-        else:
-            print("Write a valid option!")
-
-
 def add_new_student(student_list):
     while True:
         print("You chose to add a new student! Please fill the following fields with the required information:")
-        student_name = get_correct_input_name("Student name: ", validate_student_name_using_re)
-        student_grade = get_correct_input_grade("Student grade: ", validate_student_grade)
+        student_name = get_correct_student_name_or_grade("Student name: ", validate_student_name_using_re)
+        student_grade = get_correct_student_name_or_grade("Student grade: ", validate_student_grade)
         spanish_score = int(get_correct_input_score("Spanish score: ", validate_student_score))
         english_score = int(get_correct_input_score("English score: ", validate_student_score))
         history_score = int(get_correct_input_score("History score: ", validate_student_score))
