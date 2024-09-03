@@ -6,7 +6,6 @@ class BankAccount:
     def send_money_to_account(self, amount):
         if amount > 0:
             self.balance += amount
-            print(self.balance)
         else:
             print("Negative numbers are not allowed")
 
@@ -15,22 +14,27 @@ class BankAccount:
             print("Insufficient funds")
         else:
             self.balance -= amount
-            print(self.balance)
 
 
 class SavingsAccount(BankAccount):
-    min_balance = 100
 
-    def take_out_money(self, amount):
-        if self.balance < SavingsAccount.min_balance:
-            print("Your current balance is less thant the minimum balance!")
-        else:
+    def __init__(self, min_balance):
+        self.balance = 0
+        self.min_balance = min_balance
+
+    def take_out_money_considering_min(self, amount):
+        if self.balance - amount >= self.min_balance:
             self.balance -= amount
-            print(self.balance)
+        else:
+            raise ValueError("You can't take out more money than the minimum")
+            
+
+    def check_balances(self):
+        print(f"Balance = {self.balance} and min balance = {self.min_balance}")            
+            
 
 
-jose = SavingsAccount()
-jose.take_out_money(100)
-jose.send_money_to_account(1000)
-jose.take_out_money(1000)
-jose.take_out_money(1000)
+person = SavingsAccount(100)
+person.send_money_to_account(100)
+person.send_money_to_account(100)
+person.check_balances()
