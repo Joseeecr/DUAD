@@ -34,7 +34,7 @@ class CategoryUI:
                 break
             elif event == "Save Category":
                 self.category_data_manager.process_user_category(category_window, values)
-                self.category_file_handler.save_to_json("semana 17/categories_file.json")
+                self.category_file_handler.save_to_json("categories_file.json")
             elif event == "Delete":
                 self.category_file_handler.delete_item(category_window)
 
@@ -69,14 +69,14 @@ class IncomeOutUI:
             elif event == "Add Income":
                 transaction_type = "In"
                 self.user_data_manager.add_user_data_to_list(self.main_window, values, transaction_type)
-                self.income_out_file_handler.save_to_json("semana 17/user_data_file.json")
+                self.income_out_file_handler.save_to_json("user_data_file.json")
                 self.user_data_manager.update_table(self.main_window)
                 data_window["-TITLE-"].update("")
                 data_window["-AMOUNT-"].update("")
             elif event == "Add Expense":
                 transaction_type = "Out"
                 self.user_data_manager.add_user_data_to_list(self.main_window, values, transaction_type)
-                self.income_out_file_handler.save_to_json("semana 17/user_data_file.json")
+                self.income_out_file_handler.save_to_json("user_data_file.json")
                 self.user_data_manager.update_table(self.main_window)
                 data_window["-TITLE-"].update("")
                 data_window["-AMOUNT-"].update("")
