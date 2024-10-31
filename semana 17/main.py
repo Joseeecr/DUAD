@@ -8,10 +8,10 @@ class MainWindowUI:
     def __init__(self):
         self.user_data_manager = UserDataManager()
         self.income_out_file_handler = IncomeOutFileHandler(self.user_data_manager)
-        self.user_data_manager.user_data_list = self.income_out_file_handler.load_from_json("semana 17/user_data_file.json")
+        self.user_data_manager.user_data_list = self.income_out_file_handler.load_from_json("user_data_file.json")
         self.category_data_manager = CategoryDataManager()
         self.category_file_handler = CategoryFileHandler(self.category_data_manager)
-        self.category_data_manager.category_data_list = self.category_file_handler.load_from_json("semana 17/categories_file.json")
+        self.category_data_manager.category_data_list = self.category_file_handler.load_from_json("categories_file.json")
         
         if self.user_data_manager.user_data_list is None:
             self.user_data_manager.user_data_list = []

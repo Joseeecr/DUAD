@@ -20,7 +20,7 @@ class CategoryFileHandler:
         return None
 
     def update_table_with_json_file(self, category_window):
-        json_data = self.load_from_json("semana 17/categories_file.json")
+        json_data = self.load_from_json("categories_file.json")
         json_data = [[item] for item in self.category_data_manager.category_data_list]
         if json_data:
             category_window["-CATEGORY_TABLE-"].update(values=json_data)
@@ -30,7 +30,7 @@ class CategoryFileHandler:
 
         if self.category_data_manager.user_input in self.category_data_manager.category_data_list:
             self.category_data_manager.category_data_list.remove(self.category_data_manager.user_input)
-            self.save_to_json("semana 17/categories_file.json")
+            self.save_to_json("categories_file.json")
 
             category_window["-CATEGORY_TABLE-"].update(values=self.category_data_manager.category_data_list)
 
@@ -55,7 +55,7 @@ class IncomeOutFileHandler:
         return None
 
     def update_table_with_json_file(self, main_window):
-        json_data = self.load_from_json("semana 17/user_data_file.json")
+        json_data = self.load_from_json("user_data_file.json")
         json_data = [[item["title"], item["category"], item["type"], item["amount"]] for item in self.user_data_manager.user_data_list]
         if json_data:
             main_window["-MAIN_TABLE-"].update(values=json_data)
@@ -70,7 +70,7 @@ class IncomeOutFileHandler:
             index_to_delete = selected_row[0]
             if 0 <= index_to_delete < len(self.user_data_manager.user_data_list):
                 removed_item  = self.user_data_manager.user_data_list.pop(index_to_delete)
-                sg.popup(f"Row with Title: {removed_item["title"]} and Category: {removed_item["category"]} was deleted")
-                self.save_to_json("semana 17/user_data_file.json")
+                sg.popup(f"Row with Title: {removed_item['title']} and Category: {removed_item['category']} was deleted")
+                self.save_to_json("user_data_file.json")
                 main_window["-MAIN_TABLE-"].update(values=self.user_data_manager.update_table(main_window))
 
