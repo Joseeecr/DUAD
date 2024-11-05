@@ -10,7 +10,7 @@ class CategoryDataManager:
         user_category_input = values["-CATEGORY-"]
 
         if Validators.validate_user_input(user_category_input):
-            if Validators.is_duplicate_category(user_category_input, self.category_data_list):
+            if Validators.is_duplicate_category(user_category_input, self.category_data_list): # Two ifs were created to show more specific errors
                 self.category_data_list.append(user_category_input)
         else:
             sg.popup("Enter a valid category!")
@@ -24,7 +24,7 @@ class UserDataManager:
     def __init__(self, user_data_list=None):
         self.user_data_list = user_data_list if user_data_list is not None else []
 
-    def add_user_data_to_list(self, main_window, values, transaction_type ):
+    def add_user_data_to_list(self, main_window, values, transaction_type):
         user_title_input = (values["-TITLE-"])
         user_amount_input = values["-AMOUNT-"]
         selected_category = values["-CATEGORY-"]

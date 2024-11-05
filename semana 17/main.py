@@ -30,6 +30,20 @@ class MainWindowUI:
         [sg.Button("Add New Category"),  sg.Button("Add an income/expense"), sg.Button("Select row to delete", key="-DELETE_ROW-")]
     ]
 
+    def delete_row(self, values, main_window):
+        selected_row = values["-MAIN_TABLE-"]
+
+        if not selected_row:
+            sg.popup("Please select a row to delete")
+
+        else:
+            index_to_delete = selected_row[0]
+            if 0 <= index_to_delete < len(self.user_data_manager.user_data_list):
+                removed_item  = self.user_data_manager.user_data_list.pop(index_to_delete)
+                sg.popup(f"Row with Title: {removed_item['title']} and Category: {removed_item['category']} was deleted")
+                self.income_out_file_handler.save_to_json("user_data_file.json")
+                main_window["-MAIN_TABLE-"].update(values=self.user_data_manager.update_table(main_window))
+
     def opening_main_window(self):
 
         main_window = sg.Window("Income/Expense", self.layout)
@@ -40,7 +54,7 @@ class MainWindowUI:
             if event == sg.WINDOW_CLOSED:
                 break
             if event == "-DELETE_ROW-":
-                self.income_out_file_handler.delete_item(values, main_window)
+                self.delete_row(values, main_window)
 
             elif event == "Add New Category":
                 category_ui = CategoryUI(self.category_data_manager, self.category_file_handler)
@@ -60,5 +74,6 @@ if __name__ == "__main__":
     open_main_window = MainWindowUI()
     try:
         open_main_window.opening_main_window()
-    except Exception:
+    except Exception as error:
         sg.popup("A random error occurred")
+        print(error)
