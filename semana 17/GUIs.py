@@ -21,11 +21,29 @@ class CategoryUI:
             [sg.Button("Save Category"), sg.Button("Close"), sg.Button("Delete")],
         ]
 
+    def update_table_with_json_file(self, category_window):
+        json_data = self.category_file_handler.load_from_json("categories_file.json")
+        json_data = [[item] for item in self.category_data_manager.category_data_list]
+        if json_data:
+            category_window["-CATEGORY_TABLE-"].update(values=json_data)
+        
+    def delete_item(self, category_window):
+        self.category_data_manager.user_input = sg.popup_get_text("Enter a value", 'Deleting item')
+
+        if self.category_data_manager.user_input in self.category_data_manager.category_data_list:
+            self.category_data_manager.category_data_list.remove(self.category_data_manager.user_input)
+            self.category_file_handler.save_to_json("categories_file.json")
+
+            category_window["-CATEGORY_TABLE-"].update(values=self.category_data_manager.category_data_list)
+
+        elif self.category_data_manager.user_input is not None and self.category_data_manager.user_input not in self.category_data_manager.category_data_list:
+            sg.popup("That item doesn't exist")
+
     def open_category_window(self):
 
         category_window = sg.Window("Add New Category", self.window_category_layout)
         event, values = category_window.read(timeout=5)
-        self.category_file_handler.update_table_with_json_file(category_window)
+        self.update_table_with_json_file(category_window)
         
         while True:
             event, values = category_window.read()
@@ -36,7 +54,7 @@ class CategoryUI:
                 self.category_data_manager.process_user_category(category_window, values)
                 self.category_file_handler.save_to_json("categories_file.json")
             elif event == "Delete":
-                self.category_file_handler.delete_item(category_window)
+                self.delete_item(category_window)
 
         category_window.close()
 
