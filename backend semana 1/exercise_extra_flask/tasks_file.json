@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "title": "Workout",
+        "description": "Go to take a walk",
+        "status": "To do"
+    },
+    {
+        "id": 2,
+        "title": "Study",
+        "description": "Study 2 hours today",
+        "status": "In Progress"
+    }
+]
