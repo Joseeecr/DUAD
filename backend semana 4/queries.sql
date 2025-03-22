@@ -4,11 +4,9 @@ FROM Books
 LEFT JOIN Authors ON Books.AuthorID = Authors.id;
 
 -- Obtenga todos los libros que no tienen autor
-SELECT Books.name, Authors.name
+SELECT Name
 FROM Books
-LEFT JOIN Authors
-ON Books.AuthorID = Authors.id
-WHERE Books.AuthorID IS NULL;
+WHERE AuthorID IS NULL;
 
 -- Obtenga todos los autores que no tienen libros
 SELECT Authors.name, Books.name
