@@ -25,15 +25,11 @@ class CarHandler:
       year_of_manufacture = data.get('year_of_manufacture')
       status_car = data.get('status_car')
 
-      success = self.car_repository.insert_new_car_register(
+      response, status = self.car_repository.insert_new_car_register(
         make, model, year_of_manufacture, status_car
       )
 
-
-      if success:
-        return {"message": "Car created successfully"}, 201
-      else:
-        return {"message": "Failed to create car"}, 500
+      return response, status
 
     except Exception as error:
       return jsonify({"message": "Error", "details": str(error)}), 400

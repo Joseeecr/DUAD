@@ -27,15 +27,11 @@ class UserHandler:
       date_of_birth = data.get('date_of_birth')
       status_account = data.get('status_account')
 
-      success = self.user_repository.insert_new_user_register(
+      response, status = self.user_repository.insert_new_user_register(
         full_name, email, user_name, password, date_of_birth, status_account
       )
 
-
-      if success:
-        return {"message": "User created successfully"}, 201
-      else:
-        return {"message": "Failed to create user"}, 500
+      return response, status
 
     except Exception as error:
       return jsonify({"message": "Error", "details": str(error)}), 400
