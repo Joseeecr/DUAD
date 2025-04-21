@@ -124,17 +124,23 @@ class UserRepository:
 
 
   def insert_new_user_register(self, full_name, email, user_name, password, date_of_birth, status_account):
+    status = str(status_account).strip().casefold()
+    valid_statuses = {stat.casefold() for stat in ['Currently Renting', 'Currently not Renting']}
+
+    if status not in valid_statuses:
+      return {'error':'Invalid status. Only "Currently Renting" or "Currently not Renting" are allowed'}, 400
+
     try:
       self.db_manager.execute_query(
         'INSERT INTO lyfter_car_rental.users(full_name, email, user_name, password, date_of_birth, status_account) VALUES (%s, %s, %s, %s, %s, %s)',
-        (full_name, email, user_name, password, date_of_birth, status_account)
+        (full_name, email, user_name, password, date_of_birth, status_account.capitalize())
       )
       print('Inserted successfully')
-      return True
+      return {"message": "User created successfully"}, 201
 
     except Exception as error:
       print("Error inserting a user into the database: ", error)
-      return False
+      return {"message": "Failed to create user"}, 500
 
 
   def update_status_account(self, new_status_account, _id):

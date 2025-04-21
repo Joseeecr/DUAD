@@ -91,17 +91,23 @@ class CarRepository:
 
 
   def insert_new_car_register(self, make, model, year_of_manufacture, status_car):
+    status = str(status_car).strip().casefold()
+    valid_statuses = {stat.casefold() for stat in ['Available', 'Rented']}
+
+    if status not in valid_statuses:
+      return {'error':'Invalid status. Only "Available" or "Rented" are allowed'}, 400
+
     try:
       self.db_manager.execute_query(
         'INSERT INTO lyfter_car_rental.cars(make, model, year_of_manufacture, status_car) VALUES (%s, %s, %s, %s)',
-        (make, model, year_of_manufacture, status_car),
+        (make, model, year_of_manufacture, status_car.capitalize()),
       )
       print('Inserted successfully')
-      return True
+      return {"message": "Car created successfully"}, 201
 
     except Exception as error:
       print("Error inserting a car into the database: ", error)
-      return False
+      return {"message": "Failed to create car"}, 500
 
 
   def update_status_car(self, new_status_car, _id):
