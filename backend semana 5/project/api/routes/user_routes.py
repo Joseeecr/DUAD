@@ -15,5 +15,7 @@ class UserBlueprint:
     
     self.blueprint.add_url_rule('/users/<int:id>', view_func=user_view, methods=['PUT', 'DELETE'])
 
+    self.blueprint.add_url_rule('/users/<int:id>/flag-user-as-delinquent', view_func=user_view, methods=['PATCH'])
+
   def get_blueprint(self):
     return self.blueprint

@@ -39,9 +39,9 @@ class CarUserHandler:
       success = self.car_user_repository.update_rental_status(rental_status, _id)
 
       if success:
-        return {"message": "Rental created successfully"}, 201
+        return {"message": "Rental status updated successfully"}, 201
       else:
-        return {"message": "Failed to create rental"}, 500
+        return {"message": "Failed to update rental"}, 500
 
     except Exception as error:
       return jsonify({"message": "Error", "details": str(error)}), 400

@@ -112,42 +112,42 @@ class CarRepository:
 
   def update_status_car(self, new_status_car, _id):
     if not self.is_id_valid(_id):
-      return False
+      return {'error': 'Id does not exist'}, 404
 
-    status_car = str(new_status_car).casefold().strip()
-    valid_statuses = {stat.casefold() for stat in ['Rented', 'Available']}
+    status_car = str(new_status_car).capitalize().strip()
+    valid_statuses = {stat.capitalize () for stat in ['Rented', 'Available']}
 
     if status_car not in valid_statuses:
-      raise ValueError('Invalid status. Only "Rented" and "Available" are allowed.')
+      return {'error': 'Invalid status. Only "Rented" and "Available" are allowed.'}, 400
 
     try:
       self.db_manager.execute_query(
         'UPDATE lyfter_car_rental.cars SET status_car = %s WHERE ID = %s',
-        (status_car.capitalize(), _id)
+        (status_car, _id)
       )
       print('Car status updated successfully')
-      return True
+      return {'Success': 'Car status updated successfully.'}, 200
     
     except Exception as error:
       print('Error updating a car from the database:', error)
-      return False
+      return {"message": "Failed to update car"}, 500
 
 
   def disable_car(self, _id):
-    if self.is_id_valid(_id):
-      try:
-        self.db_manager.execute_query(
-          'UPDATE lyfter_car_rental.cars SET status_car = %s WHERE ID = %s',
-          ('Disabled', _id)
-        )
-        print('Car successfuly disabled')
-        return True
+    if not self.is_id_valid(_id):
+      return {'error': 'Id does not exist'}, 404
 
-      except Exception as error:
-        print('Error occured in the DB while disabling a car', error)
-        return False
-    else:
-      return False
+    try:
+      self.db_manager.execute_query(
+        'UPDATE lyfter_car_rental.cars SET status_car = %s WHERE ID = %s',
+        ('Disabled', _id)
+      )
+      print('Car successfuly disabled')
+      return {'Success': 'Car disabled successfully.'}, 200
+
+    except Exception as error:
+      print('Error occured in the DB while disabling a car', error)
+      return {'Error': 'Error while labeling the car as disabled'}, 400
 
 
   def delete_car_register(self, _id):

@@ -26,20 +26,12 @@ class UserAPI(MethodView):
 
   def put(self, id):
     data = request.get_json()
-    if data:
-      try:
-        if self.user_handler.update_user_status_account(data, id):
-          return {'Success': 'User status has been updated'}, 200
-        else:
-          return {'Error': 'User was not found or status was not allowed, "Currently renting" or "Currently not renting" are the only valid'}, 400
-      except Exception as error:
-        return {'Error': {error}}
-    else:
-      try:
-        return self.user_handler.flag_delinquenter_user(id)
-      
-      except Exception as error:
-        print('Error occured while setting the user as "Delinquent"', error)
+
+    return self.user_handler.update_user_status_account(data, id)
+
+
+  def patch(self, id):
+    return self.user_handler.flag_delinquenter_user(id)
 
 
   def delete(self, id):

@@ -14,6 +14,8 @@ class CarBlueprint:
     self.blueprint.add_url_rule('/cars', view_func=car_view, methods=['GET', 'POST'])
     
     self.blueprint.add_url_rule('/cars/<int:id>', view_func=car_view, methods=['PUT', 'DELETE'])
+    
+    self.blueprint.add_url_rule('/cars/<int:id>/status-disabled', view_func=car_view, methods=['PATCH'])
 
   def get_blueprint(self):
     return self.blueprint

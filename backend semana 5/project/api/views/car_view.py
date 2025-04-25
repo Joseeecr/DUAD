@@ -21,26 +21,18 @@ class CarAPI(MethodView):
   def post(self):
     data = request.get_json()
     response, status = self.car_handler.post_car(data)
-    print(f'Response:{response} and status: {status}')
+
     return jsonify(response), status
 
 
   def put(self, id):
     data = request.get_json()
-    if data:
-      try:
-        if self.car_handler.update_status_car(data, id):
-          return {'Success': 'Car status has been updated'}, 200
-        else:
-          return {'Error': 'Car was not found or status was not allowed, "Available" or "Rented" are the only valid'}, 400
-      except Exception as error:
-        return {'Error': {error}}
-    else:
-      try:
-        return self.car_handler.disabling_car(id)
-      
-      except Exception as error:
-        print('Error occured while setting the car as "Disabled"', error)
+
+    return self.car_handler.update_status_car(data, id)
+
+
+  def patch(self, id):
+    return self.car_handler.disabling_car(id)
 
 
   def delete(self, id):

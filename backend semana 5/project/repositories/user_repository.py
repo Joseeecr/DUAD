@@ -145,13 +145,13 @@ class UserRepository:
 
   def update_status_account(self, new_status_account, _id):
     if not self.is_id_valid(_id):
-      return False
+      return {'error': 'Id does not exist'}, 404
     
-    status = str(new_status_account).strip().casefold()
-    valid_statuses = {stat.casefold() for stat in ['Currently renting', 'Currently not renting']}
+    status = str(new_status_account).strip().capitalize()
+    valid_statuses = {stat.capitalize() for stat in ['Currently renting', 'Currently not renting']}
     
     if status not in valid_statuses:
-      raise ValueError('Invalid status. Only "Currently renting" or "Currently not renting" are allowed')
+      return {'error': 'Invalid status. Only "Currently renting" and "Currently not renting" are allowed.'}, 400
     
     try:
       self.db_manager.execute_query(
@@ -159,11 +159,11 @@ class UserRepository:
         (new_status_account, _id)
       )
       print('User status account updated successfully')
-      return True
+      return {'Success': 'User status updated successfully.'}, 200
     
     except Exception as error:
       print('Error updating a user from the database:', error)
-      return False
+      return {"message": "Failed to update user"}, 500
 
 
   def delete_user_register(self, _id):
@@ -182,16 +182,16 @@ class UserRepository:
 
 
   def flag_delinquenter_user(self, _id):
-    if self.is_id_valid(_id):
-      try:
-        self.db_manager.execute_query(
-          'UPDATE lyfter_car_rental.users SET status_account = %s WHERE ID = %s',
-          ('Delinquent', _id)
-        )
-        return True
+    if not self.is_id_valid(_id):
+      return {'error': 'Id does not exist'}, 404
 
-      except Exception as error:
-        print('Error occured', error)
-        return False
-    else:
-      return False
+    try:
+      self.db_manager.execute_query(
+        'UPDATE lyfter_car_rental.users SET status_account = %s WHERE ID = %s',
+        ('Delinquent', _id)
+      )
+      return {'Success': 'User was successfully flagged as delinquent.'}, 200
+
+    except Exception as error:
+      print('Error occured', error)
+      return {'Error': 'Error while flagging user as delinquent'}, 400
