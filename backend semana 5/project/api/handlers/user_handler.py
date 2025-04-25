@@ -38,14 +38,14 @@ class UserHandler:
 
 
   def update_user_status_account(self, data, _id):
+  
     try:
-      new_status = data.get('status_account')
-      new_status = new_status.lower().capitalize()
+      response, status= self.user_repository.update_status_account(data.get('status_account'), _id)
+      return response, status
 
-      if new_status is not None:
-        return self.user_repository.update_status_account(new_status, _id)
-      else:
-        return False
+    except Exception as error:
+      return jsonify({"message": "Error", "details": str(error)}), 400
+
 
     except Exception as error:
       print('Error happened while updating the user status', error)
@@ -59,7 +59,4 @@ class UserHandler:
 
 
   def flag_delinquenter_user(self, _id):
-    if self.user_repository.flag_delinquenter_user(_id):
-      return {'Success': 'User was successfully flagged as "Delinquent"'}, 200
-    else:
-      return {'Error': 'User id was not found'}, 404
+    return self.user_repository.flag_delinquenter_user(_id)

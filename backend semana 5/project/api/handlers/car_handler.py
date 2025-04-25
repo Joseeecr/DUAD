@@ -6,6 +6,7 @@ class CarHandler:
     self.car_repository = car_repository
     self.car_validator = car_validator
 
+
   def get_cars(self):
     return self.car_repository.get_all_cars()
 
@@ -37,26 +38,15 @@ class CarHandler:
 
   def update_status_car(self, data, _id):
     try:
-      new_status = data.get('status_car')
-      new_status = new_status.lower().capitalize()
-
-      if new_status is not None:
-        return self.car_repository.update_status_car(new_status, _id)
-      else:
-        return False
+      response, status= self.car_repository.update_status_car(data.get('status_car'), _id)
+      return response, status
 
     except Exception as error:
-      print('Error happened while updating the car status', error)
+      return jsonify({"message": "Error", "details": str(error)}), 400
 
 
   def disabling_car(self, _id):
-    try:
-      if self.car_repository.disable_car(_id):
-        return  {'Success': 'Car disabled successfully'}, 200
-      else:
-        return {'Error': 'Error while labeling the car as disabled'}, 400
-    except Exception as error:
-      print('Error happened while labeling the car', error)
+    return self.car_repository.disable_car(_id)
 
 
   def delete_car(self, _id):
