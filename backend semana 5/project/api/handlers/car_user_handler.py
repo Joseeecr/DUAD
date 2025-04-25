@@ -39,7 +39,7 @@ class CarUserHandler:
       success = self.car_user_repository.update_rental_status(rental_status, _id)
 
       if success:
-        return {"message": "Rental status updated successfully"}, 201
+        return {"message": "Rental status updated successfully"}, 200
       else:
         return {"message": "Failed to update rental"}, 500
 
