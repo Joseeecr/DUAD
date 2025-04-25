@@ -33,12 +33,12 @@ class CarUserAPI(MethodView):
   def put(self, id):
     data = request.get_json()
 
-    if data:
-      response, status = self.car_user_handler.update_status(data, id)
-      return jsonify(response), status
-    else:
-      response, status = self.car_user_handler.complete_rental_handler(id)
-      return jsonify(response), status
+    response, status = self.car_user_handler.update_status(data, id)
+    return jsonify(response), status
+
+
+  def patch(self, id):
+    return self.car_user_handler.complete_rental_handler(id)
 
 
   def delete(self, id):

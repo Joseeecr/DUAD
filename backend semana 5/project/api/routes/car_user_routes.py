@@ -15,5 +15,7 @@ class CarUserBlueprint:
     
     self.blueprint.add_url_rule('/rentals/<int:id>', view_func=car_user_view, methods=['PUT', 'DELETE'])
 
+    self.blueprint.add_url_rule('/rentals/<int:id>/complete-rental', view_func=car_user_view, methods=['PATCH'])
+
   def get_blueprint(self):
     return self.blueprint
