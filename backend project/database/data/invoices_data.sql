@@ -1,0 +1,1 @@
+insert into invoices (invoice_number, payment_method_id, user_id, total_price, shopping_cart_id, shipping_address_id) values ('INV-4538', 3, 7, '2.99', 3, 3);

@@ -1,0 +1,15 @@
+insert into products (name, price, category_id, sku, stock, created_date) values ('Croquetas para perro adulto - 10kg (Purina Dog Chow)', 25.99, 1, 'QYFJ8852', 9, '29/01/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Arena para gato aglutinante - 7kg (Cat''s Best)', 2.29, 2, 'SKIG1088', 8, '23/02/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Juguete de cuerda para morder (para perros medianos)', 4.99, 3, 'KPJG3285', 8, '23/04/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Comedero doble antideslizante (acero inoxidable)', 249.99, 4, 'WRYI5943', 8, '21/03/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Rascador con base para gato (con poste de sisal)', 2.99, 4, 'ZQOT2121', 9, '17/03/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Transportadora plástica para mascotas (tamaño mediano)', 22.99, 4, 'FVYP1755', 4, '06/03/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Galletas premio sabor pollo (Pedigree Dentastix)', 8.99, 1, 'GWPV7019', 12, '29/04/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Pecera de vidrio 20 litros con tapa y filtro incluido', 3.99, 5, 'PVRA9041', 2, '27/04/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Jaula para hámster con ruedas y bebedero', 3.99, 5, 'JIGH2800', 3, '29/01/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Collar antipulgas y antigarrapatas (Seresto - perros grandes)', 19.99, 6, 'IZXG2406', 12, '15/04/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Vitaminas para aves exóticas (gotas para el agua)', 1.69, 6, 'JZWH9951', 4, '06/02/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Champú hipoalergénico para perros (uso veterinario)', 12.99, 2, 'PBZR2877', 3, '10/02/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Bolsas biodegradables para desechos de perro (rollo de 15)', 1.29, 2, 'GVQE9719', 1, '23/04/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Alimento para peces tropicales (TetraMin 100g)', 3.49, 1, 'PIOL5332', 4, '08/02/2025');
+insert into products (name, price, category_id, sku, stock, created_date) values ('Bebedero automático 2L (con filtro de carbón activado)', 4.49, 7, 'XGMP5800', 9, '06/04/2025');
