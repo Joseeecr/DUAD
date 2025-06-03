@@ -1,0 +1,5 @@
+insert into addresses (street, city, province, zip_code, country, user_id) values ('Calle 0, Avenida Central', 'San José', 'San José', '10101', 'Costa Rica');
+insert into addresses (street, city, province, zip_code, country, user_id) values ('Calle La Cruz', 'Liberia', 'Guanacaste', '50101', 'Costa Rica');
+insert into addresses (street, city, province, zip_code, country, user_id) values ('Calle 1, Barrio Los Ángeles', 'Cartago', 'Cartago', '30101', 'Costa Rica');
+insert into addresses (street, city, province, zip_code, country, user_id) values ('Calle 5, Urbanización La Trinidad', 'Heredia', 'Heredia', '40101', 'Costa Rica');
+insert into addresses (street, city, province, zip_code, country, user_id) values ('Calle Central, Barrio Los Ángeles', 'Alajuela', 'Alajuela', '20101', 'Costa Rica');
