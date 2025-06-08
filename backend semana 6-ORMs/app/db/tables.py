@@ -1,5 +1,5 @@
 from sqlalchemy import Table, Column, Integer, String, BigInteger, SmallInteger, DateTime, func, ForeignKey
-from engine import metadata_obj
+from db.connection import engine, metadata_obj
 
 users_table = Table(
   "users",
@@ -34,4 +34,9 @@ cars_table = Table(
   Column("user_id", ForeignKey("users.id"), nullable=True),
   Column("created_date", DateTime, server_default=func.now())
 )
-#todo create the tables using create_all()
+
+if __name__ == "__main__":
+  try:
+    metadata_obj.create_all(engine)
+  except Exception as error:
+    print(f"An error ocurrred: {error}")
