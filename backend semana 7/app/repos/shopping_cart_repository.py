@@ -1,8 +1,8 @@
 from sqlalchemy import insert, select, delete, update
-from db.tables import shopping_cart_table, user_table, products_table, cart_items_table, invoices_table
+from db.tables import shopping_cart_table, products_table, cart_items_table, invoices_table
 from repos.repos_utils import with_connection, validate_column_and_query_value
 from exceptions.generated_exceptions import CartNotFoundError, UserNotFoundError, ProductNotFoundError
-
+from typing import Optional
 class ShoppingCartRepository:
   def __init__(self, engine, shopping_cart_validator):
     self.engine = engine
@@ -51,32 +51,41 @@ class ShoppingCartRepository:
     return shopping_carts
 
 
-  @with_connection
-  def insert_cart(self, conn, user_id : int) -> int:
+  def check_if_cart_exists(self, conn, user_id : int) -> Optional[int]:
+    cart = conn.execute(select(shopping_cart_table).where(
+        (shopping_cart_table.c.user_id == user_id) &
+        (shopping_cart_table.c.status == "active")
+    )).fetchone()
 
-    if validate_column_and_query_value(conn, user_table, "id", user_id):
-      stmt = insert(shopping_cart_table).returning(shopping_cart_table.c.id).values(user_id=user_id)
-      result = conn.execute(stmt)
-      conn.commit()
-      return result.scalar_one()
-    else:
-      raise UserNotFoundError(f"User with id {user_id} not found")
-
-
-  @with_connection
-  def add_product_to_cart(self, conn, shopping_cart_id: int, product_id: int, quantity: int):
-
-    cart = validate_column_and_query_value(conn, shopping_cart_table, "id", shopping_cart_id)
     if not cart:
-      raise CartNotFoundError(f"Cart with id '{shopping_cart_id}' not found.")
+      return None
 
-    product = validate_column_and_query_value(conn, products_table, "id", product_id)
+    return cart.id
+
+
+  def insert_cart_if_needed(self, conn, user_id : int) -> Optional[int]:
+    stmt = insert(shopping_cart_table).returning(shopping_cart_table.c.id).values(user_id=user_id)
+    result = conn.execute(stmt)
+    conn.commit()
+    return result.scalar_one()
+
+
+  @with_connection
+  def add_product_to_cart(self, conn, user_id: int, product_id: int, quantity: int):
+
+    cart_id = self.check_if_cart_exists(conn, user_id)
+    print(f"this cart_id:{cart_id}")
+    if cart_id is None:
+      cart_id = self.insert_cart_if_needed(conn, user_id)
+
+    product = conn.execute(select(products_table).where(products_table.c.id == product_id)).fetchone()
+
     if not product:
       raise ProductNotFoundError(f"Product with id '{product_id}' not found.")
 
-    #*check if cart already exists
+    #*check if cart already exists in cart_items table
     existing = conn.execute(select(cart_items_table).where(
-        (cart_items_table.c.shopping_cart_id == shopping_cart_id) &
+        (cart_items_table.c.shopping_cart_id == cart_id) &
         (cart_items_table.c.product_id == product_id)
     )).fetchone()
 
@@ -84,13 +93,13 @@ class ShoppingCartRepository:
       new_quantity = existing.quantity + quantity
       conn.execute(update(cart_items_table)
                   .where(
-                    (cart_items_table.c.shopping_cart_id == shopping_cart_id) &
+                    (cart_items_table.c.shopping_cart_id == cart_id) &
                     (cart_items_table.c.product_id == product_id)
                   )
                   .values(quantity=new_quantity))
     else:
       conn.execute(insert(cart_items_table).values(
-        shopping_cart_id=shopping_cart_id,
+        shopping_cart_id=cart_id,
         product_id=product_id,
         quantity=quantity,
         price=product.price

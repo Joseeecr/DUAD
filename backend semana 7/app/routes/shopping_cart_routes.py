@@ -4,6 +4,7 @@ from validators.shopping_cart_validators import ShoppingCartValidators
 from exceptions.generated_exceptions import UserNotFoundError, ValidationError, CartNotFoundError, ColumnNotFoundError, ProductNotFoundError
 from db.tables import engine
 from routes.utils_routes import admin_only 
+from auth.jwt_instance import jwt_manager
 
 shopping_cart_validator = ShoppingCartValidators()
 shopping_cart_repo = ShoppingCartRepository(engine, shopping_cart_validator)
@@ -45,22 +46,38 @@ def add_cart():
     return jsonify({"error": str(e)}), 400
 
 
-@shopping_cart_bp.route('/<int:shopping_cart_id>/items', methods=['POST'])
-@admin_only
-def add_item_to_cart(shopping_cart_id):
+@shopping_cart_bp.route('/items', methods=['POST'])
+def add_item_to_cart():
+
+  token = request.headers.get('Authorization')
+
+  if token is None:
+    return jsonify({"error": "Authorization token missing"}), 401
+
+  raw_token = token.replace("Bearer ","")
   data = request.get_json()
   product_id = data.get('product_id')
   quantity = data.get('quantity')
 
   try:
-    shopping_cart_repo.add_product_to_cart(shopping_cart_id, product_id, quantity)
+
+    decoded = jwt_manager.decode(raw_token)
+    if "id" in decoded:
+      user_id = decoded["id"]
+
+    else:
+      return jsonify({"error": "id field missing"}), 401
+
+
+    shopping_cart_repo.add_product_to_cart(user_id, product_id, quantity)
     return jsonify({"message": "Product added to cart"}), 201
   
-  except CartNotFoundError as e:
+  except ProductNotFoundError as e:
     return jsonify({"error": str(e)}), 404
   
-  except ProductNotFoundError as e:
-      return jsonify({"error": str(e)}), 404
+  except Exception as e:
+    return jsonify({"error": str(e)}), 401
+
 
 
 @shopping_cart_bp.route('/update/<int:_id>', methods=['PATCH'])
