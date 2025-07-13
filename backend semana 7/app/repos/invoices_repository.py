@@ -48,7 +48,7 @@ class InvoicesRepository:
 
 
   @with_connection
-  def get_invoice_by_user_id(self, conn, user_id : int) -> Optional[int]:
+  def check_invoices(self, conn, user_id : int) -> Optional[int]:
     if not validate_column_and_query_value(conn, invoices_table, "user_id", user_id):
       raise InvoiceNotFoundError(f"Invoice not found")
 

@@ -74,7 +74,7 @@ class ShoppingCartRepository:
   def add_product_to_cart(self, conn, user_id: int, product_id: int, quantity: int):
 
     cart_id = self.check_if_cart_exists(conn, user_id)
-    print(f"this cart_id:{cart_id}")
+
     if cart_id is None:
       cart_id = self.insert_cart_if_needed(conn, user_id)
 
@@ -136,18 +136,16 @@ class ShoppingCartRepository:
 
 
   @with_connection
-  def close_cart(self, conn, shopping_cart_id: int):
+  def checkout_cart(self, conn, user_id: int):
     
-    #*Check the cart exists and is in active
-    cart = conn.execute(select(shopping_cart_table).where(shopping_cart_table.c.id == shopping_cart_id)).first()
-    if not cart:
-      raise CartNotFoundError(f"Cart with id '{shopping_cart_id}' not found.")
+    #*Check the cart exists and is active
+    cart_id = self.check_if_cart_exists(conn, user_id)
 
-    if cart.status != "active":
-      raise Exception("Cart is not in a closable state.")
+    if cart_id is None:
+      raise CartNotFoundError(f"Cart not found") 
 
     items = conn.execute(
-        select(cart_items_table).where(cart_items_table.c.shopping_cart_id == shopping_cart_id)
+        select(cart_items_table).where(cart_items_table.c.shopping_cart_id == cart_id)
     ).fetchall()
     
     for item in items:
@@ -163,14 +161,14 @@ class ShoppingCartRepository:
           .values(quantity=products_table.c.quantity - item.quantity))
 
     conn.execute(update(shopping_cart_table)
-        .where(shopping_cart_table.c.id == shopping_cart_id)
+        .where(shopping_cart_table.c.id == cart_id)
         .values(status="closed"))
 
     total = sum(item.quantity * item.price for item in items)
 
     invoice_stmt = insert(invoices_table).returning(invoices_table.c.id).values(
-        user_id=cart.user_id,
-        shopping_cart_id=shopping_cart_id,
+        user_id=user_id,
+        shopping_cart_id=cart_id,
         total=total,
         status="paid"
     )

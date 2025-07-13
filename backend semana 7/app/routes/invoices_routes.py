@@ -4,6 +4,7 @@ from validators.invoices_validators import InvoiceValidators
 from exceptions.generated_exceptions import InvoiceNotFoundError, ValidationError
 from routes.utils_routes import admin_only
 from db.tables import engine
+from auth.jwt_instance import jwt_manager
 
 invoice_validator = InvoiceValidators()
 invoice_repo = InvoicesRepository(engine, invoice_validator)
@@ -27,14 +28,24 @@ def list_invoices():
   
 
 
-@invoice_bp.route('/<int:user_id>', methods=['GET'])
-def list_invoices_by_user_id(user_id):
+@invoice_bp.route('/check_invoices', methods=['GET'])
+def check_invoices():
+
+  token = request.headers.get('Authorization')
+  if token is None:
+    return jsonify({"error": "Authorization token missing"}), 401
+
+  raw_token = token.replace("Bearer ","")
 
   try:
-    invoices = invoice_repo.get_invoice_by_user_id(user_id)
-    return jsonify(invoices), 200
+    decoded = jwt_manager.decode(raw_token)
 
-  except InvoiceNotFoundError as e:
-    return jsonify({"error": str(e)}), 404
+    if "id" in decoded:
+      user_id = decoded["id"]
+    else:
+      return jsonify({"error": "id field missing"}), 401
+
+    invoices_list = invoice_repo.check_invoices(user_id)
+    return jsonify(invoices_list), 200
   except Exception as e:
-    return jsonify({"error": str(e)}), 500
+    return jsonify({"error": str(e)})
