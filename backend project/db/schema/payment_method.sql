@@ -1,4 +1,0 @@
-CREATE TABLE IF NOT EXISTS payment_method (
-  id SERIAL PRIMARY KEY,
-  payment_method VARCHAR(25) UNIQUE NOT NULL
-);

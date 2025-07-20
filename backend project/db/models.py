@@ -12,7 +12,7 @@ user_table = Table(
   Column("last_name", String(50), nullable=False),
   Column("email", String(50), nullable=False, unique=True),
   Column("password", String(50), nullable=False),
-  Column("phone_number", String(25), nullable=False),
+  Column("phone_number", String(25), nullable=False, unique=True),
   Column("is_admin", Boolean, nullable=False, server_default=text('false')),
   Column("created_at", DateTime, server_default=func.now())
 )
@@ -21,7 +21,7 @@ products_table = Table(
   "products",
   metadata_obj,
   Column("id", Integer, primary_key=True),
-  Column("name", String(30), nullable=False, unique=True),
+  Column("name", String(255), nullable=False, unique=True),
   Column("price", Numeric(10, 2), nullable=False),
   Column("sku", String(8), nullable=False, unique=True),
   CheckConstraint("char_length(sku) = 8", name="sku_8_characters"),
@@ -88,7 +88,7 @@ payment_method_table = Table(
   "payment_method",
   metadata_obj,
   Column("id", Integer, primary_key=True),
-  Column("payment_method", Enum("sinpe, card, cash",name="payment_method_enum"), nullable=False)
+  Column("payment_method", Enum("sinpe", "card", "cash", name="payment_method_enum"), nullable=False)
 )
 
 if __name__ == "__main__":

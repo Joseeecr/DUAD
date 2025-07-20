@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS shipping_address (
-  id SERIAL PRIMARY KEY,
-  street VARCHAR(250) UNIQUE NOT NULL,
-  city VARCHAR(50) NOT NULL,
-  province VARCHAR(50) NOT NULL,
-  zip_code VARCHAR(50) NOT NULL,
-  country VARCHAR(50) NOT NULL,
-  created_date TIMESTAMP DEFAULT now()
-);
