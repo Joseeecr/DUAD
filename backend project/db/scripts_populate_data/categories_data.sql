@@ -1,7 +1,7 @@
-insert into categories (category) values ('Alimentos');
-insert into categories (category) values ('Higiene y limpieza');
-insert into categories (category) values ('Juguetes');
-insert into categories (category) values ('Accesorios');
-insert into categories (category) values ('Hábitats y refugios');
-insert into categories (category) values ('Salud y bienestar');
-insert into categories (category) values ('Tecnología y automatización');
+insert into product_categories (name) values ('Alimentos');
+insert into product_categories (name) values ('Higiene y limpieza');
+insert into product_categories (name) values ('Juguetes');
+insert into product_categories (name) values ('Accesorios');
+insert into product_categories (name) values ('Hábitats y refugios');
+insert into product_categories (name) values ('Salud y bienestar');
+insert into product_categories (name) values ('Tecnología y automatización');
