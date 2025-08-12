@@ -1,6 +1,6 @@
 from flask import request, jsonify, Response
 from db.database import engine
-from exceptions.exceptions import ValidationError, UserNotFoundError
+from exceptions.exceptions import ValidationError, NotFoundError
 from services.user_services import UserService
 from repos.user_repository import UserRepository
 from validators.user_validators import UserValidator
@@ -22,7 +22,7 @@ class UserController:
 
     except ValidationError as e:
       return jsonify({"error": str(e)}), 400
-    except UserNotFoundError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 400
     except Exception as e:
       return jsonify({"error": str(e)}), 

@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from db.models import user_table
-from exceptions.exceptions import UserNotFoundError
+from exceptions.exceptions import NotFoundError
 import bcrypt 
 
 
@@ -43,7 +43,7 @@ class UserService:
     users = [dict(row._mapping) for row in result]
 
     if not users:
-      raise UserNotFoundError("No matching users found.")
+      raise NotFoundError("No matching users found.")
 
     
     return users
