@@ -7,7 +7,7 @@ def admin_only(func):
   def wrapper(*args, **kwargs):
     try:
       token = request.headers.get('Authorization')
-      
+
       if token is not None:
         raw_token = token.replace("Bearer " , "")
         decoded = jwt_manager.decode(raw_token)
