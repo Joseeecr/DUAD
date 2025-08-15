@@ -42,7 +42,7 @@ cart_table = Table(
   metadata_obj,
   Column("id", Integer, primary_key=True),
   Column("user_id", ForeignKey("users.id"), nullable=False),
-  Column("status", Enum("active", "closed", "abandoned", "expired", name="status_enum"), nullable=False),
+  Column("status", Enum("active", "closed", "abandoned", "expired", name="status_enum"), nullable=False, default="active"),
   Column("created_at", DateTime, server_default=func.now()),
   Column("expires_at", DateTime, Computed("created_at + interval '1 hour'", persisted=True)),
 )
