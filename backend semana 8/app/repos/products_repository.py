@@ -63,17 +63,17 @@ class ProductsRepository:
 
   @with_connection
   def get_product_by_id(self, conn, id : int) -> Optional[int]:
-    if not validate_column_and_query_value(conn, products_table, "id", id):
-      return False
 
     stmt = select(products_table).where(products_table.c.id == id)
     result = conn.execute(stmt)
-    products = result.all()
+    product = result.first()
 
-    if len(products) == 0:
-        return None
-    else:
-        return products[0]
+    if not product:
+      raise ProductNotFoundError("No matching products found.")
+    
+    product = dict(product._mapping)
+
+    return product
 
 
   @with_connection
@@ -90,7 +90,7 @@ class ProductsRepository:
   @with_connection
   def update_product(self, conn, id : int, data : dict) -> int:
     if not validate_column_and_query_value(conn, products_table, "id", id):
-      return False
+      raise ProductNotFoundError("No matching products found")
 
     valid_columns = set(products_table.columns.keys())
     incoming_columns = set(data.keys())

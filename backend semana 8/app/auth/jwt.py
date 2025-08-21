@@ -25,5 +25,6 @@ class JWT_Manager:
       token = jwt.decode(token, self.public_key, algorithms=[self.algorithm])
       return token
     except Exception as e:
+        print(type(token))
         print("Error decoding token:", e)
         return None

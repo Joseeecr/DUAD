@@ -28,7 +28,7 @@ def list_invoices():
   
 
 
-@invoice_bp.route('/check_invoices', methods=['GET'])
+@invoice_bp.route('/check-invoices', methods=['GET'])
 def check_invoices():
 
   token = request.headers.get('Authorization')
