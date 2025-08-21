@@ -27,7 +27,7 @@ def list_carts():
     return jsonify({"error": str(e)}), 404
 
 
-@shopping_cart_bp.route('/items', methods=['POST'])
+@shopping_cart_bp.route('/add', methods=['POST'])
 def add_item_to_cart():
 
   token = request.headers.get('Authorization')
