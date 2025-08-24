@@ -5,6 +5,7 @@ from exceptions.generated_exceptions import ProductNotFoundError, ValidationErro
 from db.tables import engine
 from routes.utils_routes import admin_only
 from cache.cache_manager_instance import cache_manager
+from cache.cache_utils import checking_cache
 
 product_validator = ProductValidators()
 product_repo = ProductsRepository(engine, product_validator)
@@ -17,15 +18,13 @@ def list_products():
   raw_params = request.args.to_dict()
   try:
     filters = product_validator.validate_product_filters(raw_params)
-    cache_key = cache_manager.make_cache_key("fruits:all", filters)
+    cache = checking_cache(cache_manager.make_cache_key("fruits:all", filters), cache_manager)
 
-    cached =  cache_manager.get_data(cache_key)
-
-    if cached:
-      return jsonify(cached), 200
+    if cache:
+      return cache
 
     products = product_repo.get_products(filters)
-    cache_manager.store_data(cache_key, products)
+    cache_manager.store_data(cache_manager.make_cache_key("fruits:all", filters), products)
     return jsonify(products), 200
 
   except ProductNotFoundError as e:
@@ -37,15 +36,14 @@ def list_products():
 @product_bp.route('/<int:id>', methods=['GET'])
 @admin_only
 def get_product_id(id):
-  cache_key = f"fruits:{id}"
-  try:
-    cached =  cache_manager.get_data(cache_key)
 
-    if cached:
-      return jsonify(cached), 200
+  try:
+    cache = checking_cache(f"fruits:{id}", cache_manager)
+    if cache:
+      return cache
 
     product = product_repo.get_product_by_id(id)
-    cache_manager.store_data(cache_key, product, time_to_live=600)
+    cache_manager.store_data(f"fruits:{id}", product, time_to_live=600)
     return jsonify(product), 200
 
   except ValidationError as e:
