@@ -5,7 +5,7 @@ from exceptions.generated_exceptions import ProductNotFoundError, ValidationErro
 from db.tables import engine
 from routes.utils_routes import admin_only
 from cache.cache_manager_instance import cache_manager
-from cache.cache_utils import checking_cache
+from cache.cache_utils import check_cache, invalidate_cache
 
 product_validator = ProductValidators()
 product_repo = ProductsRepository(engine, product_validator)
@@ -14,17 +14,13 @@ product_bp = Blueprint('fruit', __name__, url_prefix='/fruits')
 
 @product_bp.route('/', methods=['GET'])
 @admin_only
+@check_cache("fruits", cache_manager, request)
 def list_products():
   raw_params = request.args.to_dict()
   try:
     filters = product_validator.validate_product_filters(raw_params)
-    cache = checking_cache(cache_manager.make_cache_key("fruits:all", filters), cache_manager)
-
-    if cache:
-      return cache
 
     products = product_repo.get_products(filters)
-    cache_manager.store_data(cache_manager.make_cache_key("fruits:all", filters), products)
     return jsonify(products), 200
 
   except ProductNotFoundError as e:
@@ -33,17 +29,14 @@ def list_products():
     return jsonify({"error": str(e)}), 500
 
 
-@product_bp.route('/<int:id>', methods=['GET'])
+@product_bp.route('/<int:_id>', methods=['GET'])
 @admin_only
-def get_product_id(id):
+@check_cache("fruits", cache_manager, request)
+def get_product_id(_id):
 
   try:
-    cache = checking_cache(f"fruits:{id}", cache_manager)
-    if cache:
-      return cache
 
-    product = product_repo.get_product_by_id(id)
-    cache_manager.store_data(f"fruits:{id}", product, time_to_live=600)
+    product = product_repo.get_product_by_id(_id)
     return jsonify(product), 200
 
   except ValidationError as e:
@@ -56,6 +49,7 @@ def get_product_id(id):
 
 @product_bp.route('/', methods=['POST'])
 @admin_only
+@invalidate_cache("fruits", cache_manager)
 def add_product():
   data = request.get_json()
 
@@ -68,7 +62,6 @@ def add_product():
     return {"errors": errors}, 400
 
   elif product_repo.insert_product(name=name, price=price, quantity=quantity):
-    cache_manager.delete_data_with_pattern("fruits:all*")
     return {"success": "product was successfully inserted"}, 200
 
   else:
@@ -77,12 +70,11 @@ def add_product():
 
 @product_bp.route('/update/<int:_id>', methods=['PATCH'])
 @admin_only
+@invalidate_cache("fruits", cache_manager)
 def update(_id):
   try:
     data = request.get_json()
     product_repo.update_product(_id, data)
-    cache_manager.delete_data(f"fruits:{_id}")
-    cache_manager.delete_data_with_pattern(f"fruits:all*")
     return jsonify("Product successfully updated"), 200
   except ProductNotFoundError as e:
     return jsonify({"error": str(e)}), 404
@@ -92,12 +84,12 @@ def update(_id):
 
 @product_bp.route('/delete/<int:_id>', methods=['DELETE'])
 @admin_only
+@invalidate_cache("fruits", cache_manager)
 def delete(_id):
-  success = product_repo.delete_product(_id)
-
-  if not success:
-    return Response("Product not found", status=404)
-
-  cache_manager.delete_data(f"fruits:{_id}")
-  cache_manager.delete_data_with_pattern(f"fruits:all*")
-  return Response("Resource deleted successfully", status=200)
+  try:
+    product_repo.delete_product(_id)
+    return jsonify("Product successfully deleted"), 200
+  except ProductNotFoundError as e:
+    return jsonify({"error": str(e)}), 404
+  except ColumnNotFoundError as e:
+    return jsonify({"error": str(e)}), 404
