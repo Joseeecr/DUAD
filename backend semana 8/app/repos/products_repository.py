@@ -113,7 +113,7 @@ class ProductsRepository:
   @with_connection
   def delete_product(self, conn, _id : int) -> bool:
     if not validate_column_and_query_value(conn, products_table, "id", _id):
-      return False
+      raise ProductNotFoundError("No matching products found")
 
     stmt = delete(products_table).where(products_table.c.id == _id)
     conn.execute(stmt)

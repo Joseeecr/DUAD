@@ -1,11 +1,47 @@
-from flask import jsonify
-def checking_cache(key, cache_manager):
-  try:
-    cached =  cache_manager.get_data(key)
-    
-    if cached:
-      return jsonify(cached), 200
+from functools import wraps
 
-  except Exception as e:
-    print(f"Cache error: {e}")
-    return None
+def check_cache(base_key, cache_manager, request):
+  def decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+
+      if "_id" in kwargs:
+        final_cache_key = f"{base_key}:{kwargs["_id"]}"
+      else:
+        params = request.args.to_dict()
+        final_cache_key = cache_manager.make_cache_key(f"{base_key}:all", params)
+
+      cached = cache_manager.get_data(final_cache_key)
+
+      if cached:
+        print("returning cache")
+        return cached
+
+      response = func(*args, **kwargs)
+      data, status = response
+
+      if status == 200 and "_id" in kwargs:
+        cache_manager.store_data(final_cache_key, data.get_json(), time_to_live = 180)
+      elif status == 200:
+        cache_manager.store_data(final_cache_key, data.get_json(), time_to_live = 300)
+      return response
+    return wrapper
+  return decorator
+
+
+def invalidate_cache(base_key, cache_manager):
+  def decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+      response = func(*args, **kwargs)
+      status = response[1]
+
+      if status == 200 and "_id" in kwargs:
+        cache_manager.delete_data(f"{base_key}:{kwargs["_id"]}")
+        cache_manager.delete_data_with_pattern(f"{base_key}:all*")
+      elif status == 200:
+        cache_manager.delete_data_with_pattern(f"{base_key}:all*")
+
+      return response
+    return wrapper
+  return decorator
