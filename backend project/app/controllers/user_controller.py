@@ -13,7 +13,7 @@ user_service = UserService(user_validator, user_repo, jwt_manager)
 
 
 class UserController:
-  @admin_only
+
   def get_user(self):
     try:
 
@@ -72,7 +72,6 @@ class UserController:
       return Response(e, status=500)
 
 
-  @admin_only
   def update_by_admin(self, id):
     try:
       data = request.get_json()
@@ -86,7 +85,6 @@ class UserController:
       return jsonify({"error": str(e)}), 500
 
 
-  @admin_only
   def delete(self, id):
     try:
       user_service.delete_user(id)

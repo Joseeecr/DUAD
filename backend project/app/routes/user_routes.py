@@ -1,12 +1,13 @@
 from flask import Blueprint
 from controllers.user_controller import UserController
-
+from auth.admin_only import admin_only
 
 user_bp = Blueprint("user", __name__, url_prefix="/users")
 user_controller = UserController()
 
 
 @user_bp.route("/", methods=['GET'])
+@admin_only
 def get_users():
   return user_controller.get_user()
 
@@ -27,10 +28,12 @@ def me():
 
 
 @user_bp.route("/update/<int:id>", methods=['PATCH'])
+@admin_only
 def update_user_by_admin(id):
   return user_controller.update_by_admin(id)
 
 
 @user_bp.route("/delete/<int:id>", methods=['DELETE'])
+@admin_only
 def delete_user(id):
   return user_controller.delete(id)

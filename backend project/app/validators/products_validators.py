@@ -79,6 +79,9 @@ class ProductsValidator:
     if "sku" in params:
       filters["sku"] = self.validate_sku(params["sku"])
 
+    if "category_id" in params:
+      filters["category_id"] = self.validate_is_number(params["category_id"])
+
     if "stock" in params:
       filters["stock"] = self.validate_is_number(params["stock"])
 
