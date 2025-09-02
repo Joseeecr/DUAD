@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, jsonify
-from auth.jwt_instance import jwt_manager
+from app.auth.jwt_instance import jwt_manager
 
 def admin_only(func):
   @wraps(func)
