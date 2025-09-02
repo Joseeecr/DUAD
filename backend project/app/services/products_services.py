@@ -34,6 +34,9 @@ class ProductsService:
     if "sku" in filters:
       stmt = stmt.where(products_table.c.sku == filters["sku"])
 
+    if "category_id" in filters:
+      stmt = stmt.where(products_table.c.category_id == filters["category_id"])
+
     if "stock" in filters:
       stmt = stmt.where(products_table.c.stock == filters["stock"])
 
@@ -54,6 +57,14 @@ class ProductsService:
 
     return product
 
+
+  def get_product_by_id(self, id : int) -> int:
+    product = self.product_repository.get_product_by_id(id)
+
+    if not product:
+      raise ValueError("Product not found")
+
+    return product
 
 
   def update_product_by_admin(self, products_id : int, data : dict):

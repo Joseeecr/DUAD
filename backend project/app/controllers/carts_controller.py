@@ -4,17 +4,13 @@ from exceptions.exceptions import ValidationError, NotFoundError
 from services.cart_services import CartServices
 from repos.carts_repository import CartsRepository
 from validators.carts_validators import CartsValidator
-from auth.admin_only import admin_only
-from controllers.controllers_utils import jwt_required
 
 carts_validator = CartsValidator()
 carts_repo = CartsRepository(engine)
 cart_services = CartServices(carts_validator, carts_repo)
 
-
 class CartsController:
 
-  @admin_only
   def get_carts(self):
     try:
       params = request.args.to_dict()
@@ -28,7 +24,6 @@ class CartsController:
       return jsonify({"error": str(e)}), 
 
 
-  @jwt_required
   def post_cart(self):
     data = request.get_json()
 
@@ -44,7 +39,6 @@ class CartsController:
       return jsonify({"error": str(e)}), 500
 
 
-  @admin_only
   def update_by_admin(self, id):
     try:
       data = request.get_json()
@@ -56,9 +50,8 @@ class CartsController:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
       return jsonify({"error": str(e)}), 500
-    
 
-  @jwt_required
+
   def update_carts_items(self):
     try:
       data = request.get_json()
@@ -72,7 +65,6 @@ class CartsController:
       return jsonify({"error": str(e)}), 500
 
 
-  @jwt_required
   def checkout_cart(self):
     data = request.get_json()
 
