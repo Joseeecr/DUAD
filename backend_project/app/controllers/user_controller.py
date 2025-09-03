@@ -1,11 +1,10 @@
 from flask import request, jsonify, Response
-from db.database import engine
-from exceptions.exceptions import ValidationError, NotFoundError
-from services.user_services import UserService
-from repos.user_repository import UserRepository
-from validators.user_validators import UserValidator
-from auth.jwt_instance import jwt_manager
-from auth.admin_only import admin_only
+from app.db.database import engine
+from app.exceptions.exceptions import ValidationError, NotFoundError
+from app.services.user_services import UserService
+from app.repos.user_repository import UserRepository
+from app.validators.user_validators import UserValidator
+from app.auth.jwt_instance import jwt_manager
 
 user_validator = UserValidator()
 user_repo = UserRepository(engine)

@@ -1,6 +1,6 @@
 from flask import Blueprint
-from controllers.user_controller import UserController
-from auth.admin_only import admin_only
+from app.controllers.user_controller import UserController
+from app.auth.admin_only import admin_only
 
 user_bp = Blueprint("user", __name__, url_prefix="/users")
 user_controller = UserController()

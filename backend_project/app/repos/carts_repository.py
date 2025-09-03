@@ -1,7 +1,7 @@
 from sqlalchemy import insert, select, delete, update, Select
 from sqlalchemy.engine import CursorResult, Row
-from db.models import cart_table, products_table, cart_products_table, payment_method_table, shipping_address_table
-from repos.utils import with_connection
+from app.db.models import cart_table, products_table, cart_products_table, payment_method_table, shipping_address_table
+from app.repos.utils import with_connection
 from typing import Optional
 
 class CartsRepository:

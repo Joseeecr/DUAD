@@ -1,7 +1,7 @@
 from sqlalchemy import insert, select, delete, update, Select
 from sqlalchemy.engine import CursorResult, Row
-from db.models import products_table
-from repos.utils import with_connection
+from app.db.models import products_table
+from app.repos.utils import with_connection
 from typing import Optional
 
 class ProductsRepository:

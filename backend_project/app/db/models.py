@@ -1,4 +1,4 @@
-from db.database import engine
+from app.db.database import engine
 from sqlalchemy import MetaData
 from sqlalchemy import Table, Column, Integer, String, Numeric, DateTime, ForeignKey, Enum, func, Boolean, text, Computed, CheckConstraint
 

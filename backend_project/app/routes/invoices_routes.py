@@ -1,7 +1,7 @@
 from flask import Blueprint
-from controllers.invoices_controller import InvoicesController
-from auth.admin_only import admin_only
-from controllers.controllers_utils import jwt_required
+from app.controllers.invoices_controller import InvoicesController
+from app.auth.admin_only import admin_only
+from app.controllers.controllers_utils import jwt_required
 
 
 invoices_bp = Blueprint("invoices", __name__, url_prefix="/invoices")

@@ -1,6 +1,6 @@
 from sqlalchemy import select
-from db.models import products_table
-from exceptions.exceptions import NotFoundError
+from app.db.models import products_table
+from app.exceptions.exceptions import NotFoundError
 
 
 

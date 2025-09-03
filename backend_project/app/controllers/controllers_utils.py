@@ -1,4 +1,4 @@
-from auth.jwt_instance import jwt_manager
+from app.auth.jwt_instance import jwt_manager
 from functools import wraps
 from flask import request, jsonify, g
 

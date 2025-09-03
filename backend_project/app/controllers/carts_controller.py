@@ -1,9 +1,9 @@
 from flask import request, jsonify, g
-from db.database import engine
-from exceptions.exceptions import ValidationError, NotFoundError
-from services.cart_services import CartServices
-from repos.carts_repository import CartsRepository
-from validators.carts_validators import CartsValidator
+from app.db.database import engine
+from app.exceptions.exceptions import ValidationError, NotFoundError
+from app.services.cart_services import CartServices
+from app.repos.carts_repository import CartsRepository
+from app.validators.carts_validators import CartsValidator
 
 carts_validator = CartsValidator()
 carts_repo = CartsRepository(engine)

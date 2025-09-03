@@ -1,4 +1,4 @@
-from exceptions.exceptions import ValidationError
+from app.exceptions.exceptions import ValidationError
 from decimal import Decimal, InvalidOperation
 from typing import Union, Optional
 import re
