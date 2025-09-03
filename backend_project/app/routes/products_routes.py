@@ -1,9 +1,8 @@
-from flask import Blueprint
-from cache.cache_utils import check_cache, invalidate_cache
-from cache.cache_instance import cache_manager
-from flask import request
-from controllers.products_controller import ProductsController
-from auth.admin_only import admin_only
+from flask import Blueprint,request
+from app.cache.cache_utils import check_cache, invalidate_cache
+from app.cache.cache_instance import cache_manager
+from app.controllers.products_controller import ProductsController
+from app.auth.admin_only import admin_only
 
 products_bp = Blueprint("products", __name__, url_prefix="/products")
 products_controller = ProductsController()

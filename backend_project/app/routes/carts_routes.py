@@ -1,7 +1,7 @@
 from flask import Blueprint
-from controllers.carts_controller import CartsController
-from auth.admin_only import admin_only
-from controllers.controllers_utils import jwt_required
+from app.controllers.carts_controller import CartsController
+from app.auth.admin_only import admin_only
+from app.controllers.controllers_utils import jwt_required
 
 carts_bp = Blueprint("carts", __name__, url_prefix="/carts")
 carts_controller = CartsController()

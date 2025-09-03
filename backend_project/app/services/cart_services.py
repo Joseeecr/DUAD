@@ -1,7 +1,7 @@
 from sqlalchemy import select, update, insert
-from db.models import cart_table, cart_products_table, products_table, invoices_table
-from db.session import SessionLocal
-from exceptions.exceptions import NotFoundError
+from app.db.models import cart_table, cart_products_table, products_table, invoices_table
+from app.db.session import SessionLocal
+from app.exceptions.exceptions import NotFoundError
 import random
 import string
 

@@ -1,9 +1,9 @@
 from flask import request, jsonify, g
-from db.database import engine
-from exceptions.exceptions import ValidationError, NotFoundError
-from services.invoices_services import InvoicesServices
-from repos.invoices_repository import InvoicesRepository
-from validators.invoices_validators import InvoicesValidator
+from app.db.database import engine
+from app.exceptions.exceptions import ValidationError, NotFoundError
+from app.services.invoices_services import InvoicesServices
+from app.repos.invoices_repository import InvoicesRepository
+from app.validators.invoices_validators import InvoicesValidator
 
 invoices_validator = InvoicesValidator()
 invoices_repo = InvoicesRepository(engine)

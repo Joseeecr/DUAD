@@ -1,9 +1,9 @@
 from flask import request, jsonify
-from db.database import engine
-from exceptions.exceptions import ValidationError, NotFoundError
-from services.products_services import ProductsService
-from repos.products_repository import ProductsRepository
-from validators.products_validators import ProductsValidator
+from app.db.database import engine
+from app.exceptions.exceptions import ValidationError, NotFoundError
+from app.services.products_services import ProductsService
+from app.repos.products_repository import ProductsRepository
+from app.validators.products_validators import ProductsValidator
 
 
 

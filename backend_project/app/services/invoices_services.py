@@ -1,6 +1,6 @@
 from sqlalchemy import select
-from db.models import invoices_table
-from exceptions.exceptions import NotFoundError
+from app.db.models import invoices_table
+from app.exceptions.exceptions import NotFoundError
 
 class InvoicesServices:
   def __init__(self, invoices_validator, invoices_repository):

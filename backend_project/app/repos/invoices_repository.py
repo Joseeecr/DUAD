@@ -1,7 +1,7 @@
 from sqlalchemy import select, Select
 from sqlalchemy.engine import CursorResult
-from db.models import invoices_table
-from repos.utils import with_connection
+from app.db.models import invoices_table
+from app.repos.utils import with_connection
 
 
 class InvoicesRepository:

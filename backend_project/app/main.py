@@ -1,8 +1,8 @@
 from flask import Flask
-from routes.user_routes import user_bp
-from routes.products_routes import products_bp
-from routes.carts_routes import carts_bp
-from routes.invoices_routes import invoices_bp
+from app.routes.user_routes import user_bp
+from app.routes.products_routes import products_bp
+from app.routes.carts_routes import carts_bp
+from app.routes.invoices_routes import invoices_bp
 
 app = Flask(__name__)
 app.register_blueprint(user_bp)
