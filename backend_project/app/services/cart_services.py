@@ -94,9 +94,7 @@ class CartServices:
         items = self.carts_repository.get_cart_products(session, shopping_cart_id)
         
         for item in items:
-          product = session.execute(
-            select(products_table).where(products_table.c.id == item.product_id)
-          ).fetchone()
+          product = self.carts_repository.get_product_by_id(session, item.product_id)
 
           if not product:
             raise NotFoundError("Product not found")
@@ -104,31 +102,27 @@ class CartServices:
           if product.stock < item.quantity:
             raise Exception(f"Not enough stock for product '{product.name}'")
 
-          session.execute(update(products_table)
-              .where(products_table.c.id == item.product_id)
-              .values(stock=products_table.c.stock - item.quantity))
+          new_stock = product.stock - item.quantity
 
-        session.execute(update(cart_table)
-            .where(cart_table.c.id == shopping_cart_id)
-            .values(status="closed"))
+          self.carts_repository.update_product_stock(session, item.product_id, new_stock)
+
+        self.carts_repository.close_cart(session, shopping_cart_id)
 
         total = sum(item.quantity * item.price for item in items)
 
-        invoice = self.generate_invoice_number()
-        payment_method = self.carts_repository.get_payment_method(session, validate_payload.get("payment_method"))
+        invoice_number = self.generate_invoice_number()
+        payment_method_id = self.carts_repository.get_payment_method(session, validate_payload.get("payment_method"))
 
-        invoice_stmt = insert(invoices_table).returning(invoices_table.c.id).values(
-            invoice_number = invoice,
-            user_id = user_id,
-            cart_id = shopping_cart_id,
-            payment_method_id = payment_method,
-            total = total,
-            status="paid",
-            shipping_address_id = shipping_address_id
+        invoice_id = self.carts_repository.create_invoice(
+          session,
+          user_id,
+          shopping_cart_id,
+          payment_method_id,
+          total,
+          shipping_address_id,
+          invoice_number
         )
 
-        invoice_id = session.execute(invoice_stmt).scalar_one()
-        
         return invoice_id
 
 

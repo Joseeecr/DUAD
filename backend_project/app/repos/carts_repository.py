@@ -173,6 +173,7 @@ class CartsRepository:
       .values(stock=new_stock)
   )
 
+
   def close_cart(self, session, cart_id):
     session.execute(
       update(cart_table).where(cart_table.c.id == cart_id)
