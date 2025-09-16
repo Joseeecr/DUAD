@@ -1,6 +1,6 @@
-from sqlalchemy import insert, select, delete, update, Select
+from sqlalchemy import insert, select, update, Select
 from sqlalchemy.engine import CursorResult, Row
-from app.db.models import cart_table, products_table, cart_products_table, payment_method_table, shipping_address_table
+from app.db.models import cart_table, products_table, cart_products_table, payment_method_table, shipping_address_table, invoices_table
 from app.repos.utils import with_connection
 from typing import Optional
 
@@ -58,6 +58,10 @@ class CartsRepository:
     )).fetchone()
 
     return existing
+
+  def get_cart_products(self, session, cart_id: int) -> list:
+    stmt = select(cart_products_table).where(cart_products_table.c.cart_id == cart_id)
+    return session.execute(stmt).fetchall()
 
 
   def update_quantity_if_cart_product_already_exists(self, session, existing_cart, quantity, cart_id, product_id) -> Optional[int]:
@@ -161,3 +165,29 @@ class CartsRepository:
 
     result = session.execute(stmt)
     return result.scalar_one()
+
+
+  def update_product_stock(self, session, product_id, new_stock):
+    session.execute(
+      update(products_table).where(products_table.c.id == product_id)
+      .values(stock=new_stock)
+  )
+
+  def close_cart(self, session, cart_id):
+    session.execute(
+      update(cart_table).where(cart_table.c.id == cart_id)
+      .values(status="closed")
+  )
+
+
+  def create_invoice(self, session, user_id, cart_id, payment_method_id, total, shipping_address_id, invoice_number):
+    stmt = insert(invoices_table).returning(invoices_table.c.id).values(
+      invoice_number=invoice_number,
+      user_id=user_id,
+      cart_id=cart_id,
+      payment_method_id=payment_method_id,
+      total=total,
+      status="paid",
+      shipping_address_id=shipping_address_id
+  )
+    return session.execute(stmt).scalar_one()

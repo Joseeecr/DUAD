@@ -74,7 +74,7 @@ class CartServices:
     existing_id = self.carts_repository.get_existing_address(session, address_data)
     if existing_id is not None:
       return existing_id
-    return self.insert_address_if_needed(session, address_data)
+    return self.carts_repository.insert_address_if_needed(session, address_data)
 
 
   def checkout_cart(self, user_id: int, data : dict):
@@ -91,18 +91,18 @@ class CartServices:
         if shopping_cart_id is None:
           raise NotFoundError(f"Not found.")
 
-
-        items = session.execute(
-            select(cart_products_table).where(cart_products_table.c.cart_id == shopping_cart_id)
-        ).fetchall()
+        items = self.carts_repository.get_cart_products(session, shopping_cart_id)
         
         for item in items:
           product = session.execute(
             select(products_table).where(products_table.c.id == item.product_id)
           ).fetchone()
 
-          if not product or product.stock < item.quantity:
-            raise Exception(f"Not enough stock for product {item.product_id}")
+          if not product:
+            raise NotFoundError("Product not found")
+
+          if product.stock < item.quantity:
+            raise Exception(f"Not enough stock for product '{product.name}'")
 
           session.execute(update(products_table)
               .where(products_table.c.id == item.product_id)

@@ -24,7 +24,7 @@ class ProductsController:
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 400
     except Exception as e:
-      return jsonify({"error": str(e)}), 
+      return jsonify({"error": "Internal server error"}), 500
 
 
   def get_product_id(self, id):
