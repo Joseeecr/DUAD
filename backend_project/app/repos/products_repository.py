@@ -24,6 +24,16 @@ class ProductsRepository:
 
 
   @with_connection
+  def get_product_by_name(self, conn, name : str) -> Optional[Row]:
+    stmt = select(products_table).where(products_table.c.name == name)
+    result = conn.execute(stmt).first()
+
+    if result:
+      return dict(result._mapping)
+    return None
+
+
+  @with_connection
   def insert_product(self, conn, data : dict) -> int:
 
     stmt = insert(products_table).values(**data).returning(products_table.c.id)

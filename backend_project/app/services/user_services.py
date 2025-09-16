@@ -10,7 +10,6 @@ class UserService:
     self.user_repository = user_repository
     self.jwt_manager = jwt_manager
 
-
   def list_users(self, params : dict) -> list[dict]:
     filters  = self.user_validator.validate_filters(params)
 
@@ -45,7 +44,6 @@ class UserService:
     if not users:
       raise NotFoundError("No matching users found.")
 
-    
     return users
 
 

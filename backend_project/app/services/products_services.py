@@ -1,7 +1,8 @@
 from sqlalchemy import select
 from app.db.models import products_table
-from app.exceptions.exceptions import NotFoundError
-
+from app.exceptions.exceptions import NotFoundError, ValidationError
+import random
+import string
 
 
 class ProductsService:
@@ -50,14 +51,6 @@ class ProductsService:
     return products
 
 
-  def insert_product(self, data : dict) -> str:
-    validate_data = self.products_validator.validate_insert_products(data)
-
-    product = self.product_repository.insert_product(validate_data)
-
-    return product
-
-
   def get_product_by_id(self, id : int) -> int:
     product = self.product_repository.get_product_by_id(id)
 
@@ -65,6 +58,24 @@ class ProductsService:
       raise ValueError("Product not found")
 
     return product
+
+
+  def generate_sku(self):
+    letters = ''.join(random.choices(string.ascii_uppercase, k=4))
+    numbers = ''.join(random.choices(string.digits, k=4))
+    return letters + numbers
+
+
+  def insert_product(self, data : dict) -> str:
+    validate_data = self.products_validator.validate_insert_products(data)
+    check_product_already_in_db = self.product_repository.get_product_by_name(data.get("name"))
+
+    if not check_product_already_in_db:
+      validate_data["sku"] = self.generate_sku()
+      product = self.product_repository.insert_product(validate_data)
+      return product
+
+    raise ValidationError("Product already in DB")
 
 
   def update_product_by_admin(self, products_id : int, data : dict):
@@ -78,10 +89,15 @@ class ProductsService:
     return self.product_repository.update_product(products_id, validate_data)
 
 
-  def delete_product(self, products_id : int):
-    products = self.product_repository.get_product_by_id(products_id)
+  def delete_product(self, product_id : int):
+    product = self.product_repository.get_product_by_id(product_id)
 
-    if not products:
+    if not product:
       raise ValueError("products not found")
-  
-    return self.product_repository.delete_product(products_id)
+
+    product_deleted = self.product_repository.delete_product(product_id)
+    
+    if not product_deleted:
+      raise ValueError("No rows were deleted")
+    
+    return product_deleted

@@ -40,7 +40,7 @@ class ProductsValidator:
 
 
   def validate_sku(self, sku: str) -> str:
-    sku_structure = r"^[A-Z]{4}+[0-9]{4}$"
+    sku_structure = r"^[A-Z]{4}[0-9]{4}$"
     match = re.search(sku_structure, sku)
 
     if not match:
@@ -89,7 +89,7 @@ class ProductsValidator:
 
 
   def validate_insert_products(self, data : dict):
-    required_keys = {"name", "price", "sku", "category_id", "stock"}
+    required_keys = {"name", "price", "category_id", "stock"}
 
 
     for field in required_keys:
