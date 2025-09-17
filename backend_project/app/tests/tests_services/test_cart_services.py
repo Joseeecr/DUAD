@@ -244,6 +244,7 @@ def test_get_or_create_address_inserts_new_address_when_not_found(cart_service, 
 
 
 def test_checkout_cart_creates_invoice_successfully(cart_service, validator_mock, repo_mock, mocker):
+
   raw_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validated_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validator_mock.validate_create_invoice.return_value = validated_payload
@@ -256,26 +257,33 @@ def test_checkout_cart_creates_invoice_successfully(cart_service, validator_mock
   fake_item.product_id = 1
   fake_item.quantity = 2
   fake_item.price = 5.0
-  session_mock = mocker.MagicMock()
-  session_mock.execute().fetchall.return_value = [fake_item]
+  repo_mock.get_cart_products.return_value = [fake_item]
 
   fake_product = mocker.MagicMock()
   fake_product.stock = 10
-  session_mock.execute().fetchone.return_value = fake_product
+  fake_product.name = "Pelota"
+  repo_mock.get_product_by_id.return_value = fake_product
 
   repo_mock.get_payment_method.return_value = 1
+  repo_mock.create_invoice.return_value = 12345
 
-  session_mock.execute().scalar_one.return_value = 12345
-
-  mocker.patch("app.services.cart_services.SessionLocal", return_value=mocker.MagicMock(__enter__=lambda s: session_mock, __exit__=lambda *a: None))
+  repo_mock.update_product_stock.return_value = None
+  repo_mock.close_cart.return_value = None
 
   result = cart_service.checkout_cart(user_id=1, data=raw_payload)
 
   assert result == 12345
   validator_mock.validate_create_invoice.assert_called_once_with(raw_payload)
-  repo_mock.get_cart_id_by_user.assert_called_once_with(session_mock, 1)
-  repo_mock.get_payment_method.assert_called_once_with(session_mock, "card")
-  cart_service.get_or_create_address.assert_called_once_with(session_mock, {"street": "Main"})
+  repo_mock.get_cart_id_by_user.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_cart_products.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_product_by_id.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.update_product_stock.assert_called_once_with(mocker.ANY, 1, 8)
+  repo_mock.close_cart.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_payment_method.assert_called_once_with(mocker.ANY, "card")
+  cart_service.get_or_create_address.assert_called_once_with(mocker.ANY, {"street": "Main"})
+  repo_mock.create_invoice.assert_called_once_with(
+    mocker.ANY, 1, 1, 1, 10.0, 10, mocker.ANY
+  )
 
 
 def test_checkout_cart_raises_not_found_error_when_cart_does_not_exist(cart_service, validator_mock, repo_mock, mocker):
@@ -284,50 +292,29 @@ def test_checkout_cart_raises_not_found_error_when_cart_does_not_exist(cart_serv
   validator_mock.validate_create_invoice.return_value = validated_payload
 
   mocker.patch.object(cart_service, "get_or_create_address", return_value=10)
-
   repo_mock.get_cart_id_by_user.return_value = None
 
-  with pytest.raises(NotFoundError) as exc_info:   
+  with pytest.raises(NotFoundError) as exc_info:
     cart_service.checkout_cart(1, raw_payload)
 
   assert str(exc_info.value) == "Not found."
   validator_mock.validate_create_invoice.assert_called_once_with(raw_payload)
   cart_service.get_or_create_address.assert_called_once_with(ANY, {"street": "Main"})
   repo_mock.get_payment_method.assert_not_called()
-  session_patch = mocker.patch("app.services.cart_services.SessionLocal", return_value=mocker.MagicMock())
-  session_patch.assert_not_called()
 
 
 def test_checkout_cart_raises_exception_when_product_not_found(cart_service, validator_mock, repo_mock, mocker):
-
   raw_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validated_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validator_mock.validate_create_invoice.return_value = validated_payload
 
   mocker.patch.object(cart_service, "get_or_create_address", return_value=10)
-
   repo_mock.get_cart_id_by_user.return_value = 1
-
-  fake_item = mocker.MagicMock()
-  fake_item.product_id = 1
-  fake_item.quantity = 2
-  fake_item.price = 5.0
-
-  session_mock = mocker.MagicMock()
-  session_mock.execute().fetchall.return_value = [fake_item]
-
-  session_mock.execute().fetchone.return_value = None
-
-  mocker.patch(
-    "app.services.cart_services.SessionLocal",
-    return_value=mocker.MagicMock(
-        __enter__=lambda s: session_mock,
-        __exit__=lambda *a: None
-    )
-  )
+  repo_mock.get_cart_products.return_value = [SimpleNamespace(product_id=1, quantity=2, price=5)]
+  repo_mock.get_product_by_id.return_value = None
 
   with pytest.raises(NotFoundError) as exc_info:
-    cart_service.checkout_cart(user_id=1, data=raw_payload)
+    cart_service.checkout_cart(1, raw_payload)
 
   assert str(exc_info.value) == "Product not found"
 
@@ -339,26 +326,8 @@ def test_checkout_cart_raises_exception_when_not_enough_stock(cart_service, vali
 
   mocker.patch.object(cart_service, "get_or_create_address", return_value=10)
   repo_mock.get_cart_id_by_user.return_value = 1
-
-  fake_item = mocker.MagicMock()
-  fake_item.product_id = 1
-  fake_item.quantity = 5
-  fake_item.price = 5.0
-
-  session_mock = mocker.MagicMock()
-  session_mock.execute().fetchall.return_value = [fake_item]
-  
-  fake_product = mocker.MagicMock()
-  fake_product.name = "Pelota"
-  fake_product.stock = 2
-  session_mock.execute().fetchone.return_value = fake_product  
-
-  mocker.patch(
-    "app.services.cart_services.SessionLocal",
-    return_value=mocker.MagicMock(
-        __enter__=lambda s: session_mock, __exit__=lambda *a: None
-    )
-  )
+  repo_mock.get_cart_products.return_value = [SimpleNamespace(product_id=1, quantity=5, price=5)]
+  repo_mock.get_product_by_id.return_value = SimpleNamespace(id=1, name="Pelota", stock=2)
 
   with pytest.raises(Exception) as exc_info:
     cart_service.checkout_cart(1, raw_payload)
@@ -382,10 +351,24 @@ def test_checkout_cart_propagates_exception_when_repo_fails(cart_service, valida
   cart_service.get_or_create_address.assert_called_once_with(ANY, {"street": "Main"})
   repo_mock.get_cart_id_by_user.assert_called_once_with(ANY, 1)
   repo_mock.get_payment_method.assert_not_called()
-  session_patch = mocker.patch("app.services.cart_services.SessionLocal", return_value=mocker.MagicMock())
-  session_patch.assert_not_called()
 
-def test_checkout_cart_updates_product_stock_when_checkout_is_successful(cart_service, validator_mock, repo_mock, mocker):
+
+def test_checkout_cart_raises_validation_error_for_invalid_payload(cart_service, validator_mock, repo_mock, mocker):
+  raw_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
+  
+  validator_mock.validate_create_invoice.side_effect = ValidationError("Invalid payload")
+
+  with pytest.raises(ValidationError) as exc_info:
+    cart_service.checkout_cart(1, raw_payload)
+
+  assert str(exc_info.value) == "Invalid payload"
+
+  validator_mock.validate_create_invoice.assert_called_once_with(raw_payload)
+  repo_mock.get_cart_id_by_user.assert_not_called()
+  repo_mock.get_payment_method.assert_not_called()
+
+
+def test_checkout_cart_updates_stock_for_multiple_products(cart_service, validator_mock, repo_mock, mocker):
   raw_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validated_payload = {"payment_method": "card", "shipping_address": {"street": "Main"}}
   validator_mock.validate_create_invoice.return_value = validated_payload
@@ -393,39 +376,181 @@ def test_checkout_cart_updates_product_stock_when_checkout_is_successful(cart_se
   mocker.patch.object(cart_service, "get_or_create_address", return_value=10)
   repo_mock.get_cart_id_by_user.return_value = 1
   repo_mock.get_payment_method.return_value = 1
+  repo_mock.create_invoice.return_value = 555
 
-  fake_item = mocker.MagicMock()
-  fake_item.product_id = 1
-  fake_item.quantity = 2
-  fake_item.price = 5.0
+  # cart with 2 products
+  product1 = mocker.MagicMock(product_id=1, quantity=2, price=5.0)
+  product2 = mocker.MagicMock(product_id=2, quantity=1, price=10.0)
+  repo_mock.get_cart_products.return_value = [product1, product2]
 
-  session_mock = mocker.MagicMock()
-  session_mock.execute().fetchall.return_value = [fake_item]
+  # products with stock enough
+  repo_mock.get_product_by_id.side_effect = [
+    mocker.MagicMock(id=1, name="Pelota", stock=5),
+    mocker.MagicMock(id=2, name="Cuerda", stock=2)
+  ]
 
-  fake_product = mocker.MagicMock()
-  fake_product.stock = 10
-  session_mock.execute().fetchone.return_value = fake_product
+  result = cart_service.checkout_cart(user_id=1, data=raw_payload)
 
-  session_mock.execute().scalar_one.return_value = 123
+  assert result == 555
 
-  mocker.patch(
-      "app.services.cart_services.SessionLocal",
-      return_value=mocker.MagicMock(__enter__=lambda s: session_mock, __exit__=lambda *a: None)
-  )
+  repo_mock.get_cart_id_by_user.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_cart_products.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_product_by_id.assert_any_call(mocker.ANY, 1)
+  repo_mock.get_product_by_id.assert_any_call(mocker.ANY, 2)
+  repo_mock.update_product_stock.assert_any_call(mocker.ANY, 1, 3)  # 5-2
+  repo_mock.update_product_stock.assert_any_call(mocker.ANY, 2, 1)  # 2-1
+  repo_mock.close_cart.assert_called_once_with(mocker.ANY, 1)
+  repo_mock.get_payment_method.assert_called_once_with(mocker.ANY, "card")
+  repo_mock.create_invoice.assert_called_once()
 
-  result = cart_service.checkout_cart(1, raw_payload)
 
-  assert result == 123
-  validator_mock.validate_create_invoice.assert_called_once_with(raw_payload)
-  repo_mock.get_cart_id_by_user.assert_called_once_with(session_mock, 1)
-  repo_mock.get_payment_method.assert_called_once_with(session_mock, "card")
-  cart_service.get_or_create_address.assert_called_once_with(session_mock, {"street": "Main"})
+def test_update_cart_by_admin_success(cart_service, validator_mock, repo_mock):
+  raw_data = {"status": "active"}
 
-  session_mock.execute.assert_any_call(
-      mocker.ANY  # no verificamos el objeto Update exacto, solo que se llamó
-  )
+  repo_mock.get_cart_by_id.return_value = {
+    "id": 1,
+    "user_id":1,
+    "status": "expired"
+  }
+  
+  validate_data = {"status": "active"}
+  validator_mock.validate_update_cart_admin.return_value = validate_data
 
-  # Verificar que se cerró el carrito
-  session_mock.execute.assert_any_call(
-      mocker.ANY  # idem, no importa el objeto exacto
-  )
+  repo_mock.update_cart.return_value = 1
+
+  result = cart_service.update_cart_by_admin(1, raw_data)
+
+  assert result == 1
+
+  validator_mock.validate_update_cart_admin.assert_called_once_with(raw_data)
+  repo_mock.get_cart_by_id.assert_called_once_with(ANY, ANY, 1)
+  repo_mock.update_cart.assert_called_once_with(ANY, 1, validate_data)
+
+
+def test_update_cart_by_admin_raises_value_error_if_cart_not_found(cart_service, validator_mock, repo_mock):
+  raw_data = {"status": "active"}
+
+  repo_mock.get_cart_by_id.return_value = None
+
+  with pytest.raises(ValueError) as exc_info:
+    cart_service.update_cart_by_admin(1000, raw_data)
+
+  assert str(exc_info.value) == "cart not found"
+
+  repo_mock.get_cart_by_id.assert_called_once_with(ANY, ANY, 1000)
+  validator_mock.validate_update_cart_admin.assert_not_called()
+  repo_mock.update_cart.assert_not_called()
+
+
+def test_update_cart_by_admin_validation_error_propagated(cart_service, validator_mock, repo_mock):
+  raw_data = {"random": "random"}
+
+  repo_mock.get_cart_by_id.return_value = {
+    "id": 1,
+    "user_id":1,
+    "status": "expired"
+  }
+  
+  validator_mock.validate_update_cart_admin.side_effect = ValidationError("Invalid")
+
+  with pytest.raises(ValidationError) as exc_info:
+    cart_service.update_cart_by_admin(1, raw_data)
+
+  assert str(exc_info.value) == "Invalid"
+
+  validator_mock.validate_update_cart_admin.assert_called_once_with(raw_data)
+  repo_mock.get_cart_by_id.assert_called_once_with(ANY, ANY, 1)
+  repo_mock.update_cart.assert_not_called()
+
+
+def test_update_cart_by_admin_repository_failure(cart_service, validator_mock, repo_mock):
+  raw_data = {"status": "active"}
+
+  repo_mock.get_cart_by_id.return_value = {
+    "id": 1,
+    "user_id":1,
+    "status": "expired"
+  }
+  
+  validate_data = {"status": "active"}
+  validator_mock.validate_update_cart_admin.return_value = validate_data
+
+  repo_mock.update_cart.side_effect = Exception("DB error")
+
+  with pytest.raises(Exception) as exc_info:
+    cart_service.update_cart_by_admin(1, raw_data)
+
+  assert str(exc_info.value) == "DB error"
+
+  validator_mock.validate_update_cart_admin.assert_called_once_with(raw_data)
+  repo_mock.get_cart_by_id.assert_called_once_with(ANY, ANY, 1)
+  repo_mock.update_cart.assert_called_once_with(ANY, 1, validate_data)
+
+
+def test_update_cart_products_success(cart_service, validator_mock, repo_mock):
+  raw_data = {"quantity": "1", "product_id": "1"}
+  validate_data = {"quantity": 1, "product_id": 1}
+  
+  repo_mock.get_cart_id_by_user.return_value = 1
+
+  validator_mock.validate_insert_products_to_cart.return_value = validate_data
+
+  repo_mock.update_cart_items.return_value = 1
+
+  result = cart_service.update_cart_products(1, raw_data)
+  assert result == 1
+
+  validator_mock.validate_insert_products_to_cart.assert_called_once_with(raw_data)
+  repo_mock.get_cart_id_by_user.assert_called_once_with(ANY, 1)
+  repo_mock.update_cart_items.assert_called_once_with(ANY, 1, 1, validate_data)
+
+
+def test_update_cart_products_raises_value_error_if_cart_not_found(cart_service, validator_mock, repo_mock):
+  raw_data = {"quantity": "1", "product_id": "1"}
+
+  repo_mock.get_cart_id_by_user.return_value = None
+
+  with pytest.raises(ValueError) as exc_info:
+    cart_service.update_cart_products(1000, raw_data)
+
+  assert str(exc_info.value) == "cart not found"
+
+  repo_mock.get_cart_id_by_user.assert_called_once_with(ANY, 1000)
+  validator_mock.validate_insert_products_to_cart.assert_not_called()
+  repo_mock.update_cart_items.assert_not_called()
+
+
+def test_update_cart_products_validation_error_propagated(cart_service, validator_mock, repo_mock):
+  raw_data = {"amount": "one", "product_id": "1"}
+
+  repo_mock.get_cart_id_by_user.return_value = 1
+
+  validator_mock.validate_insert_products_to_cart.side_effect = ValidationError("Invalid")
+
+  with pytest.raises(ValidationError) as exc_info:
+    cart_service.update_cart_products(1, raw_data)
+
+  assert str(exc_info.value) == "Invalid"
+
+  validator_mock.validate_insert_products_to_cart.assert_called_once_with(raw_data)
+  repo_mock.get_cart_id_by_user.assert_called_once_with(ANY, 1)
+  repo_mock.update_cart_items.assert_not_called()
+
+
+def test_update_cart_products_repository_failure(cart_service, validator_mock, repo_mock):
+  raw_data = {"quantity": "1", "product_id": "1"}
+  validate_data = {"quantity": 1, "product_id": 1}
+  repo_mock.get_cart_id_by_user.return_value = 1
+
+  validator_mock.validate_insert_products_to_cart.return_value = validate_data
+
+  repo_mock.update_cart_items.side_effect = Exception("DB error")
+
+  with pytest.raises(Exception) as exc_info:
+    cart_service.update_cart_products(1, raw_data)
+
+  assert str(exc_info.value) == "DB error"
+
+  validator_mock.validate_insert_products_to_cart.assert_called_once_with(raw_data)
+  repo_mock.get_cart_id_by_user.assert_called_once_with(ANY, 1)
+  repo_mock.update_cart_items.assert_called_once_with(ANY, 1, 1, validate_data)
