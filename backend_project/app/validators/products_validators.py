@@ -1,7 +1,7 @@
 from app.exceptions.exceptions import ValidationError
 from decimal import Decimal, InvalidOperation
 from typing import Union, Optional
-import re
+import regex
 
 
 class ProductsValidator:
@@ -24,24 +24,30 @@ class ProductsValidator:
 
 
   def validate_product_name(self, value : str) -> str:
-    if not re.match(r'^(?=.*[a-zA-Z])[\S0-9\s]+$', value):
+    if not regex.match(r'^(?=.*\p{L})[\p{L}0-9\s]+$', value):
       raise ValidationError("Invalid name")
     return value
 
 
   def validate_price(self, price : Union[str, int, float]) -> Optional[None|Decimal]:
     try:
+
       value = Decimal(str(price).strip())
-      if abs(value.as_tuple().exponent) <= 2:
-        return value
-      raise ValidationError("Only two decimals are allowed")
+
+      if not abs(value.as_tuple().exponent) <= 2:
+        raise ValidationError("Only two decimals are allowed")
+      if not value >= 0:
+        raise ValidationError("Only positive numbers are allowed")
+
+      return value
+
     except InvalidOperation:
       raise ValidationError("Invalid operator")
 
 
   def validate_sku(self, sku: str) -> str:
     sku_structure = r"^[A-Z]{4}[0-9]{4}$"
-    match = re.search(sku_structure, sku)
+    match = regex.search(sku_structure, str(sku))
 
     if not match:
       raise ValidationError("Incorrect SKU structure")
