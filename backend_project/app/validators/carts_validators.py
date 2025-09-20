@@ -1,13 +1,17 @@
 from app.exceptions.exceptions import ValidationError
+from decimal import Decimal, InvalidOperation
+from typing import Optional
 from typing import Union
 
 class CartsValidator:
   def __init__(self):
     self.validation_map = {
       "product_id": self.validate_is_int,
+      "user_id": self.validate_is_int,
       "quantity": self.validate_is_int,
       "status": self.validate_status,
       "payment_method": self.validate_payment_method,
+      "price": self.validate_price,
       "shipping_address": self.validate_shipping_address
     }
 
@@ -20,7 +24,24 @@ class CartsValidator:
       raise ValidationError("Only numbers are allowed")
 
 
+  def validate_price(self, price : Union[str, int, float]) -> Optional[None|Decimal]:
+    try:
+
+      value = Decimal(str(price).strip())
+
+      if not abs(value.as_tuple().exponent) <= 2:
+        raise ValidationError("Only two decimals are allowed")
+      if not value >= 0:
+        raise ValidationError("Only positive numbers are allowed")
+
+      return value
+
+    except InvalidOperation:
+      raise ValidationError("Invalid operator")
+
+
   def validate_status(self, status : str) -> str:
+    status = str(status)
     if not status.isalpha() or status not in ["active", "closed", "abandoned", "expired"]:
       raise ValidationError("Invalid status")
     return status
@@ -58,6 +79,7 @@ class CartsValidator:
 
 
   def validate_payment_method(self, pay_method : str) -> str:
+    pay_method = str(pay_method)
     if not pay_method.isalpha() or pay_method not in ["sinpe", "card", "cash"]:
       raise ValidationError("Invalid method")
     return pay_method
@@ -101,6 +123,12 @@ class CartsValidator:
     if not (isinstance(data["zip_code"], str) or isinstance(data["zip_code"], int)):
       raise ValidationError("zip_code must be a string or integer")
 
+    if isinstance(data["zip_code"], str) and not data["zip_code"].strip():
+        raise ValidationError("zip_code must be a non-empty string")
+
+    if not isinstance(data["country"], str) or not data["country"].strip():
+      raise ValidationError("country must be a non-empty string")
+
     return data
 
 
@@ -109,7 +137,7 @@ class CartsValidator:
 
     for key in data:
       if key not in optional_keys_to_update:
-        raise ValidationError(f"Invalid key {key}")
+        raise ValidationError(f"Invalid key: '{key}'")
     
     return self._validate_dict_data(data)
 
