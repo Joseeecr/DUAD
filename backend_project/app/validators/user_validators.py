@@ -1,4 +1,5 @@
 from app.exceptions.exceptions import ValidationError
+from typing import Union
 import re
 
 class UserValidator:
@@ -13,10 +14,12 @@ class UserValidator:
     }
 
 
-  def validate_id(self, value : str) -> int:
-    if not value.isdigit():
+  def validate_id(self, value : Union[str, int]) -> int:
+    try:
+      value = int(value)
+      return value
+    except ValueError:
       raise ValidationError("Id must be a number")
-    return int(value)
 
 
   def validate_user_name_lastname(self, value : str) -> str:
