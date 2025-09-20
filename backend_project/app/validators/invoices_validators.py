@@ -15,12 +15,15 @@ class InvoicesValidator:
 
 
   def validate_id(self, value : str) -> int:
-    if not value.isdigit():
+    try:
+      value = int(value)
+      return value
+    except ValueError:
       raise ValidationError("Id must be a number")
-    return int(value)
 
 
   def validate_status(self, status : str) -> str:
+    status = str(status)
     if not status.isalpha() or status not in ["paid", "pending", "canceled"]:
       raise ValidationError("Invalid status")
     return status
