@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from app.services.products_services import ProductsService
 from app.services.user_services import UserService
 from app.services.cart_services import CartServices
+from app.services.invoices_services import InvoicesServices
 
 @pytest.fixture
 def validator_mock():
@@ -27,4 +28,9 @@ def user_service(validator_mock, repo_mock, jwt_manager_mock):
 @pytest.fixture
 def cart_service(validator_mock, repo_mock):
   return CartServices(validator_mock, repo_mock)
+
+
+@pytest.fixture
+def invoices_service(validator_mock, repo_mock):
+  return InvoicesServices(validator_mock, repo_mock)
 
