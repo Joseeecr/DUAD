@@ -1,10 +1,18 @@
 from flask import Blueprint
-from app.controllers.carts_controller import CartsController
 from app.auth.admin_only import admin_only
 from app.controllers.controllers_utils import jwt_required
+from app.db.database import engine
+from app.validators.carts_validators import CartsValidator
+from app.repos.carts_repository import CartsRepository
+from app.services.cart_services import CartServices
+from app.controllers.carts_controller import CartsController
+
+carts_validator = CartsValidator()
+carts_repo = CartsRepository(engine)
+cart_services = CartServices(carts_validator, carts_repo)
+carts_controller = CartsController(cart_services)
 
 carts_bp = Blueprint("carts", __name__, url_prefix="/carts")
-carts_controller = CartsController()
 
 @carts_bp.route("/", methods=['GET'])
 @admin_only

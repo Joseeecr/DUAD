@@ -1,4 +1,4 @@
-from flask import request, jsonify, Response
+from flask import request, jsonify
 from app.exceptions.exceptions import ValidationError, NotFoundError
 
 class UserController:
@@ -65,7 +65,7 @@ class UserController:
         return jsonify({"error": "Forbidden"}), 403
 
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      return jsonify({"error": "Invalid token"}), 403
 
 
   def update_by_admin(self, id):
