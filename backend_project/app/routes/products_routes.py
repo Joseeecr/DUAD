@@ -3,9 +3,18 @@ from app.cache.cache_utils import check_cache, invalidate_cache
 from app.cache.cache_instance import cache_manager
 from app.controllers.products_controller import ProductsController
 from app.auth.admin_only import admin_only
+from app.db.database import engine
+from app.repos.products_repository import ProductsRepository
+from app.services.products_services import ProductsService
+from app.validators.products_validators import ProductsValidator
+
+products_validator = ProductsValidator()
+products_repo = ProductsRepository(engine)
+products_service = ProductsService(products_validator, products_repo)
+
+products_controller = ProductsController(products_service)
 
 products_bp = Blueprint("products", __name__, url_prefix="/products")
-products_controller = ProductsController()
 
 @products_bp.route("/", methods=['GET'])
 @admin_only
