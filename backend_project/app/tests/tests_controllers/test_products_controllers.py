@@ -1,6 +1,5 @@
 from flask import Flask
 from app.exceptions.exceptions import NotFoundError, ValidationError
-import pytest
 
 def test_get_products_returns_products_successfully(products_controller, service_mock):
 
@@ -110,8 +109,8 @@ def test_post_product_inserts_product_successfully(products_controller, service_
 def test_post_product_raises_validation_error(products_controller, service_mock):
   service_mock.insert_product.side_effect = ValidationError("Invalid product data")
   data = {"name": "Juguete Hueso para morder", "price": 2.50}
+  
   app = Flask(__name__)
-
   with app.test_request_context("/", method="POST", json=data):
     response, status_code = products_controller.post_product()
 

@@ -1,54 +1,51 @@
 from flask import request, jsonify, Response
-from app.db.database import engine
 from app.exceptions.exceptions import ValidationError, NotFoundError
-from app.services.user_services import UserService
-from app.repos.user_repository import UserRepository
-from app.validators.user_validators import UserValidator
-from app.auth.jwt_instance import jwt_manager
-
-user_validator = UserValidator()
-user_repo = UserRepository(engine)
-user_service = UserService(user_validator, user_repo, jwt_manager)
-
 
 class UserController:
+  def __init__(self, user_service, jwt_manager):
+    self.user_service = user_service
+    self.jwt_manager = jwt_manager
 
   def get_user(self):
     try:
 
       params = request.args.to_dict()
-      return user_service.list_users(params)
+      users = self.user_service.list_users(params)
+      return jsonify(users), 200
 
     except ValidationError as e:
       return jsonify({"error": str(e)}), 400
     except NotFoundError as e:
-      return jsonify({"error": str(e)}), 400
+      return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 
+      print(f"error : {str(e)}")
+      return jsonify({"error": "Internal server error"}), 500
 
 
   def register(self):
     try:
 
       data = request.get_json()
-      token = user_service.insert_user(data)
+      token = self.user_service.insert_user(data)
       return jsonify(token=token), 201
 
     except ValidationError as e:
       return jsonify({"error": str(e)}), 400
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print(f"error: {e}")
+      return jsonify({"error": "Internal Server error"}), 500
 
 
   def login(self):
     try:
       data = request.get_json()
-      token = user_service.login_user(data.get("email"), data.get("password"))
+      token = self.user_service.login_user(data.get("email"), data.get("password"))
       return jsonify(token=token), 200
     except ValueError as e:
       return jsonify({"error": str(e)}), 400
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print(f"error: {e}")
+      return jsonify({"error": "Internal Server error"}), 500
 
 
   def me(self):
@@ -58,35 +55,36 @@ class UserController:
       
       if token is not None:
         test = token.replace("Bearer ","")
-        decoded = jwt_manager.decode(test)
+        decoded = self.jwt_manager.decode(test)
         user_id = decoded['id']
-        user_row = user_repo.get_user_by_id(user_id)
+        user_row = self.user_service.get_user_by_id(user_id)
 
-        return jsonify(id=user_id, name=user_row["name"], is_admin=user_row["is_admin"])
+        return jsonify(id=user_id, name=user_row["name"], is_admin=user_row["is_admin"]), 200
 
       else:
-        return Response(status=403)
+        return jsonify({"error": "Forbidden"}), 403
 
     except Exception as e:
-      return Response(e, status=500)
+      return jsonify({"error": str(e)}), 500
 
 
   def update_by_admin(self, id):
     try:
       data = request.get_json()
-      user_service.update_user_by_admin(id, data)
+      self.user_service.update_user_by_admin(id, data)
       return jsonify({"message": "User successfully updated"}), 200
     except ValidationError as e:
       return jsonify({"error": str(e)}), 422
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500
 
 
   def delete(self, id):
     try:
-      user_service.delete_user(id)
+      self.user_service.delete_user(id)
       return jsonify(), 204
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404

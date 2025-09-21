@@ -1,9 +1,19 @@
 from flask import Blueprint
 from app.controllers.user_controller import UserController
 from app.auth.admin_only import admin_only
+from app.db.database import engine
+from app.services.user_services import UserService
+from app.repos.user_repository import UserRepository
+from app.validators.user_validators import UserValidator
+from app.auth.jwt_instance import jwt_manager
+
+
+user_validator = UserValidator()
+user_repo = UserRepository(engine)
+user_service = UserService(user_validator, user_repo, jwt_manager)
+user_controller = UserController(user_service, jwt_manager)
 
 user_bp = Blueprint("user", __name__, url_prefix="/users")
-user_controller = UserController()
 
 
 @user_bp.route("/", methods=['GET'])

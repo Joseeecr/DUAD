@@ -3,7 +3,6 @@ from app.db.models import user_table
 from app.exceptions.exceptions import NotFoundError
 import bcrypt 
 
-
 class UserService:
   def __init__(self, user_validator, user_repository, jwt_manager):
     self.user_validator = user_validator
@@ -45,6 +44,13 @@ class UserService:
       raise NotFoundError("No matching users found.")
 
     return users
+
+
+  def get_user_by_id(self, user_id):
+    user = self.user_repository.get_user_by_id(user_id)
+    if not user:
+      raise NotFoundError(f"User {user_id} not found")
+    return user
 
 
   def insert_user(self, data : dict) -> str:
@@ -91,7 +97,7 @@ class UserService:
     user = self.user_repository.get_user_by_id(user_id)
 
     if not user:
-      raise ValueError("User not found")
+      raise NotFoundError("User not found")
     
     validate_data = self.user_validator.validate_update_user(data)
 
@@ -102,6 +108,6 @@ class UserService:
     user = self.user_repository.get_user_by_id(user_id)
 
     if not user:
-      raise ValueError("User not found")
+      raise NotFoundError("User not found")
   
     return self.user_repository.delete_user(user_id)
