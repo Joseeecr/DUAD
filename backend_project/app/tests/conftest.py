@@ -6,6 +6,7 @@ from app.services.cart_services import CartServices
 from app.services.invoices_services import InvoicesServices
 from app.controllers.products_controller import ProductsController
 from app.controllers.user_controller import UserController
+from app.controllers.carts_controller import CartsController
 
 @pytest.fixture
 def validator_mock():
@@ -40,7 +41,6 @@ def cart_service(validator_mock, repo_mock):
 def invoices_service(validator_mock, repo_mock):
   return InvoicesServices(validator_mock, repo_mock)
 
-
 @pytest.fixture
 def products_controller(service_mock):
   return ProductsController(service_mock)
@@ -48,3 +48,7 @@ def products_controller(service_mock):
 @pytest.fixture
 def user_controller(service_mock, jwt_manager_mock):
   return UserController(service_mock, jwt_manager_mock)
+
+@pytest.fixture
+def cart_controller(service_mock):
+  return CartsController(service_mock)

@@ -8,14 +8,16 @@ class CartsController:
   def get_carts(self):
     try:
       params = request.args.to_dict()
-      return self.cart_services.list_carts(params)
+      carts = self.cart_services.list_carts(params)
+      return jsonify(carts), 200
 
     except ValidationError as e:
       return jsonify({"error": str(e)}), 400
     except NotFoundError as e:
-      return jsonify({"error": str(e)}), 400
+      return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500
 
 
   def post_cart(self):
@@ -30,7 +32,8 @@ class CartsController:
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500
 
 
   def update_by_admin(self, id):
@@ -40,10 +43,11 @@ class CartsController:
       return jsonify({"message": "cart successfully updated"}), 200
     except ValidationError as e:
       return jsonify({"error": str(e)}), 422
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500
 
 
   def update_carts_items(self):
@@ -53,10 +57,11 @@ class CartsController:
       return jsonify({"message": "cart successfully updated"}), 200
     except ValidationError as e:
       return jsonify({"error": str(e)}), 422
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500
 
 
   def checkout_cart(self):
@@ -71,4 +76,5 @@ class CartsController:
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      return jsonify({"error": str(e)}), 500
+      print({"error": str(e)})
+      return jsonify({"error": "Internal Server Error"}), 500

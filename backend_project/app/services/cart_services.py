@@ -132,7 +132,7 @@ class CartServices:
         cart = self.carts_repository.get_cart_by_id(session, cart_table, carts_id)
 
         if not cart:
-          raise ValueError("cart not found")
+          raise NotFoundError("cart not found")
         
         validate_data = self.carts_validator.validate_update_cart_admin(data)
 
@@ -145,7 +145,7 @@ class CartServices:
         cart_id = self.carts_repository.get_cart_id_by_user(session, user_id)
 
         if not cart_id:
-          raise ValueError("cart not found")
+          raise NotFoundError("cart not found")
         
         validate_data = self.carts_validator.validate_insert_products_to_cart(data)
         
