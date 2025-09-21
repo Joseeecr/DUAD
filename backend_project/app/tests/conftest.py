@@ -7,6 +7,7 @@ from app.services.invoices_services import InvoicesServices
 from app.controllers.products_controller import ProductsController
 from app.controllers.user_controller import UserController
 from app.controllers.carts_controller import CartsController
+from app.controllers.invoices_controller import InvoicesController
 
 @pytest.fixture
 def validator_mock():
@@ -52,3 +53,7 @@ def user_controller(service_mock, jwt_manager_mock):
 @pytest.fixture
 def cart_controller(service_mock):
   return CartsController(service_mock)
+
+@pytest.fixture
+def invoices_controller(service_mock):
+  return InvoicesController(service_mock)
