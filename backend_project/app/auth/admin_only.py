@@ -26,6 +26,6 @@ def admin_only(func):
         return jsonify({"error": "Forbidden"}), 403
         
     except Exception as e:
-      return jsonify({"error": str(e)})
+      return jsonify({"error": str(e)}), 500
     
   return wrapper
