@@ -13,7 +13,7 @@ def jwt_required(func):
       raw_token = token.replace("Bearer ", "")
       decoded = jwt_manager.decode(raw_token)
       if not isinstance(decoded, dict):
-        return jsonify({"error": "invalid token"}), 401
+        return jsonify({"error": "Invalid token"}), 401
 
       if "id" not in decoded:
         return jsonify({"error": "id field missing"}), 401
