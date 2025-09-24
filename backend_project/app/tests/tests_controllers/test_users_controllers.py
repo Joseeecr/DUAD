@@ -171,14 +171,14 @@ def test_me_returns_403_when_no_token_provided(user_controller):
 
 
 def test_me_raises_generic_exception(user_controller, service_mock, jwt_manager_mock):
-  jwt_manager_mock.decode.side_effect = Exception("Error decoding")
+  jwt_manager_mock.decode.side_effect = Exception("Internal Server error")
 
   app = Flask(__name__)
   with app.test_request_context("/", headers={"Authorization": "Bearer fake_token"}):
     response, status_code = user_controller.me()
 
   assert status_code == 500
-  assert response.get_json() == {"error": "Error decoding"}
+  assert response.get_json() == {"error": "Internal Server error"}
   service_mock.get_user_by_id.assert_not_called()
 
 

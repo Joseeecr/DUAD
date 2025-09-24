@@ -65,7 +65,8 @@ class UserController:
         return jsonify({"error": "Forbidden"}), 403
 
     except Exception as e:
-      return jsonify({"error": "Invalid token"}), 403
+      print(f"error: {e}")
+      return jsonify({"error": "Internal Server error"}), 500
 
 
   def update_by_admin(self, id):

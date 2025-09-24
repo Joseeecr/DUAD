@@ -155,7 +155,7 @@ def test_get_product_by_id_raises_value_error(products_service, repo_mock):
 
   repo_mock.get_product_by_id.return_value = None
 
-  with pytest.raises(ValueError) as exc_info:
+  with pytest.raises(NotFoundError) as exc_info:
     products_service.get_product_by_id(1000)
 
   assert str(exc_info.value) == "Product not found"

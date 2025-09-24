@@ -324,7 +324,7 @@ def test_update_user_by_admin_updates_user_successfully(user_service, validator_
 def test_update_user_by_admin_raises_value_error_user_not_found(user_service, validator_mock, repo_mock):
   repo_mock.get_user_by_id.return_value = None
 
-  with pytest.raises(ValueError) as exc_info:   
+  with pytest.raises(NotFoundError) as exc_info:   
     user_service.update_user_by_admin(1000, {"is_admin": False})
 
   assert str(exc_info.value) == "User not found"
@@ -404,7 +404,7 @@ def test_delete_user_returns_rowcount_when_user_exists(user_service, repo_mock):
 def test_delete_user_raises_value_error_when_user_not_found(user_service, repo_mock):
   repo_mock.get_user_by_id.return_value = None
 
-  with pytest.raises(ValueError) as exc_info:   
+  with pytest.raises(NotFoundError) as exc_info:   
     user_service.delete_user(1000)
 
   assert str(exc_info.value) == "User not found"

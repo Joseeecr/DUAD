@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from app.services.products_services import ProductsService
 from app.services.user_services import UserService
 from app.services.cart_services import CartServices
@@ -8,6 +8,7 @@ from app.controllers.products_controller import ProductsController
 from app.controllers.user_controller import UserController
 from app.controllers.carts_controller import CartsController
 from app.controllers.invoices_controller import InvoicesController
+from app.cache.cache_manager import CacheManager
 
 @pytest.fixture
 def validator_mock():
@@ -57,3 +58,13 @@ def cart_controller(service_mock):
 @pytest.fixture
 def invoices_controller(service_mock):
   return InvoicesController(service_mock)
+
+@pytest.fixture
+def redis_mock():
+  with patch("app.cache.cache_manager.redis.Redis") as mock:
+    yield mock
+
+@pytest.fixture
+def cache_manager(redis_mock):
+  manager = CacheManager("localhost", 6379, "password")
+  return manager

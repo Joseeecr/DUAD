@@ -432,7 +432,7 @@ def test_update_cart_by_admin_raises_value_error_if_cart_not_found(cart_service,
 
   repo_mock.get_cart_by_id.return_value = None
 
-  with pytest.raises(ValueError) as exc_info:
+  with pytest.raises(NotFoundError) as exc_info:
     cart_service.update_cart_by_admin(1000, raw_data)
 
   assert str(exc_info.value) == "cart not found"
@@ -510,7 +510,7 @@ def test_update_cart_products_raises_value_error_if_cart_not_found(cart_service,
 
   repo_mock.get_cart_id_by_user.return_value = None
 
-  with pytest.raises(ValueError) as exc_info:
+  with pytest.raises(NotFoundError) as exc_info:
     cart_service.update_cart_products(1000, raw_data)
 
   assert str(exc_info.value) == "cart not found"
