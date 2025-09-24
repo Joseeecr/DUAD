@@ -1,14 +1,11 @@
 import pytest
 
-# Ejecuta todos los tests dentro de la carpeta 'tests'
-# -q : modo quiet (resumen corto)
-# --tb=short : traceback corto
-# --maxfail=3 : detenerse después de 3 fallos (opcional)
+# executes all tests inside the 'tests' folder
 exit_code = pytest.main(["app/tests", "-q", "--tb=short"])
 
-# exit_code = 0 -> todos pasaron
-# exit_code = 1 -> algún fallo
+# exit_code = 0 -> all passed
+# exit_code = 1 -> some failed
 if exit_code == 0:
-    print("\n✅ Todos los tests pasaron correctamente.")
+    print("\n✅ All tests passed correctly.")
 else:
-    print(f"\n❌ Algunos tests fallaron. Código de salida: {exit_code}")
+    print(f"\n❌ Some tests failed, exit code: {exit_code}")
