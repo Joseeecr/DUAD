@@ -1,5 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from app.db.database import engine
+from app.cache.cache_utils import check_cache
+from app.cache.cache_instance import cache_manager
 from app.controllers.invoices_controller import InvoicesController
 from app.auth.admin_only import admin_only
 from app.controllers.controllers_utils import jwt_required
@@ -17,11 +19,13 @@ invoices_bp = Blueprint("invoices", __name__, url_prefix="/invoices")
 
 @invoices_bp.route("/", methods=['GET'])
 @admin_only
+@check_cache("invoices", cache_manager, request, ttl=86400)
 def get_invoices():
   return invoices_controller.get_invoices()
 
 
 @invoices_bp.route("/check-invoices", methods=['GET'])
 @jwt_required
+@check_cache("invoices", cache_manager, ttl=86400)
 def check_user_invoices():
   return invoices_controller.check_user_invoices()

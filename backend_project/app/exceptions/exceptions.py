@@ -3,3 +3,6 @@ class ValidationError(Exception):
 
 class NotFoundError(Exception):
     pass
+
+class NotEnoughStockError(Exception):
+    pass

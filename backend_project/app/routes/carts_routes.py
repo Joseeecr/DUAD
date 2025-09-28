@@ -1,5 +1,7 @@
 from flask import Blueprint
 from app.auth.admin_only import admin_only
+from app.cache.cache_utils import invalidate_cache
+from app.cache.cache_instance import cache_manager
 from app.controllers.controllers_utils import jwt_required
 from app.db.database import engine
 from app.validators.carts_validators import CartsValidator
@@ -16,7 +18,6 @@ carts_bp = Blueprint("carts", __name__, url_prefix="/carts")
 
 @carts_bp.route("/", methods=['GET'])
 @admin_only
-
 def get_carts():
   return carts_controller.get_carts()
 
@@ -29,6 +30,7 @@ def post():
 
 @carts_bp.route("/checkout", methods=['POST'])
 @jwt_required
+@invalidate_cache("invoices", cache_manager)
 def checkout():
   return carts_controller.checkout_cart()
 
@@ -37,6 +39,7 @@ def checkout():
 @admin_only
 def update_carts_by_admin(id):
   return carts_controller.update_by_admin(id)
+
 
 @carts_bp.route("/update-cart-items/", methods=['PATCH'])
 @jwt_required

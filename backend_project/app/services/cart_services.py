@@ -1,7 +1,7 @@
 from sqlalchemy import select, update, insert
 from app.db.models import cart_table, cart_products_table, products_table, invoices_table
 from app.db.session import SessionLocal
-from app.exceptions.exceptions import NotFoundError
+from app.exceptions.exceptions import NotFoundError, NotEnoughStockError
 import random
 import string
 
@@ -100,7 +100,7 @@ class CartServices:
             raise NotFoundError("Product not found")
 
           if product.stock < item.quantity:
-            raise Exception(f"Not enough stock for product '{product.name}'")
+            raise NotEnoughStockError(f"Not enough stock for product '{product.name}'")
 
           new_stock = product.stock - item.quantity
 

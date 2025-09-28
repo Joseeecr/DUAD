@@ -1,5 +1,5 @@
 from flask import request, jsonify, g
-from app.exceptions.exceptions import ValidationError, NotFoundError
+from app.exceptions.exceptions import ValidationError, NotFoundError, NotEnoughStockError
 
 class CartsController:
   def __init__(self, cart_services):
@@ -75,6 +75,9 @@ class CartsController:
       return jsonify({"error": str(e)}), 400
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
+    except NotEnoughStockError as e:
+      return jsonify({"error": str(e)}), 400
+
     except Exception as e:
       print({"error": str(e)})
       return jsonify({"error": "Internal Server Error"}), 500
