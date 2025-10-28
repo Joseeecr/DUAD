@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading Habits Survey</title>
+  </head>
+  <body>
+    <form action="https://www.resumen.html" method="POST">
+      <h1>Reading Habits Survey</h1>
+      <label for="full-name">Full Name</label>
+      <br />
+      <input type="text" id="full-name" name="fullName" />
+      <br />
+      <br />
+      <label for="age">Age</label>
+      <br />
+      <input type="text" id="age" name="age" />
+      <br />
+      <br />
+      <fieldset>
+        <legend>How often do you read books?</legend>
+        <input type="radio" name="readingFrequency" id="daily" value="daily" />
+        <label for="daily">Daily</label>
+        <br />
+        <input
+          type="radio"
+          name="readingFrequency"
+          id="weekly"
+          value="weekly"
+        />
+        <label for="weekly">Weekly</label>
+        <br />
+        <input
+          type="radio"
+          name="readingFrequency"
+          id="almost-never"
+          value="almost-never"
+        />
+        <label for="almost-never">Almost never</label>
+      </fieldset>
+      <br />
+      <label for="message">Recommend your favorite book</label>
+      <br />
+      <textarea id="message" name="message"></textarea>
+      <br />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
