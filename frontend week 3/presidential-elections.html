@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presidential Elections Form</title>
+  </head>
+  <body>
+    <form action="https://www.dummyjson.com/test" method="POST">
+      <h1>Fill out all the fields, then hit submit!</h1>
+      <label for="full-name">Full Name</label>
+      <br />
+      <input type="text" id="full-name" name="fullName" />
+      <br />
+      <label for="email">Email</label>
+      <br />
+      <input type="text" id="email" name="email" />
+      <br />
+      <label for="ssn">SSN</label>
+      <br />
+      <input type="text" id="ssn" name="ssn" />
+      <br />
+      <label for="phone-number">Phone Number</label>
+      <br />
+      <input type="text" id="phone-number" name="phoneNumber" />
+      <br />
+      <label for="type">Select one candidate</label>
+      <br />
+      <select name="type" id="type">
+        <option hidden>Select one</option>
+        <option value="candidate1">Candidate #1</option>
+        <option value="candidate2">Candidate #2</option>
+        <option value="candidate3">Candidate #3</option>
+        <option value="candidate4">Candidate #4</option>
+        <option value="candidate5">Candidate #5</option>
+      </select>
+      <br />
+      <br />
+      <input type="submit" value="Confirm""/>
+    </form>
+  </body>
+</html>
