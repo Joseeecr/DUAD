@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <form
+        action="https://www.dummyjson.com/test"
+        method="POST"
+        id="contact-form"
+      >
+        <hr />
+        <h1>Contact us!</h1>
+        <p class="top-text">Got something to say? Fire away!</p>
+        <div class="user-input">
+          <input
+            type="text"
+            id="first-name"
+            name="firstName"
+            placeholder="First Name *"
+          />
+
+          <input
+            type="text"
+            id="last-name"
+            name="lastName"
+            placeholder="Last Name *"
+          />
+          <div class="input-with-icon">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email address *"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              fill="gray"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="email-icon"
+            >
+              <rect x="1.5" y="4" width="21" height="16" rx="2" ry="2" />
+              <path d="M3 6.5l8.5 6L20 6.5" />
+            </svg>
+          </div>
+          <select name="type" id="type">
+            <option hidden>What's your message about? *</option>
+            <option value="question">Question</option>
+            <option value="suggestion">Suggestion</option>
+          </select>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Fire away! *"
+          ></textarea>
+        </div>
+        <input
+          type="submit"
+          value="Send my message"
+          id="submit-response-button"
+        />
+        <div class="powered-by">
+          <span>Powered by</span>
+          <img src="images/nethunt-logopng.png" alt="NetHunt CRM logo" />
+          <span class="brand">NetHunt CRM</span>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
