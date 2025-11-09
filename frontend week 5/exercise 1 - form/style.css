@@ -1,0 +1,167 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+body{
+  position: relative;
+  height: 100vh;
+  background-color: rgb(73, 130, 216);
+  font-family:Roboto, sans-serif;
+  padding-top: 2rem;
+}
+
+main{
+  position: relative;
+  min-height: 95%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+#contact-form{
+  position: relative;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  min-height: 95%;
+  width: 90%;
+  max-width: 60rem;
+  min-width: 18rem; 
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2%;
+}
+
+hr{
+  width: 1.7rem;
+  height: 0.3rem;
+  background-color: rgb(73, 130, 216);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+h1{
+  font-weight: 800;
+  color: #323841;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+#contact-form p.top-text{
+  color: #5e6774;
+  margin-bottom: 1rem;
+}
+
+div.user-input input, textarea, select{
+  background-color: #f5f7fa;
+  color: #5e6774;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 1%;
+  padding: 1%;
+}
+
+#submit-response-button{
+  background-color: rgb(73, 130, 216);
+  font-size: 1rem;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.email-icon {
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+  color: #5e6774;
+}
+
+.powered-by {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-top: 1rem;
+  margin-left: 75%;
+}
+
+.powered-by span,
+.powered-by img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.powered-by img {
+  width: 22px;
+  height: auto;
+  margin: 0 0.3rem;
+}
+
+.powered-by .brand {
+  color: #374151;
+  font-weight: 500;
+}
