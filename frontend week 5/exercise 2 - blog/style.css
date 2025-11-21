@@ -1,0 +1,207 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+body{
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  background-color: #fffdf9;
+}
+
+.main-content{
+  min-height: 100vh;
+}
+
+div.container{
+  width:90%;
+  margin: 0 auto;
+}
+
+.blog-hero{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.article-content{
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+h1{
+  font-size: 3rem;
+  line-height: 55px;
+  color: #2d2e2e;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.subtitle{
+  margin-top: 20px;
+  color: #403f3e;
+  font-size: 1.5rem;
+  line-height: 30px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.created-by{
+  margin-top: 20px;
+  color: #403f3e;
+  font-size: 0.9rem;
+  line-height: 20px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.promo-box{
+  overflow: auto;
+  width: 50%;
+  padding: 22px;
+  margin-left: 20px;
+  margin-right: 0;
+  float: right;
+  background-color: #ffbf6e;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.promo-box-header{
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2d2e2e;
+  line-height: 30px;
+}
+
+.promo-box-button{
+  margin-top: 24px;
+}
+
+.promo-box-button a{
+  display: inline-block;
+  width: 100%;
+  max-width: 120px;
+  min-width: 100px;
+  margin: 0 auto;  
+  padding: 0.8rem;
+  border-radius: 3px;
+  background-color: #2d2e2e;
+  text-decoration-line: none;
+}
+
+.promo-box-button span{
+  font-weight: 700;
+  color: #f7f5f2;
+}
+
+a svg {
+  width: 24px;
+  height: 24px;
+}
+
+.social-links{
+  display: block;
+  margin-top: 30px;
+  text-align: center;
+}
+
+a[data-color="primary"]{
+  color: #3d4592;
+}
+
+.social-links a{
+  display: inline-block;
+  margin: 0 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.featured-image{
+  width: 100%;
+  max-width: 1000px;
+  max-height: 100%;
+  margin: 20px auto 0 auto;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.article-content p{
+  font-weight: 400;
+}
+
+.article-content-intro{
+  margin: 20px 0;
+  padding: 20px;
+  font-style: italic;
+  font-size: 1rem;
+  background-color: #f7f5f2;
+  color: #403f3e;
+}
+
+.article-paragraph{
+  margin: 20px 0;
+  font-size: 1.1rem;
+  line-height: 31px;
+  color: #403f3e;
+}
+
+.icon {
+  color: #707070;
+  transition: color 0.2s ease;
+}
+
+.icon:hover {
+  color: #38bdf8;
+}
