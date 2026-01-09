@@ -1,0 +1,117 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+body{
+  background-color: rgb(219, 219, 219);
+}
+
+.main{
+  min-height: 100vh;
+}
+
+.cards-container{
+  min-height: 100vh;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.card-item{
+  display: inline-block;
+  width: 90%;
+  max-width: 320px;
+  height: 320px;
+  margin-bottom: 1rem;
+  vertical-align: top;
+  border: 1px solid rgb(173, 171, 171);
+  border-radius: 3px;
+  background-color: white;
+  transition: background-color  4s;
+  overflow: hidden;
+}
+
+.card-item:hover{
+  transform: scale(1.05);
+  background-color: orange;
+}
+
+.card-item img{
+  width: 90%;
+  height: 180px;
+  margin: 1rem auto;
+  object-fit: cover;
+  border: solid rgb(173, 171, 171) 1px;
+}
+
+.card-content{
+  padding: .5rem;
+  height: 140px;
+  text-align: left;
+}
+
+.card-title{
+  font-size: .9rem;
+}
+
+.card-text{
+  font-size: .8rem;
+}
+
+
+@media (min-width: 1440px) {
+  .cards-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
