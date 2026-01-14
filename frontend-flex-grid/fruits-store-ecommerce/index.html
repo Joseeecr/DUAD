@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <title>Fruits Store</title>
+  </head>
+  <body>
+    <header>
+      <div class="navbar contain">
+        <div class="nav-main">
+          <a class="nav-brand"
+            ><div class="brand-icon">
+              <img src="imgs/brand-icon.jpg" alt="Brand Icon" /></div
+          ></a>
+
+          <a class="nav-button">Home</a>
+          <a class="nav-button">Shoes</a>
+          <a class="nav-button">Backpack</a>
+          <a class="nav-button">Contact</a>
+        </div>
+
+        <div class="nav-search-field">
+          <form
+            id="nav-search-bar-form"
+            action="https://www.dummyjson.com/test"
+            method="POST"
+          >
+            <label for="search-box" style="display: none">Search</label>
+            <input
+              type="text"
+              name="searchBox"
+              id="search-box"
+              placeholder="Search"
+            />
+          </form>
+        </div>
+      </div>
+    </header>
+    <section>
+      <div class="poster contain">
+        <div class="poster-content">
+          <p class="sub-text">The best fruit store you’ll ever find</p>
+          <p class="main-text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
+            rerum a est ullam, aut vitae eveniet, eos repudiandae libero, ex
+            magnam.
+          </p>
+          <p class="price">Fresh bananas, just $0.69/lb</p>
+          <button class="buy-button">Buy Now</button>
+        </div>
+        <div class="poster-content-image">
+          <img src="imgs/banana.jpg" alt="fruits-image" class="poster-image" />
+        </div>
+      </div>
+    </section>
+    <main class="catalog contain">
+      <h2 class="product-category-title">Fruits</h2>
+      <section class="fruits-products">
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/banana-product.jpg"
+              alt="banana"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Bananas</div>
+            <div class="product-description">
+              Sweet, soft, and full of energy
+            </div>
+            <div class="product-price">$0.69/lb</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/mango-product.jpg"
+              alt="mango"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Mango</div>
+            <div class="product-description">
+              Juicy, tropical, and rich in flavor
+            </div>
+            <div class="product-price">$1.50</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/watermelon-product.jpg"
+              alt="watermelon-product"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Watermelon</div>
+            <div class="product-description">
+              Fresh, juicy, and perfectly refreshing
+            </div>
+            <div class="product-price">$5</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/pineapple-product-jpg.jpg"
+              alt="pineapple"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Pineapple</div>
+            <div class="product-description">
+              Sweet, tangy, and full of tropical taste
+            </div>
+            <div class="product-price">$2.50</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/apples-product.jpg"
+              alt="apple"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Apple</div>
+            <div class="product-description">
+              Crisp, fresh, and naturally sweet
+            </div>
+            <div class="product-price">$1.99/lb</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image-container">
+            <img
+              src="imgs/grapes-product.jpg"
+              alt="grapes"
+              class="product-image"
+            />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Grapes</div>
+            <div class="product-description">
+              Juicy, sweet, and perfect for snacking
+            </div>
+            <div class="product-price">$2.49/lb</div>
+            <div class="product-buy-button">Buy now</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer contain">
+      <div class="footer-contact-information">
+        <p class="footer-contact-title">Let's stay in touch</p>
+        <p class="footer-contact-text">
+          Get updates on sales specials and more
+        </p>
+        <form
+          id="contact-email-input"
+          action="https://www.dummyjson.com/test"
+          method="POST"
+          class="contact-email-input"
+        >
+          <label for="contact-email-input" style="display: none"
+            >Enter your email</label
+          >
+          <input
+            type="text"
+            name="contacEmail"
+            id="contact-email-input"
+            placeholder="Enter your email"
+          />
+        </form>
+        <div class="footer-button">Send</div>
+      </div>
+    </footer>
+  </body>
+</html>
