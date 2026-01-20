@@ -1,0 +1,40 @@
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 82%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  background-color: rgb(245, 227, 230);
+  border-radius: 6px;
+
+
+  .footer-contact-information{
+    display: flex;
+    flex-direction: column;
+    padding: 5% 0;
+  }
+
+  .footer-contact-title{
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: rgba(19, 17, 17, 0.959);
+  }
+  .footer-contact-text{
+    font-size: .9rem;
+    color: rgba(0, 0, 0, 0.705);
+  }
+  input#contact-email-input{
+    font-size: .9rem;
+    padding:0 4rem 0 .1rem;
+  }
+  .footer-button{
+    width: 25%;
+    padding: .3rem 1rem;
+    font-size: .9rem;
+    text-align: center;
+    color: white;
+    background: linear-gradient(rgb(247, 116, 192), rgb(255, 20, 130));
+    border-radius: 6px;
+  }
+}

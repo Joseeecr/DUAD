@@ -1,0 +1,46 @@
+.magazine{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin-top: 2rem;
+  gap: 3rem;
+}
+
+.magazine-content{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.magazine-card-image-container{
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.magazine-card-image{
+  width: 100%;
+  height: 10rem;
+  border-radius: 12px;
+}
+
+.magazine-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 30%;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(7, 0, 0, 0.788);
+}
+
+.magazine-card-title{
+  font-size: 1.3rem;
+  font-weight:600;
+  text-align: center;
+  transition: color .2s ease;
+}
+
+.magazine-card-source a{
+  color: rgb(245 73 62);
+  font-weight:600;
+}

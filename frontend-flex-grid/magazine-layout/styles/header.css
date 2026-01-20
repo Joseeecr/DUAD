@@ -1,0 +1,51 @@
+.navbar{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: .5rem;
+  background-color: rgb(249, 250, 252);
+}
+
+.nav-left{
+  display: flex;
+  align-items: center;
+}
+.nav-right{
+  display: flex;
+}
+.nav-button{
+  margin-right: 3rem;
+}
+
+.nav-brand{
+  width: min-content;
+}
+
+.brand-icon{
+  width: 3.5rem;
+}
+
+.nav-search-field{
+  margin-left: 3rem;
+}
+
+.nav-login-signup{
+  display: flex;
+}
+
+.login-button{
+  margin-right: .5rem;
+  padding: .1rem .3rem;
+  background: linear-gradient(rgba(236, 208, 236, 0.836), rgb(187, 76, 187));
+  border-radius: 5px;
+}
+.signup-button{
+  margin-left: .5rem;
+  padding: .1rem .3rem;
+  background: linear-gradient(rgba(236, 208, 236, 0.836), rgb(187, 76, 187));
+  border-radius: 5px;
+}
+
+a{
+  cursor: pointer;
+}

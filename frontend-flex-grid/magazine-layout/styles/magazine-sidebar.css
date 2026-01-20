@@ -1,0 +1,22 @@
+.magazine-sidebar{
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+  justify-content: space-evenly;
+}
+
+.magazine-sidebar-title{
+  font-size: 2rem;
+  text-transform: uppercase;
+  background-color: orange;
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
+}
+
+.sidebar-links-container{
+  border-bottom: solid 1px;
+}
+
+.magazine-sidebar-links{
+  font-size: 1.1rem;
+  font-weight: bold;
+}

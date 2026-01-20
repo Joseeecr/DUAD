@@ -1,0 +1,39 @@
+.footer-container{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 2px solid grey;
+}
+
+.footer-contact-information{
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+}
+
+.footer-social-media{
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-contact-information-title{
+  font-size: 1.8rem;
+}
+
+.social-media-title{
+  font-size: 1.8rem;
+}
+
+.contact-info{
+  font-size: 1.4rem;
+}
+.contact-info span{
+  font-weight: bold;
+}
+
+.social-media{
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+}
