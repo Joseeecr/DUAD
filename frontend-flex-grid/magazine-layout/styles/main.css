@@ -64,6 +64,18 @@ html{
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body{
+  height: 100vh;
+  background-color: #F5F6F8;
+}
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 a{
   text-decoration: none;
   color: rgb(41, 38, 38);
@@ -71,5 +83,10 @@ a{
 }
 
 a:hover{
-  color: rgba(73, 68, 68, 0.616);
+  color:#2563EB;
+}
+
+.contain{
+  margin-left: 10%;
+  margin-right: 10%;
 }

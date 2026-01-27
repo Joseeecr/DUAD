@@ -1,15 +1,15 @@
 .footer-container{
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  margin-top: 5rem;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5%;
   padding-top: 2rem;
-  border-top: 2px solid grey;
+  background-color: rgb(255, 255, 255);
 }
 
 .footer-contact-information{
   display: flex;
   flex-direction: column;
-  margin-left: 3rem;
+  margin-bottom: 1rem;
 }
 
 .footer-social-media{
@@ -18,16 +18,17 @@
 }
 
 .footer-contact-information-title{
-  font-size: 1.8rem;
+  font-size: 2.5rem;
 }
 
 .social-media-title{
-  font-size: 1.8rem;
+  font-size: 2.5rem;
 }
 
 .contact-info{
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
+
 .contact-info span{
   font-weight: bold;
 }
@@ -35,5 +36,5 @@
 .social-media{
   display: flex;
   flex-direction: column;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
