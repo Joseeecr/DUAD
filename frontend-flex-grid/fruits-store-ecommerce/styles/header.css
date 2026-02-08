@@ -1,0 +1,40 @@
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  padding: 0 1%;
+  background-color: rgb(247, 247, 247);
+
+  .nav-main{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .5rem 0;
+  }
+
+  .nav-button{
+    margin: .5rem;
+    cursor: pointer;
+    color:gray;
+  }
+
+  .nav-brand{
+    width: min-content;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+
+  .brand-icon{
+      width: 6rem;
+  }
+
+  .nav-search-field{
+    padding-top: .4rem;
+    #search-box{
+      padding: .2rem 0 .2rem .5rem;
+    }
+  }
+}

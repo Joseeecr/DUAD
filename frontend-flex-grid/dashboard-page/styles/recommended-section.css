@@ -1,0 +1,70 @@
+.recommended-card-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #1d2029;
+  border-radius: 16px;
+}
+
+.recommended-card-container .card-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card-info .flex-right .watch-now-button{
+  padding: .3rem 1.7rem;
+  outline: none;
+  border: none;
+  border-radius: 24px;
+  background: rgb(97, 65, 223);
+  margin-bottom: 1rem;
+}
+
+.card-info .flex-right .watch-now-button:hover{
+  cursor: pointer;
+  background-color: rgb(142, 118, 238);
+}
+
+.card-info .flex-right a.watch-now{
+  color: white;
+} 
+
+.card-info .flex-right .streamer-account{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.card-info .flex-right .streamer-logo{
+  display: flex;
+  width: 1.5rem;
+  min-height:1.5rem;
+  background-color: white;
+  border-radius: 24px;
+}
+
+.card-info .flex-right .streamer-name{
+  margin-left: .3rem;
+}
+.card-info .flex-right .streamer-name a:hover{
+  color: #c2b8b8;
+}
+
+.card .video-image, .card-image .video-image{
+  border-radius: 16px;
+}
+
+.recommended-card-container .card-image{
+  flex-grow: 1;
+
+  .video-image{
+    height: 80%;
+    width: 100%;
+  }
+}
+
+.recommended-card-container .card-title a:hover{
+  color: white;
+} 
