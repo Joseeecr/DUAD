@@ -1,0 +1,19 @@
+.footer-info-container{
+  display: flex;
+  justify-content: space-between;
+  font-size: .8rem;
+  border-top: 2px solid #dbd8d8;
+  padding-top: .5rem;
+
+  @media(width >= 768px){
+    font-size: 1rem;
+  }
+
+  @media(width >= 2000px){
+    font-size: 2rem;
+  }
+}
+
+.footer-link:hover{
+  color: rgb(107, 96, 96);
+}
