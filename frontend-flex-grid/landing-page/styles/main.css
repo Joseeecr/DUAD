@@ -1,0 +1,142 @@
+@import url(header.css);
+@import url(banner-container.css);
+@import url(benefits-section.css);
+@import url(contact-us.css);
+@import url(footer.css);
+
+/* CSS reset */
+
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  min-height: inherit;
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+a{
+  text-decoration-line: none;
+  color: currentColor;
+}
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+html{
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.post-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 90%;
+  min-height: inherit;
+  margin: 0 auto;
+  padding-top: 2rem;
+  padding-bottom: .5rem;
+
+  @media(width >= 2000px){
+    width: 60%;
+  }
+}
+
+.start-selling-button{
+  display: flex;
+  justify-content: center;
+  width: 8rem;
+  padding: .5rem;
+  color: black;
+  background-color: #F2A900;
+
+  @media(width >= 2000px){
+    width: 15rem;
+  }
+
+  .button-link{
+    font-size: .7rem;
+    font-weight: bold;
+
+    @media(width >= 768px){
+      font-size: .8rem;
+    }
+
+    @media(width >= 2000px){
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.bottom-text{
+  font-size: .6rem;
+  color: rgb(167, 163, 163);
+
+  @media(width >= 768px){
+    font-size: .7rem;
+  }
+
+  @media(width >= 2000px){
+    font-size: 1.3rem;
+  }
+}
+
+main .start-selling-container{
+  margin-bottom: 1rem;
+
+  @media(width >= 768px){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+
+    .start-selling-button{
+      margin-bottom: 1rem;
+    }
+  }
+}

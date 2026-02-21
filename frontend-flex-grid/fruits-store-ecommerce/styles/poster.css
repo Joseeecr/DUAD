@@ -1,0 +1,50 @@
+.poster{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  background-color: rgb(245, 227, 230);
+  border-radius: 7px;
+
+  .poster-content-image{
+    width: 45%;
+    padding: 5rem 1.5rem 7rem 0;
+  }
+
+  .poster-image {
+  width: 100%;
+  height: 250px;
+  border-radius: 7px;
+  }
+
+  .poster-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 45%;
+    padding: 5rem 0 7rem 1.5rem;
+
+    .sub-text{
+      font-size: 2.5rem;
+    }
+    .main-text{
+      color: rgba(56, 56, 56, 0.979);
+    }
+    .price{
+      margin-top: .4rem;
+      font-size: 2.5rem;
+      color: rgb(255, 20, 130);
+    }
+    .buy-button{
+      width: 7rem;
+      padding: .5rem;
+      color: white;
+      background-color:rgb(255, 20, 130);
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+  }
+}

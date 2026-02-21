@@ -1,0 +1,65 @@
+.aside-dashboard-content{
+  grid-area: aside;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  gap: 1.2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  background-color: #181A20;
+}
+
+.aside-dashboard-container > div{
+  margin-bottom: 2rem;
+}
+
+.aside-dashboard-brand{
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: .8rem;
+}
+
+.company-icon{
+  width: 1.8rem;
+  margin-right: .2rem;
+  border-radius: 16px;
+}
+
+.aside-title{
+  margin-bottom: 1rem;
+}
+
+.aside-link{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.choose-option-text{
+  font-size: .8rem;
+}
+
+.choose-option-text .link{
+  color: #dfd1d1;
+}
+
+.aside-link:hover, .choose-option-text .link:hover, .aside-link svg:hover{
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.aside-link svg{
+  width: 1rem;
+  margin-right: .4rem;
+  color: #dfd1d1;
+}
+
+.profile-picture{
+  max-width: 2rem;
+  min-width: 1.5rem;
+  margin-right: .4rem;
+  border-radius: 16px;
+}

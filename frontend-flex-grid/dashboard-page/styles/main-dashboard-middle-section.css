@@ -1,0 +1,50 @@
+.main-dashboard-container{
+  width: 95%;
+  margin: 0 auto;
+}
+
+.main-dashboard-top-section{
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  grid-template-areas: "recommended next-videos";
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.see-all-button .button{
+  outline: none;
+  border: none;
+  background: transparent;
+  color: rgb(223, 209, 209);
+}
+
+.see-all-button a:hover{
+  color: #ffffff;
+}
+
+
+.recommended{
+  grid-area: recommended;
+}
+
+.next-videos{
+  grid-area: next-videos;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-dashboard-middle-section{
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.main-dashboard-middle-section p{
+  font-size: .8rem;
+}
+
+.main-dashboard-middle-section .card{
+  background-color: #1d2029;
+  border-radius: 16px;
+}

@@ -1,0 +1,19 @@
+.dashboard-content{
+  display: grid;
+  grid-template-columns: .4fr 3fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "aside header"
+    "aside cards";
+  background-color: #1A1C22;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.main-dashboard-container {
+  grid-area: cards;
+}

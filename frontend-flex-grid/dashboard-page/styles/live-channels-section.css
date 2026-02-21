@@ -1,0 +1,92 @@
+.live-channels .cards-container{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.first .gameplay-background-image{
+  background-image: url("../imgs/gta-v-gameplay.jpg");
+}
+
+.second .gameplay-background-image{
+  background-image: url("../imgs/League_of_Legends_gameplay.jpg");
+}
+
+
+.third .gameplay-background-image{
+  background-image: url("../imgs/valorant-gameplay.jpg");
+}
+
+.last .gameplay-background-image{
+  background-image: url("../imgs/counter-strike-gameplay.jpg");
+}
+
+.gameplay-background-image{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 24px;
+  min-height: 10rem;
+
+  .is-live{
+    width: 3rem;
+    margin: .4rem;
+    padding: .2rem .4rem;
+    border-radius: 8px;
+    text-align: center;
+    background-color: rgb(216, 31, 31);
+    color: white;
+  }
+
+  .viewers-counter{
+    width: 6rem;
+    margin: .4rem;
+    padding: .2rem .4rem;
+    font-size: .8rem;
+    border-radius: 8px;
+    text-align: center;
+    background-color: rgb(26, 22, 22);
+    opacity: .8;
+    color: white;
+  }
+}
+
+.streamer-data{
+  display: flex;
+  align-items: center;
+
+  .streamer-profile-pic{
+    width: 3rem;
+    max-height: 3rem;
+    border-radius: 32px;
+    margin-right: .5rem;
+  }
+
+  .stream-info{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-weight: bold;
+  }
+
+  .streamer-name{
+    color: rgb(122, 96, 228);
+  }
+}
+
+.live-channels .gameplay-background-image{
+  margin-bottom: 1rem;
+}
+
+.live-channels .stream-title a:hover{
+  color: #c2b8b8;
+}
+
+
+.live-channels .streamer-name a:hover{
+  color: rgb(142, 118, 238);
+}
