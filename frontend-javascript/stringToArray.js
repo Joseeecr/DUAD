@@ -6,25 +6,27 @@ function stringToArray(sentence){
   let currentWord = "";
   const wordsArray = [];
 
-  for (const char of sentence)
-
-    if (!isLetter(char)) {
-      wordsArray.push(currentWord);
-      currentWord = "";
-    }
-
-    else {
+  for (const char of sentence){
+    if (isLetter(char)) {
       currentWord += char;
+      continue;
     }
 
     if (currentWord){
       wordsArray.push(currentWord);
+      currentWord = "";
     }
+  }
 
-    return wordsArray;
+  if (currentWord){
+    wordsArray.push(currentWord);
+  }
+
+  return wordsArray;
 }
 
-const sentence = "This is a string!";
+
+const sentence = "This is a string";
 
 const result = stringToArray(sentence);
 
