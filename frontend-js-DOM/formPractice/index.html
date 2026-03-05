@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/cleanInputFields.js" defer></script>
+    <script src="js/createExtraInput.js" defer></script>
+    <link rel="stylesheet" href="styles/form-container.css" />
+    <title>Form practice</title>
+  </head>
+  <body>
+    <form
+      class="form-container"
+      action="https://dummyjson.com/test"
+      method="POST"
+      id="form"
+    >
+      <input
+        type="email"
+        id="input-email"
+        name="inputEmail"
+        placeholder="Email"
+        class="input-information"
+        required
+      />
+      <input
+        type="password"
+        id="input-password"
+        name="inputPassword"
+        placeholder="Password"
+        class="input-information"
+        required
+      />
+      <input
+        type="text"
+        id="input-name"
+        name="inputName"
+        placeholder="Name"
+        class="input-information"
+        required
+      />
+      <input
+        type="text"
+        id="input-last-name"
+        name="inputLastName"
+        placeholder="Last Name"
+        class="input-information"
+        required
+      />
+      <div class="is-employed-radio-buttons" id="is-employed-radio-buttons">
+        <input type="radio" id="employed" name="isEmployed" value="employed" />
+        <label for="employed">Employed</label><br />
+        <input type="radio" id="unemployed" name="isEmployed" value="unemployed" />
+        <label for="unemployed">Unemployed</label><br />
+      </div>
+      <input type="submit" name="submitButton" id="submit" class="input-information">
+    </form>
+  </body>
+</html>
