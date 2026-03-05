@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adding and removing elements</title>
+  </head>
+  <body>
+    <div class="container">
+      <button class="button" id="add-element">Add Element</button>
+      <button class="button" id="remove-element">Remove Element</button>
+    </div>
+
+    <script>
+      const addElementsButton = document.getElementById("add-element");
+      const removeElementsButton = document.getElementById("remove-element");
+      
+
+      const addElement = () => {
+        if (!document.querySelector(".ordered-items")) {
+          const itemsList = document.createElement("ol");
+          itemsList.classList.add("ordered-items");
+          addElementsButton.after(itemsList);
+        }
+
+        const item = document.createElement("li");
+        const createdList = document.querySelector(".ordered-items");
+        item.textContent = "New Item";
+        createdList.append(item);
+      };
+
+
+      const removeElement = () => {
+        listToRemove = document.querySelector(".ordered-items");
+
+        if(listToRemove){
+          listToRemove.remove();
+        }
+      }
+
+      addElementsButton.addEventListener("click", addElement);
+      removeElementsButton.addEventListener("click", removeElement);
+    </script>
+  </body>
+</html>
