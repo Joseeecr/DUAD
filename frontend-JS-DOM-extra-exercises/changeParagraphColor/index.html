@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change paragraph color</title>
+  </head>
+  <body>
+    <p class="text" id="text">Random text</p>
+    <button class="change-color" id="change-color">Click here</button>
+  </body>
+  <script>
+    const button = document.getElementById("change-color")
+    const text = document.getElementById("text")
+    const array = ["blue", "red", "green", "orange", "purple"]
+
+    const chooseColor = () =>{
+      const color = Math.floor(Math.random() * array.length);
+        text.style.color = array[color]
+      }
+
+    button.addEventListener("click", chooseColor)
+  </script>
+</html>
