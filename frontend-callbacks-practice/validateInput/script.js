@@ -15,9 +15,9 @@ function validateInput(number, positiveCallBack, negativeCallBack){
   }
 
   else{
-    negativeCallBack(number)
+    negativeCallBack(number);
   }
 }
 
 
-validateInput(1, positiveNumberCallBack, zeroOrNegativeNumberCallBack)
+validateInput(1, positiveNumberCallBack, zeroOrNegativeNumberCallBack);
