@@ -12,9 +12,7 @@ function validateInput(number, positiveCallBack, negativeCallBack){
 
   if(number > 0){
     positiveCallBack(number);
-  }
-
-  else{
+  } else{
     negativeCallBack(number);
   }
 }
