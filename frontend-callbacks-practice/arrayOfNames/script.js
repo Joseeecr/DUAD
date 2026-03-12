@@ -21,18 +21,19 @@ const names2 = [
 ];
 
 
-const showNames = (name) => {
-  console.log("Match found:", name);
+const showNames = (newArray) => {
+  console.log(newArray);
 }
 
 const repeatedNames = (array1, array2, callBack) => {
+  const newArray = [];
+
   for(const name1 of array1){
-    for(const name2 of array2){
-      if(name1 === name2) {
-        callBack(name1);
-      }
+    if(array2.includes(name1) && !newArray.includes(name1)){
+      newArray.push(name1);
     }
   }
+  callBack(newArray)
 }
 
 repeatedNames(names1, names2, showNames);
