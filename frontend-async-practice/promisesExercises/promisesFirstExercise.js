@@ -4,6 +4,6 @@ const promise3 = fetch("https://pokeapi.co/api/v2/pokemon/3").then((response) =>
 
 
 
-const test = Promise.all([promise1, promise2, promise3]);
+Promise.all([promise1, promise2, promise3]);
 
 
