@@ -67,11 +67,9 @@ const updateUserData = async (userId, data) => {
 
 const handleUpdateUserAddress = async (userId, newAddress) => {
   const user =  await getUserById(userId);
-  console.log(user)
   if(!user.success){
     return user;
   }
-
 
   const currentData = user.data.data;
 
@@ -83,6 +81,7 @@ const handleUpdateUserAddress = async (userId, newAddress) => {
 
   return await updateUserData(userId, newData);
 }
+
 
 const init = async () => {
   const result = await handleUpdateUserAddress("ff8081819d62221a019d6434d27b04d2", "otro");
