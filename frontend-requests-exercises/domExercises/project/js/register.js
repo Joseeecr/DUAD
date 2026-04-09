@@ -1,6 +1,9 @@
 const form = document.getElementById("register-form");
 const userInstance = axios.create({
   baseURL: "https://api.restful-api.dev/",
+  headers:{
+    "x-api-key": "00053352-bbae-4292-9162-72082d42b80b"
+  }
 });
 
 const isEmpty = (element) => {
@@ -58,7 +61,7 @@ const formatResponse = (success, data, error) => {
 
 const createUser = async (name, email, password, address) => {
   try {
-    const response = await userInstance.post("/objects", {
+    const response = await userInstance.post("collections/users/objects", {
         name: name,
         data: {
           email: email,
@@ -72,8 +75,7 @@ const createUser = async (name, email, password, address) => {
   } catch (error) {
     if (error.response) {
 
-      const details = error.response?.data?.error || null
-
+      const details = error.response?.data?.error || error
       return formatResponse(false, null, {
         type: "HTTP_ERROR",
         message: error.response.statusText,
@@ -134,7 +136,9 @@ const setupRegisterForm =  () => {
       localStorage.setItem("loggedUserId", user.data.id)
       window.location.href = './profile.html'
     }else {
-      alert(`An error occurred while creating the user: ${user.error.details || user.error.message}`)
+      alert(`An error occurred while creating the user: ${user.error.details || user.error}`)
+      console.log("Im details", user.error.details)
+      console.log("Im error", user.error)
     }
   })
 }
