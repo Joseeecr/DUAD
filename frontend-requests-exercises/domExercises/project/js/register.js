@@ -2,7 +2,7 @@ const form = document.getElementById("register-form");
 const userInstance = axios.create({
   baseURL: "https://api.restful-api.dev/",
   headers:{
-    "x-api-key": "00053352-bbae-4292-9162-72082d42b80b"
+    "x-api-key": "77adaabc-9a83-469f-baaa-9973f9b8a14c"
   }
 });
 
