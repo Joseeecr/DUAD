@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/login.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Account Login</h1>
+        <form id="login-form">
+          <div>
+            <label for="user-id">ID</label>
+            <input
+              type="text"
+              id="user-id"
+              name="user-id"
+              placeholder="Enter your User ID"
+            />
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <p id="forgot-password">
+            <a href="./change-password.html">Forgot password?</a>
+          </p>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p>
+          Do not have an account?
+          <a href="./register.html">Sign up here</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
