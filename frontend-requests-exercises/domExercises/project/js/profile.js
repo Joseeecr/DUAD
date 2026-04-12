@@ -1,14 +1,12 @@
 import { getUserById } from "./services/userService.js";
+import { getLoggedUserId } from "./auth/session.js";
+import { removeLoggedUserId } from "./auth/session.js";
+
 const userContainer = document.getElementById("user-container");
 const logoutBtn = document.getElementById("logout-btn");
 
 const isUserLoggedIn = () => {
   return Boolean(localStorage.getItem("loggedUserId"));
-}
-
-
-const getLoggedUserId = () => {
-  return localStorage.getItem("loggedUserId");
 }
 
 
@@ -22,7 +20,7 @@ const redirectIfNotLoggedIn = () => {
 
 
 const logoutUser = () => {
-  localStorage.removeItem("loggedUserId");
+  removeLoggedUserId();
   window.location.href = "./login.html";
 }
 

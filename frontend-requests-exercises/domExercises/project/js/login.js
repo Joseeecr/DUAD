@@ -1,4 +1,5 @@
 import { getUserById } from "./services/userService.js";
+import { saveLoggedUserId } from "./auth/session.js";
 const loginForm = document.getElementById("login-form");
 
 
@@ -26,8 +27,8 @@ const setupLoginForm =  () => {
       return;
     }
 
-    localStorage.setItem("loggedUserId", userData.data.id)
-    window.location.href = "./profile.html"
+    saveLoggedUserId(userData.data.id);
+    window.location.href = "./profile.html";
   })
 }
 

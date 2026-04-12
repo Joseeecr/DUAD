@@ -1,4 +1,5 @@
 import { createUser } from "./services/userService.js";
+import { saveLoggedUserId } from "./auth/session.js";
 const form = document.getElementById("register-form");
 
 
@@ -96,7 +97,7 @@ const setupRegisterForm =  () => {
     }
 
     alert(`User created successfully! Your id is ${userData.data.id}`)
-    localStorage.setItem("loggedUserId", userData.data.id)
+    saveLoggedUserId(userData.data.id)
     window.location.href = './profile.html'
   })
 }
