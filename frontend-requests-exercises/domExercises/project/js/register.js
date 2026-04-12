@@ -1,5 +1,4 @@
-import { userInstance } from "./api/apiClient.js";
-
+import { createUser } from "./services/userService.js";
 const form = document.getElementById("register-form");
 
 
@@ -47,49 +46,6 @@ const doPasswordsMatch = (password, confirmPassword) => {
 }
 
 
-const formatResponse = (success, data, error) => {
-  return {
-    success,
-    data,
-    error
-  }
-}
-
-
-const createUser = async (name, email, password, address) => {
-  try {
-    const response = await userInstance.post("collections/users/objects", {
-        name: name,
-        data: {
-          email: email,
-          password: password,
-          address: address
-        }
-      });
-
-    return formatResponse(true, response.data, null);
-
-  } catch (error) {
-    if (error.response) {
-
-      const details = error.response?.data?.error || error
-      return formatResponse(false, null, {
-        type: "HTTP_ERROR",
-        message: error.response.statusText,
-        status: error.response.status,
-        details: details
-      });
-    }
-
-    return formatResponse(false, null, {
-      type: "NETWORK_ERROR",
-      message: error.message,
-      status: null
-    });
-  }
-}
-
-
 const setupRegisterForm =  () => {
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
@@ -126,20 +82,23 @@ const setupRegisterForm =  () => {
       return;
     }
 
-    const user = await createUser(name, email, password, address);
+    const userData = await createUser(name, email, password, address);
 
-    if(user.success){
-      alert(`User created successfully! Your id is ${user.data.id}`)
-      localStorage.setItem("loggedUserId", user.data.id)
-      window.location.href = './profile.html'
-    }else {
-      alert(`An error occurred while creating the user: ${user.error.details || user.error}`)
-      console.log("Im details", user.error.details)
-      console.log("Im error", user.error)
+
+    if(!userData.success && userData.error.type === "NETWORK_ERROR"){
+      alert("Something went wrong")
+      return;
     }
+
+    if(!userData.success){
+      alert(`An error occurred while creating the user: ${user.error.details || user.error}`)
+      return;
+    }
+
+    alert(`User created successfully! Your id is ${userData.data.id}`)
+    localStorage.setItem("loggedUserId", userData.data.id)
+    window.location.href = './profile.html'
   })
 }
 
 setupRegisterForm();
-
-

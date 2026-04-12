@@ -1,4 +1,4 @@
-import { userInstance } from "./api/apiClient.js";
+import { getUserById } from "./services/userService.js";
 const userContainer = document.getElementById("user-container");
 const logoutBtn = document.getElementById("logout-btn");
 
@@ -18,42 +18,6 @@ const redirectIfNotLoggedIn = () => {
     return false
   }
   return true
-}
-
-
-const formatResponse = (success, data, error) => {
-  return {
-    success,
-    data,
-    error
-  }
-}
-
-
-const getUserById = async (userId) => {
-  try {
-    const response = await userInstance.get(`collections/users/objects/${userId}`);
-    
-    return formatResponse(true, response.data, null);
-
-  } catch (error) {
-    if (error.response) {
-      const details = error.response?.data?.error || null
-
-      return formatResponse(false, null, {
-        type: "HTTP_ERROR",
-        message: error.response.statusText,
-        status: error.response.status,
-        details: details
-      });
-    }
-
-    return formatResponse(false, null, {
-      type: "NETWORK_ERROR",
-      message: error.message,
-      status: null
-    });
-  }
 }
 
 
@@ -82,7 +46,7 @@ const protectProfilePage = async ()  => {
   userContainer.replaceChildren();
   userContainer.append(card);
   } else {
-    alert(`Error loading user data: ${user.error.details || user.error.message}`)
+    alert(`Error loading user data: ${userData.error.details || userData.error.message}`)
   }
 }
 

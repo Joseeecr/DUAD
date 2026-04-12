@@ -1,40 +1,5 @@
-import { userInstance } from "./api/apiClient.js";
+import { getUserById } from "./services/userService.js";
 const loginForm = document.getElementById("login-form");
-
-const formatResponse = (success, data, error) => {
-  return {
-    success,
-    data,
-    error
-  }
-}
-
-
-const getUserById = async (userId) => {
-  try {
-    const response = await userInstance.get(`collections/users/objects/${userId}`);
-    
-    return formatResponse(true, response.data, null);
-
-  } catch (error) {
-    if (error.response) {
-      const details = error.response?.data?.error || null
-
-      return formatResponse(false, null, {
-        type: "HTTP_ERROR",
-        message: error.response.statusText,
-        status: error.response.status,
-        details: details
-      });
-    }
-
-    return formatResponse(false, null, {
-      type: "NETWORK_ERROR",
-      message: error.message,
-      status: null
-    });
-  }
-}
 
 
 const setupLoginForm =  () => {
@@ -46,6 +11,11 @@ const setupLoginForm =  () => {
     const password  = loginForm.elements["password"].value.trim();
     const userData = await getUserById(userId);
     
+    if(!userData.success && userData.error.type === "NETWORK_ERROR"){
+      alert("Something went wrong")
+      return;
+    }
+
     if(!userData.success){
       alert("Password or user id incorrect")
       return;
