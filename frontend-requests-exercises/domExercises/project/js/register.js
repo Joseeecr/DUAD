@@ -1,18 +1,10 @@
 import { createUser } from "./services/userService.js";
 import { saveLoggedUserId } from "./auth/session.js";
 import { isEmpty, isEmailValid, isPasswordValid, doPasswordsMatch } from "./validations/validations.js";
+import { showError, clearError } from "./ui/errorHandler.js";
+
 const form = document.getElementById("register-form");
 const errorMessage = document.getElementById("error-message");
-
-
-const showError = (message) => {
-  errorMessage.textContent = message;
-}
-
-
-const clearError = () => {
-  errorMessage.textContent = "";
-}
 
 
 const validateRequiredFields = (inputValues) => {
@@ -96,14 +88,14 @@ const handleRegisterSuccess = (userData) => {
 
 const handleRegisterSubmit = async (event) => {
   event.preventDefault();
-  clearError();
+  clearError(errorMessage);
 
   const formData = getRegisterFormData();
 
   const error = validateRegisterForm(formData);
 
   if(error){
-    showError(error);
+    showError(errorMessage, error);
     return;
   }
 
@@ -112,7 +104,7 @@ const handleRegisterSubmit = async (event) => {
   const registerError = handleRegisterError(userData);
 
   if(registerError){
-    showError(registerError)
+    showError(errorMessage, registerError)
     return;
   }
 
