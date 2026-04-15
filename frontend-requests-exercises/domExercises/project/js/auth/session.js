@@ -13,3 +13,8 @@ export const getLoggedUserId = () => {
 export const removeLoggedUserId = () => {
   localStorage.removeItem(STORAGE_KEY);
 }
+
+
+export const isUserLoggedIn = () => {
+  return Boolean(localStorage.getItem(STORAGE_KEY));
+}
