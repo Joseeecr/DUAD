@@ -1,7 +1,7 @@
 import { createUser } from "./services/userService.js";
 import { saveLoggedUserId } from "./auth/session.js";
 import { isEmpty, isEmailValid, isPasswordValid, doPasswordsMatch } from "./validations/validations.js";
-import { showError, clearError } from "./ui/errorHandler.js";
+import { showErrorElement, clearError } from "./ui/errorHandler.js";
 
 const form = document.getElementById("register-form");
 const errorMessage = document.getElementById("error-message");
@@ -95,7 +95,7 @@ const handleRegisterSubmit = async (event) => {
   const error = validateRegisterForm(formData);
 
   if(error){
-    showError(errorMessage, error);
+    showErrorElement(errorMessage, error);
     return;
   }
 
@@ -104,7 +104,7 @@ const handleRegisterSubmit = async (event) => {
   const registerError = handleRegisterError(userData);
 
   if(registerError){
-    showError(errorMessage, registerError)
+    showErrorElement(errorMessage, registerError)
     return;
   }
 
