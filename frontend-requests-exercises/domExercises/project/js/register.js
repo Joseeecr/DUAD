@@ -1,20 +1,10 @@
 import { createUser } from "./services/userService.js";
 import { saveLoggedUserId } from "./auth/session.js";
-import { isEmpty, isEmailValid, isPasswordValid, doPasswordsMatch } from "./validations/validations.js";
+import { validateRequiredFields, isEmailValid, isPasswordValid, doPasswordsMatch } from "./validations/validations.js";
 import { showErrorElement, clearError } from "./ui/errorHandler.js";
 
 const form = document.getElementById("register-form");
 const errorMessage = document.getElementById("error-message");
-
-
-const validateRequiredFields = (inputValues) => {
-  for(const item of inputValues){
-    if(isEmpty(item.value)){
-      return `${item.label} should not be empty`;
-    }
-  }
-  return null;
-}
 
 
 const getRegisterFormData = () => {

@@ -29,3 +29,13 @@ export const doPasswordsMatch = (password, confirmPassword) => {
   }
   return false;
 }
+
+
+export const validateRequiredFields = (inputValues) => {
+  for(const item of inputValues){
+    if(isEmpty(item.value)){
+      return `${item.label} should not be empty`;
+    }
+  }
+  return null;
+}
