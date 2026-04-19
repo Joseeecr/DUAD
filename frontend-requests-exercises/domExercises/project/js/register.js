@@ -26,11 +26,11 @@ const getRegisterFormData = () => {
 
 const validateRegisterForm = ({name, email, password, confirmPassword, address}) => {
   const inputValues = [
-    {label: "Name", value: name},
-    {label: "Email", value: email},
-    {label: "Password", value: password},
-    {label: "Confirm Password", value: confirmPassword},
-    {label: "Address", value: address},
+    {label: "name", value: name},
+    {label: "email", value: email},
+    {label: "password", value: password},
+    {label: "confirmPassword", value: confirmPassword},
+    {label: "address", value: address},
   ]
 
   const fieldsError = validateRequiredFields(inputValues);
