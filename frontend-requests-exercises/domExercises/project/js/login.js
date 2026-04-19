@@ -18,8 +18,8 @@ const getLoginFormData = () => {
 
 const validateLoginForm =  ({userId, password}) => {
   const inputValues = [
-    {label: "ID", value: userId},
-    {label: "Password", value: password},
+    {label: "userId", value: userId},
+    {label: "password", value: password},
   ]
 
   const fieldsError = validateRequiredFields(inputValues);
