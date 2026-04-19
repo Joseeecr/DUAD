@@ -1,49 +1,138 @@
 import { getUserById } from "./services/userService.js";
 import { updateUserData } from "./services/userService.js";
+import { validateRequiredFields, doPasswordsMatch, isPasswordValid } from "./validations/validations.js";
+import { showErrorElement, clearError } from "./ui/errorHandler.js";
 
 const changePasswordForm = document.getElementById("change-password-form");
+const errorMessage = document.getElementById("error-message");
+
+const getChangePasswordFormData = () => {
+  const userId  = changePasswordForm.elements["userId"].value.trim();
+  const currentPassword  = changePasswordForm.elements["currentPassword"].value.trim();
+  const newPassword  = changePasswordForm.elements["newPassword"].value.trim();
+  const confirmPassword  = changePasswordForm.elements["confirmPassword"].value.trim();
+
+  return {
+    userId,
+    currentPassword,
+    newPassword,
+    confirmPassword
+  };
+}
 
 
-const changePassword =  () => {
-  changePasswordForm.addEventListener("submit", async function(event) {
+const validateChangePasswordForm =  ({userId, currentPassword, newPassword, confirmPassword}) => {
+  const inputValues = [
+    {label: "userId", value: userId},
+    {label: "currentPassword", value: currentPassword},
+    {label: "newPassword", value: newPassword},
+    {label: "confirmPassword", value: confirmPassword},
+  ]
 
-    event.preventDefault();
+  const fieldsError = validateRequiredFields(inputValues);
+  if(fieldsError){
+    return fieldsError;
+  }
 
-    const userId  = changePasswordForm.elements["userId"].value.trim();
-    const currentPassword  = changePasswordForm.elements["currentPassword"].value.trim();
-    const newPassword  = changePasswordForm.elements["newPassword"].value.trim();
-    const confirmPassword  = changePasswordForm.elements["confirmPassword"].value.trim();
+  return null;
+}
 
-    const userData = await getUserById(userId);
 
-    if(!userData.success && userData.error.type === "NETWORK_ERROR"){
-      alert("Something went wrong")
-      return;
-    }
+const handleChangePasswordError = (userData) => {
+  if(userData.success){
+    return null;
+  }
 
-    if(!userData.success){
-      alert("User id incorrect");
-      return;
-    }
+  const error = userData.error;
+  
+  if(error.type === "NETWORK_ERROR"){
+    console.log(error);
+    return "Something went wrong";
+  }
 
-    if(currentPassword !== userData.data.data.password){
-      alert("Password incorrect");
-      return;
-    }
+  if(error.status === 403){
+    console.log(error);
+    return "Access denied";
+  }
 
-    if(newPassword !== confirmPassword){
-      alert("Passwords do not match");
-      return;
-    }
+  if(error.status === 404){
+    console.log(error);
+    return "ID or password incorrect";
+  }
 
-    await updateUserData(userId, {
-        email: userData.data.data.email,
-        password: newPassword,
-        address: userData.data.data.address
-    });
+  console.log(error);
+  return "An error occurred while login"
+}
 
-    window.location.href = "./login.html";
+
+const validateCurrentPassword = (currentPassword, userData) => {
+  if(!doPasswordsMatch(currentPassword, userData.data.data.password)){
+    return "Current Password incorrect";
+  }
+  return null;
+}
+
+
+const validateNewPassword = (newPassword, confirmPassword) => {
+  if(!doPasswordsMatch(newPassword, confirmPassword)){
+    return "Passwords do not match";
+  }
+  
+  if(!isPasswordValid(newPassword)){
+    return "New password must be at least 8 characters long";
+  }
+
+  return null;
+}
+
+
+const handleChangePasswordSubmit = async (event) => {
+  event.preventDefault();
+  clearError(errorMessage);
+
+  const formData = getChangePasswordFormData();
+
+  const formError = validateChangePasswordForm(formData);
+
+  if(formError){
+    showErrorElement(errorMessage, formError);
+    return;
+  }
+
+  const userData = await getUserById(formData.userId);
+
+  const changePasswordError = handleChangePasswordError(userData);
+
+  if(changePasswordError){
+    showErrorElement(errorMessage, changePasswordError);
+    return;
+  }
+
+  const validateCurrentPasswordError = validateCurrentPassword(formData.currentPassword, userData);
+
+  if(validateCurrentPasswordError){
+    showErrorElement(errorMessage, validateCurrentPasswordError);
+    return;
+  }
+
+
+  const validateNewPasswordError = validateNewPassword(formData.newPassword, formData.confirmPassword);
+  if(validateNewPasswordError){
+    showErrorElement(errorMessage, validateNewPasswordError);
+    return;
+  }
+
+  await updateUserData(formData.userId, {
+    email: userData.data.data.email,
+    password: formData.newPassword,
+    address: userData.data.data.address
   });
-};
+  window.location.href = "./login.html";
+}
 
-changePassword();
+
+const setupChangePasswordForm =  () => {
+  changePasswordForm.addEventListener("submit", handleChangePasswordSubmit);
+}
+
+setupChangePasswordForm();
