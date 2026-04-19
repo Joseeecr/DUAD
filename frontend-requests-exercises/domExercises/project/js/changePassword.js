@@ -57,7 +57,7 @@ const handleChangePasswordError = (userData) => {
 
   if(error.status === 404){
     console.log(error);
-    return "ID or password incorrect";
+    return "ID incorrect";
   }
 
   console.log(error);
