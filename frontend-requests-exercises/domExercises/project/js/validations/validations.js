@@ -1,3 +1,5 @@
+import { formatLabel } from "../utils/formatResponse.js";
+
 export const isEmpty = (element) => {
   return element.trim() === "";
 }
@@ -34,7 +36,7 @@ export const doPasswordsMatch = (password, confirmPassword) => {
 export const validateRequiredFields = (inputValues) => {
   for(const item of inputValues){
     if(isEmpty(item.value)){
-      return `${item.label} should not be empty`;
+      return `${formatLabel(item.label)} should not be empty`;
     }
   }
   return null;
