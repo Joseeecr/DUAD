@@ -57,11 +57,11 @@ const handleChangePasswordError = (userData) => {
 
   if(error.status === 404){
     console.log(error);
-    return "ID incorrect";
+    return "Requested resource was not found";
   }
 
   console.log(error);
-  return "An error occurred while login"
+  return "An error occurred while updating the password"
 }
 
 
@@ -83,6 +83,12 @@ const validateNewPassword = (newPassword, confirmPassword) => {
   }
 
   return null;
+}
+
+
+const handleChangePasswordSuccess = () => {
+  alert("Password Changed! Your password has been changed successfully. Use your new password to log in.");
+  window.location.href = "./login.html";
 }
 
 
@@ -115,19 +121,25 @@ const handleChangePasswordSubmit = async (event) => {
     return;
   }
 
-
   const validateNewPasswordError = validateNewPassword(formData.newPassword, formData.confirmPassword);
   if(validateNewPasswordError){
     showErrorElement(errorMessage, validateNewPasswordError);
     return;
   }
 
-  await updateUserData(formData.userId, {
+  const updateUserDataResult = await updateUserData(formData.userId, {
     email: userData.data.data.email,
     password: formData.newPassword,
     address: userData.data.data.address
   });
-  window.location.href = "./login.html";
+
+  const updateUserDataResultError = handleChangePasswordError(updateUserDataResult);
+
+  if(updateUserDataResultError){
+    showErrorElement(errorMessage, updateUserDataResultError);
+    return;
+  }
+  handleChangePasswordSuccess();
 }
 
 
