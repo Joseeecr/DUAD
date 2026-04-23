@@ -1,8 +1,5 @@
 const apiUrlInstance = axios.create({
   baseURL: "https://api.restful-api.dev/",
-    headers:{
-    "x-api-key": "77adaabc-9a83-469f-baaa-9973f9b8a14c"
-  }
 });
 
 const nextPage = document.getElementById("next-page");
@@ -11,7 +8,7 @@ const elementsContainer =  document.getElementById("elements-container");
 
 const getElements = async () => {
   try {
-    const response = await apiUrlInstance.get("collections/users/objects");
+    const response = await apiUrlInstance.get("objects");
     
     return response.data;
 
@@ -36,10 +33,12 @@ const calculateTotalPages = (data, itemsPerPage) => {
   return Math.ceil(data.length / itemsPerPage);
 }
 
-const renderElements = (userData) => {
+
+
+const renderElements = (element) => {
   const listItem = document.createElement("li");
   listItem.className = "list-element";
-  listItem.innerHTML = userData.name;
+  listItem.innerHTML = `Name: ${element.name}`;
   elementsContainer.append(listItem);
 }
 
@@ -56,7 +55,7 @@ const pagination = async () => {
   const data = await getElements();
   const itemsPerPage = 5;
   let currentPage  = 1;
-  let totalPages = calculateTotalPages(data, itemsPerPage);
+  const totalPages = calculateTotalPages(data, itemsPerPage);
   renderCurrentPage(data, currentPage, itemsPerPage);
 
   nextPage.addEventListener("click", () => {
