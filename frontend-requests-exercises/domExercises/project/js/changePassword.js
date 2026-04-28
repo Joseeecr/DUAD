@@ -128,9 +128,11 @@ const handleChangePasswordSubmit = async (event) => {
   }
 
   const updateUserDataResult = await updateUserData(formData.userId, {
-    email: userData.data.data.email,
-    password: formData.newPassword,
-    address: userData.data.data.address
+    data: {
+      email: userData.data.data.email,
+      password: formData.newPassword,
+      address: userData.data.data.address
+    }
   });
 
   const updateUserDataResultError = handleChangePasswordError(updateUserDataResult);

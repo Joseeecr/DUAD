@@ -1,9 +1,10 @@
 import { getUserById } from "./services/userService.js";
 import { getLoggedUserId, removeLoggedUserId, isUserLoggedIn } from "./auth/session.js";
 import { showErrorAlert } from "./ui/errorHandler.js"
+
 const userContainer = document.getElementById("user-container");
 const logoutBtn = document.getElementById("logout-btn");
-
+const editBtn = document.getElementById("edit-btn");
 
 const redirectIfNotLoggedIn = () => {
   if(!isUserLoggedIn()){
@@ -17,6 +18,11 @@ const redirectIfNotLoggedIn = () => {
 const logoutUser = () => {
   removeLoggedUserId();
   window.location.href = "./login.html";
+}
+
+
+const editUser = () => {
+  window.location.href = "./update-user-data.html";
 }
 
 
@@ -55,9 +61,12 @@ const protectProfilePage = async ()  => {
 }
 
 
-async function initProfilePage() {
+const initProfilePage = async () => {
   await protectProfilePage();
+
   logoutBtn.addEventListener("click", logoutUser);
+
+  editBtn.addEventListener("click", editUser);
 }
 
 initProfilePage();
