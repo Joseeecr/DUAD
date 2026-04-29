@@ -1,5 +1,5 @@
 import { getUserById } from "./services/userService.js";
-import { saveLoggedUserId } from "./auth/session.js";
+import { saveSession } from "./auth/session.js";
 import { validateRequiredFields, doPasswordsMatch } from "./validations/validations.js";
 import { showErrorElement, clearError } from "./ui/errorHandler.js";
 const loginForm = document.getElementById("login-form");
@@ -68,7 +68,7 @@ const handleLoginError = (userData) => {
 
 
 const handleLoginSuccess = (userData) => {
-  saveLoggedUserId(userData.data.id);
+  saveSession(userData.data.id);
   window.location.href = './profile.html';
 }
 

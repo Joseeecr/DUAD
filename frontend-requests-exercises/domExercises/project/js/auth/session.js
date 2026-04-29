@@ -1,20 +1,29 @@
-const STORAGE_KEY = "loggedUserId";
+const storageKey = "session";
 
-export const saveLoggedUserId = (userId) => {
-  localStorage.setItem(STORAGE_KEY, userId)
+
+export const saveSession = (userId) => {
+  localStorage.setItem(storageKey, JSON.stringify({userId: userId, loginAt: Date.now()}))
 }
 
 
-export const getLoggedUserId = () => {
-  return localStorage.getItem(STORAGE_KEY);
+export const getSession = () => {
+  const session = localStorage.getItem(storageKey);
+  if(!session){
+    return null;
+  }
+  return JSON.parse(session);
 }
 
 
-export const removeLoggedUserId = () => {
-  localStorage.removeItem(STORAGE_KEY);
+export const hasSessionExpired = (session) => {
+  if((!session) || (!session.loginAt) || (Date.now() - session.loginAt > 300000)){
+    return true;
+  }
+
+  return false;
 }
 
 
-export const isUserLoggedIn = () => {
-  return Boolean(localStorage.getItem(STORAGE_KEY));
+export const clearSession = () => {
+  localStorage.removeItem(storageKey);
 }

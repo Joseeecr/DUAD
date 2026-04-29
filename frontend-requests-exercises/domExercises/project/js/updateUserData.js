@@ -1,5 +1,5 @@
 import { validateRequiredFields } from "./validations/validations.js";
-import { getLoggedUserId } from "./auth/session.js";
+import { getSession } from "./auth/session.js";
 import { getUserById } from "./services/userService.js";
 import { showErrorElement, clearError } from "./ui/errorHandler.js";
 import { updateUserData } from "./services/userService.js";
@@ -8,8 +8,8 @@ const editUserProfileForm = document.getElementById("edit-user-profile-form");
 const errorMessage = document.getElementById("error-message");
 
 const renderCurrentUserInfo = async () => {
-  const userId = getLoggedUserId();
-  const userData = await getUserById(userId);
+  const session = getSession();
+  const userData = await getUserById(session.userId);
 
   editUserProfileForm.elements["name"].value = userData.data.name
   editUserProfileForm.elements["address"].value = userData.data.data.address
@@ -87,8 +87,8 @@ const handleEditUserProfileSubmit = async (event) => {
     showErrorElement(errorMessage, formError);
     return;
   }
-
-  const userData = await getUserById(getLoggedUserId());
+  const session = getSession();
+  const userData = await getUserById(session.userId);
 
   const editUserDatadError = handleEditUserProfileError(userData);
   
