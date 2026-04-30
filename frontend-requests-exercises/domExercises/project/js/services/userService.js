@@ -29,6 +29,7 @@ export const getUserById = async (userId) => {
     return formatResponse(true, response.data, null);
 
   } catch (error) {
+    console.log(handleApiError(error, formatResponse));
     return handleApiError(error, formatResponse);
   };
 };
@@ -36,10 +37,12 @@ export const getUserById = async (userId) => {
 
 export const updateUserData = async (userId, data) => {
   try {
-    const response = await userInstance.patch(`collections/users/objects/${userId}`, {data});
+    const response = await userInstance.patch(`collections/users/objects/${userId}`, data);
+
     return formatResponse(true, response.data, null);
 
   } catch (error) {
+    console.log(handleApiError(error, formatResponse));
     return handleApiError(error, formatResponse);
   }
 }

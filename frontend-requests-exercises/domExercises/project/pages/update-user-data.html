@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="../js/updateUserData.js" defer></script>
+    <title>Update data</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        <form id="edit-user-profile-form" method="POST">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" />
+          </div>
+
+          <div>
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" />
+          </div>
+
+          <p id="error-message"></p>
+
+          <button type="submit">Submit</button>
+        </form>
+        <p>
+          <a href="./profile.html">Back to Profile</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,12 +1,13 @@
 import { getUserById } from "./services/userService.js";
-import { getLoggedUserId, removeLoggedUserId, isUserLoggedIn } from "./auth/session.js";
+import { getSession, clearSession, hasSessionExpired } from "./auth/session.js";
 import { showErrorAlert } from "./ui/errorHandler.js"
+
 const userContainer = document.getElementById("user-container");
 const logoutBtn = document.getElementById("logout-btn");
-
+const editBtn = document.getElementById("edit-btn");
 
 const redirectIfNotLoggedIn = () => {
-  if(!isUserLoggedIn()){
+  if(!getSession()){
     window.location.href = "./login.html";
     return false
   }
@@ -15,8 +16,13 @@ const redirectIfNotLoggedIn = () => {
 
 
 const logoutUser = () => {
-  removeLoggedUserId();
+  clearSession();
   window.location.href = "./login.html";
+}
+
+
+const editUser = () => {
+  window.location.href = "./update-user-data.html";
 }
 
 
@@ -47,17 +53,25 @@ const protectProfilePage = async ()  => {
     return;
   }
 
-  const userId = getLoggedUserId();
+  const session = getSession();
 
-  const userResult = await getUserById(userId);
+  if(hasSessionExpired(session)){
+    alert("Your session has expired");
+    logoutUser();
+  }
+
+  const userResult = await getUserById(session.userId);
 
   handleUserProfileResult(userResult);
 }
 
 
-async function initProfilePage() {
+const initProfilePage = async () => {
   await protectProfilePage();
+
   logoutBtn.addEventListener("click", logoutUser);
+
+  editBtn.addEventListener("click", editUser);
 }
 
 initProfilePage();

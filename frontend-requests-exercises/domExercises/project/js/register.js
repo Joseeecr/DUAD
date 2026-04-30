@@ -1,5 +1,5 @@
 import { createUser } from "./services/userService.js";
-import { saveLoggedUserId } from "./auth/session.js";
+import { saveSession } from "./auth/session.js";
 import { validateRequiredFields, isEmailValid, isPasswordValid, doPasswordsMatch } from "./validations/validations.js";
 import { showErrorElement, clearError } from "./ui/errorHandler.js";
 
@@ -71,7 +71,7 @@ const handleRegisterError = (userData) => {
 
 const handleRegisterSuccess = (userData) => {
   alert(`User created successfully! Your id is ${userData.data.id}`);
-  saveLoggedUserId(userData.data.id);
+  saveSession(userData.data.id);
   window.location.href = './profile.html';
 }
 
