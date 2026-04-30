@@ -1,0 +1,15 @@
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Veronike', 'Petrie', 'vpetrie0@bloomberg.com', 'zW6"teKRm%ECuea', '9182523667', 1, '25/01/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Jeane', 'Brumhead', 'jbrumhead1@multiply.com', 'cU5*&_EvMXoV'')iu', '5164073578', 1,'26/01/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Alister', 'Peppin', 'apeppin2@w3.org', 'rK3(RsK5UDniEe&@', '9742515593', 1, '11/02/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Robina', 'Christoforou', 'rchristoforou3@mozilla.com', 'fU3@o&8b@DM4Sqq', '9659169289', 2, '22/03/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Carver', 'Mohammad', 'cmohammad4@furl.net', 'uH2,}zoJVYU''v"', '9332945504', 2, '15/04/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Etan', 'Dominichelli', 'edominichelli5@clickbank.net', 'nC1*''DTTX''aL@brc', '1491775084', 2, '17/04/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Lyssa', 'Lumm', 'llumm6@spiegel.de', 'cD8(XQGTQ60O\+', '7831653901', 2, '17/03/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Heida', 'O''Lagene', 'holagene7@nyu.edu', 'bB7,k7|/c', '8445085790', 2, '18/03/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Roobbie', 'Fairpool', 'rfairpool8@ed.gov', 'mV1.gA&QD''M`', '1552650512', 2, '25/04/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Suzann', 'Monkman', 'smonkman9@unesco.org', 'eD4\E,X11,', '5595461712', 2, '27/01/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Sayre', 'Darwen', 'sdarwena@arstechnica.com', 'zE9$n%c4QX?QNU', '8651382519', 2, '30/04/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Hadrian', 'Oleksiak', 'holeksiakb@mapy.cz', 'dT0#wM/iy', '4618833644', 2, '16/03/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Free', 'Hynes', 'fhynesc@so-net.ne.jp', 'tB6>/HZy4', '6891494764', 2, '08/02/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Rik', 'Widdowfield', 'rwiddowfieldd@wikispaces.com', 'xL6+a`f,>Vk', '5401495769', 2, '08/02/2025');
+insert into users (name, last_name, user_email, password, phone_number, created_date) values ('Suzy', 'Divill', 'sdiville@google.ru', 'fV8>*9uX', '7956319413', 2, '08/03/2025');
