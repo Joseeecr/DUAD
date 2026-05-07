@@ -49,22 +49,26 @@ class UserController:
 
 
   def me(self):
+    token = request.headers.get('Authorization')
 
     try:
-      token = request.headers.get('Authorization')
-      
-      if token is not None:
-        test = token.replace("Bearer ","")
-        decoded = self.jwt_manager.decode(test)
-        user_id = decoded['id']
-        user_row = self.user_service.get_user_by_id(user_id)
 
-        return jsonify(id=user_id, name=user_row["name"], is_admin=user_row["is_admin"]), 200
-
-      else:
+      if not token:
         return jsonify({"error": "Forbidden"}), 403
 
+      token_without_bearer = token.replace("Bearer ","")
+      decoded = self.jwt_manager.decode(token_without_bearer)
+
+      if not decoded:
+        return jsonify({"error": "Forbidden"}), 403
+
+      user_id = decoded['id']
+      user_row = self.user_service.get_user_by_id(user_id)
+
+      return jsonify(id=user_id, name=user_row["name"], is_admin=user_row["is_admin"]), 200
+
     except Exception as e:
+      print(repr(e))
       print(f"error: {e}")
       return jsonify({"error": "Internal Server error"}), 500
 
