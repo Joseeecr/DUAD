@@ -1,0 +1,46 @@
+#header{
+  border-bottom: 1.5px solid var(--light-gray);
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-block: 1rem;
+  width: 80%;
+  margin: 0 auto;
+
+  > *{
+    display: flex;
+  }
+
+  .brand-logo{
+    align-items: center;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    gap: .2rem;
+
+    .brand-name{
+      font-size: 1.2rem;
+    }
+  }
+
+  .navbar-link{
+    margin-inline: 1rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--dark-gray);
+  }
+
+  .header-actions {
+    a{
+      color: var(--dark-gray);
+
+      svg{
+        stroke-width: 2;
+      }
+    }
+    .user-profile-icon{
+      margin-right: 1rem;
+    }
+  }
+}
