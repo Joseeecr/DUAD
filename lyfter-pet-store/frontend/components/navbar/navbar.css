@@ -31,7 +31,7 @@
     color: var(--dark-gray);
   }
 
-  .header-actions {
+  .navbar-actions {
     a{
       color: var(--dark-gray);
 
@@ -42,5 +42,9 @@
     .user-profile-icon{
       margin-right: 1rem;
     }
+  }
+
+  .active{
+    border-bottom: 3px solid var(--color-primary);
   }
 }
