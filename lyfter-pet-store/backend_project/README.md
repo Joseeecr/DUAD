@@ -183,11 +183,15 @@ GET /invoices/{user_id}
 
 
 
-To run the tests, execute the following command from the project root (`backend_project`):
+To run the tests, execute the following command from backend_project:
 "python -m run_tests"
 
 This will generate a short report with the test results.
 
-To run this project, first install all dependencies listed in the requirements.txt file.  
+To run this project, first install all dependencies listed in the requirements.txt file. 
+
 You will also need to generate a private key for the authentication module and create a .env file containing the database URI.  
 The variable in the .env file must be named "DATABASE_URL".
+
+Finally, you need to run the app from backend_project with the virtual enviroment activated using modules, otherwise python will 
+return import errors or will not find some dependencies.
