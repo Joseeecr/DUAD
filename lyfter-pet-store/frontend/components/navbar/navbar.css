@@ -4,11 +4,9 @@
 
 .navbar{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding-block: 1rem;
-  width: 80%;
-  margin: 0 auto;
 
   > *{
     display: flex;
