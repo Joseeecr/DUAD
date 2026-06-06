@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from app.db.models import user_table
-from app.exceptions.exceptions import NotFoundError
+from app.exceptions.exceptions import NotFoundError, ValidationError
 import bcrypt 
 
 class UserService:
@@ -55,6 +55,12 @@ class UserService:
 
   def insert_user(self, data : dict) -> str:
     validate_data = self.user_validator.validate_insert_user(data)
+
+    if self.user_repository.get_user_by_email(validate_data["email"]):
+      raise ValidationError("Email already registered")
+
+    if self.user_repository.get_user_by_phone_number(validate_data["phone_number"]):
+      raise ValidationError("Phone number already registered")
 
     password = validate_data.get("password").encode("utf-8")
     salt = bcrypt.gensalt()
