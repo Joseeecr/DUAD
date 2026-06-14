@@ -1,6 +1,6 @@
 from app.db.database import engine
 from sqlalchemy import MetaData
-from sqlalchemy import Table, Column, Integer, String, Numeric, DateTime, ForeignKey, Enum, func, Boolean, text, Computed, CheckConstraint
+from sqlalchemy import Table, Column, Integer, String, Numeric, DateTime, ForeignKey, Enum, func, Boolean, text, Computed, CheckConstraint, Text
 
 metadata_obj = MetaData(schema="pets_eccomerce")
 
@@ -11,7 +11,7 @@ user_table = Table(
   Column("name", String(50), nullable=False),
   Column("last_name", String(50), nullable=False),
   Column("email", String(50), nullable=False, unique=True),
-  Column("password", String(250), nullable=False),
+  Column("password", String(255), nullable=False),
   Column("phone_number", String(25), nullable=False, unique=True),
   Column("is_admin", Boolean, nullable=False, server_default=text('false')),
   Column("created_at", DateTime, server_default=func.now())
@@ -27,7 +27,9 @@ products_table = Table(
   CheckConstraint("char_length(sku) = 8", name="sku_8_characters"),
   Column("category_id", ForeignKey("product_categories.id"), nullable=False),
   Column("stock", Integer, nullable=False, default=0),
-  Column("entry_date", DateTime, server_default=func.now())
+  Column("entry_date", DateTime, server_default=func.now()),
+  Column("image", String(500)),
+  Column("description", Text)
 )
 
 product_categories_table = Table(
