@@ -22,6 +22,15 @@ class UserRepository:
       return dict(result._mapping)
     return None
 
+  @with_connection
+  def get_user_by_phone_number(self, conn, phone_number : str) -> Optional[Row]:
+    stmt = select(user_table).where(user_table.c.phone_number == phone_number)
+    result = conn.execute(stmt).first()
+
+    if result:
+      return dict(result._mapping)
+    return None
+
 
   @with_connection
   def get_user_by_id(self, conn, id : int) -> Optional[Row]:
