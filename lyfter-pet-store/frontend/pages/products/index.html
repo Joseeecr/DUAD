@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../assets/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../assets/favicon/favicon.svg"
+    />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../../assets/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <title>PawStore - Products</title>
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="./products.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      type="module"
+      src="../../components/navbar/navbar-config.js"
+    ></script>
+    <script type="module" src="./products.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <div data-component="navbar"></div>
+    </header>
+    <main class="entry-content">
+      <aside class="aside-products-filters">
+        <fieldset>
+          <legend>Filtros</legend>
+          <div class="aside-checkbox-categories">
+            <h5 class="filter-title">Categorías</h5>
+            <label
+              ><input type="checkbox" id="cbox1" value="first_checkbox" />
+              Perros
+            </label>
+            <label
+              ><input type="checkbox" id="cbox2" value="second_checkbox" />
+              Gatos
+            </label>
+            <label
+              ><input type="checkbox" id="cbox3" value="third_checkbox" />
+              Accesorios
+            </label>
+          </div>
+          <div class="aside-range-slider">
+            <h5 class="filter-title">Rango de precio</h5>
+            <input id="priceRange" type="range" />
+            <div class="money-range">
+              <p class="money-range-minimum">$0</p>
+              <p class="money-range-maximum">$100+</p>
+            </div>
+          </div>
+          <div class="aside-filters-tags">
+            <h5 class="filter-title">Etiquetas</h5>
+            <div class="metadata-tags">
+              <span class="tag">Orgánico</span>
+              <span class="tag">Premium</span>
+              <span class="tag">Novedad</span>
+            </div>
+          </div>
+        </fieldset>
+      </aside>
+      <div class="products-listing">
+        <div class="products-cards" data-component="products-cards"></div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
