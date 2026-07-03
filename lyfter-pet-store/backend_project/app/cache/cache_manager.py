@@ -26,13 +26,16 @@ class CacheManager:
 
 
   def get_data(self, key : str):
-    value = self.redis_client.get(key)
+    try:
+      value = self.redis_client.get(key)
 
-    if not value:
-      return None
+      if not value:
+        return None
 
-    return json.loads(value)
+      return json.loads(value)
 
+    except redis.RedisError as error:
+      print(f"An error ocurred while storing data in Redis: {error}")
 
   def store_data(self, key : str, data, time_to_live = None):
     try:
