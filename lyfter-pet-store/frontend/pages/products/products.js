@@ -3,8 +3,10 @@ import { createCardConfig } from "../../components/cards/cards-config.js";
 import {createCard} from '../../components/cards/cards.js'
 import {createPagination} from '../../components/pagination/pagination.js'
 
+const PRODUCTS_PER_PAGE = 6;
+let currentPage = 2;
 
-export async function getProducts() {
+async function getProducts() {
   try {
     const response = await baseApiUrlInstance.get("/products/");
     return response.data;
@@ -15,16 +17,39 @@ export async function getProducts() {
   };
 }
 
+
+function getProductsForPage(totalProducts, currentPage, productsPerPage) {
+  const currentIndex = (currentPage - 1) * productsPerPage ;
+
+  return totalProducts.slice(currentIndex, (currentIndex + productsPerPage));
+}
+
+
+function calculateTotalPages(products){
+  return Math.ceil(products.length / PRODUCTS_PER_PAGE);
+}
+
+
+function renderProducts(products, productsCardsContainer){
+  
+  const config = products.map((product) => createCardConfig(product));
+  
+  productsCardsContainer.innerHTML = config.map((card) => createCard(card)).join(" ");
+}
+
 const products = await getProducts();
+const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
+const productsCardsPagination = document.querySelector('[data-component="pagination"]');
 
-const config = products.map((product) => createCardConfig(product));
+function renderPage(){
 
-const productsContainer = document.querySelector('.products-listing')
+  const currentProducts  = getProductsForPage(products, currentPage, PRODUCTS_PER_PAGE);
+  const totalPages = calculateTotalPages(products);
+  const pagination = createPagination(totalPages, currentPage);
 
-const productsCards = document.querySelector('[data-component="products-cards"]')
+  productsCardsPagination.innerHTML = pagination
 
-const pagination = createPagination()
+  renderProducts(currentProducts, productsCardsContainer);
+}
 
-productsCards.innerHTML = config.map((card) => createCard(card)).join(" ");
-
-productsContainer.insertAdjacentHTML('beforeend', pagination)
+renderPage()
