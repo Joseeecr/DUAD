@@ -4,7 +4,7 @@ import {createCard} from '../../components/cards/cards.js'
 import {createPagination} from '../../components/pagination/pagination.js'
 
 const PRODUCTS_PER_PAGE = 6;
-let currentPage = 2;
+let currentPage = 1;
 
 async function getProducts() {
   try {
@@ -37,19 +37,34 @@ function renderProducts(products, productsCardsContainer){
   productsCardsContainer.innerHTML = config.map((card) => createCard(card)).join(" ");
 }
 
+function counterProducts(){
+
+}
+
 const products = await getProducts();
 const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
-const productsCardsPagination = document.querySelector('[data-component="pagination"]');
+const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
+const productsHeaderContainer = document.querySelector('[data-component="products-header"]');
 
 function renderPage(){
-
   const currentProducts  = getProductsForPage(products, currentPage, PRODUCTS_PER_PAGE);
   const totalPages = calculateTotalPages(products);
   const pagination = createPagination(totalPages, currentPage);
 
-  productsCardsPagination.innerHTML = pagination
+  productsHeaderContainer.innerHTML = `<p>Mostrando <strong>${currentProducts.length} productos</strong></p>`
+  
+  productsPaginationContainer.innerHTML = pagination
 
   renderProducts(currentProducts, productsCardsContainer);
 }
 
 renderPage()
+
+productsPaginationContainer.addEventListener("click", (event) => {
+  const button = event.target;
+
+  if (button.tagName === "BUTTON"){
+    currentPage = Number(button.dataset.page)
+    renderPage()
+  }
+})
