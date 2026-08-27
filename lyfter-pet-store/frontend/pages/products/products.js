@@ -2,6 +2,7 @@ import { baseApiUrlInstance } from "../../config/api.js";
 import { createCardConfig } from "../../components/cards/cards-config.js";
 import {createCard} from '../../components/cards/cards.js'
 import {createPagination} from '../../components/pagination/pagination.js'
+import {createProductsHeader} from '../../components/products-header/products-header.js'
 
 const PRODUCTS_PER_PAGE = 6;
 let currentPage = 1;
@@ -37,10 +38,6 @@ function renderProducts(products, productsCardsContainer){
   productsCardsContainer.innerHTML = config.map((card) => createCard(card)).join(" ");
 }
 
-function counterProducts(){
-
-}
-
 const products = await getProducts();
 const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
 const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
@@ -50,10 +47,11 @@ function renderPage(){
   const currentProducts  = getProductsForPage(products, currentPage, PRODUCTS_PER_PAGE);
   const totalPages = calculateTotalPages(products);
   const pagination = createPagination(totalPages, currentPage);
+  const productsHeader = createProductsHeader(currentProducts.length, products.length);
 
-  productsHeaderContainer.innerHTML = `<p>Mostrando <strong>${currentProducts.length} productos</strong></p>`
+  productsHeaderContainer.innerHTML = productsHeader;
   
-  productsPaginationContainer.innerHTML = pagination
+  productsPaginationContainer.innerHTML = pagination;
 
   renderProducts(currentProducts, productsCardsContainer);
 }
