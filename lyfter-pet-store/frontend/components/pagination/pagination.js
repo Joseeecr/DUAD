@@ -7,7 +7,7 @@ export function createPagination(totalPages, currentPage) {
       ? 'active'
       : ''
 
-    buttons += `<button data-page=${page} class=${active}>${page}</button>`;
+    buttons += `<button data-page=${page} class="page ${active}">${page}</button>`;
   }
 
   return `
