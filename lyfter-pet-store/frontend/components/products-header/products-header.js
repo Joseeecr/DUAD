@@ -4,8 +4,8 @@ export function createProductsCounter(productCount, totalProducts) {
 
 export function createProductsSortSelect(){
   return `<div class="order-by">
-          <label for="date-select">Ordenar por:</label>
-          <select name="date" id="date-select">
+          <label for="select-date">Ordenar por:</label>
+          <select name="date" id="select-date">
           <option value="desc">Más recientes</option>
           <option value="asc">Menos recientes</option>
           </select>
