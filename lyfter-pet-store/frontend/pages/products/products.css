@@ -12,6 +12,17 @@
     margin-block: 1rem;
   }
 
+
+  .order-by{
+    display: flex;
+    gap: 1rem;
+
+    #select-date{
+      padding: 0 .8rem;
+      border-radius: 12px;
+      border: solid 2px var(--border-ligth-gray);
+    }
+  }
   .products-cards{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -23,7 +34,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 1rem;
-    border: solid 1px #0000001a;
+    border: solid 1px var(--border-ligth-gray);
     border-radius: 12px;
 
     .card-image{
@@ -87,18 +98,78 @@
 }
 
 
-/* aside filters */
+/* aside css */
 
 .fieldset{
   padding: 1rem;
+  margin-top: 1rem;
+  border: solid 1px var(--border-ligth-gray);
+  border-radius: 12px;
 
-  .aside-checkbox-categories{
+
+  .filter-title{
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .filter-value{
+    font-size: .9rem;
+  }
+
+  .container{
     display: flex;
     flex-direction: column;
+    gap: .4rem;
+    margin-top: .5rem;
+  }
+
+  .border-bottom{
+    border-bottom: 1.5px solid var(--light-gray);
   }
 
   .money-range{
     display: flex;
     justify-content: space-between;
   }
+
+  .aside-checkbox-categories{
+    .filter-value{
+      display: flex;
+      gap: .4rem;
+      align-items: center;
+
+      input[type="checkbox"]{
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .tag-organic {
+    background-color: #f0f3ff;
+    color: #3b52d4;
+  }
+
+    .tag-premium {
+      background-color: #f7f0e6;
+      color: #8c6828;
+    }
+
+    .tag-novelty {
+      background-color: #e8f5f3;
+      color: #0d838a;
+    }
 }
