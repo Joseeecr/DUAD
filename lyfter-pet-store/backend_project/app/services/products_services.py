@@ -43,6 +43,19 @@ class ProductsService:
     if "stock" in filters:
       stmt = stmt.where(products_table.c.stock == filters["stock"])
 
+    if "sort" in filters:
+      if filters["sort"] == "newest":
+        stmt = stmt.order_by(products_table.c.entry_date.desc())
+
+      elif filters["sort"] == "oldest":
+        stmt = stmt.order_by(products_table.c.entry_date.asc())
+
+      elif filters["sort"] == "price-desc":
+        stmt = stmt.order_by(products_table.c.price.desc())
+
+      elif filters["sort"] == "price-asc":
+        stmt = stmt.order_by(products_table.c.price.asc())
+
     result = self.product_repository.get_products(stmt)
   
     products = [dict(row._mapping) for row in result]
