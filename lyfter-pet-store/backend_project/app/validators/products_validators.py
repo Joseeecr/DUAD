@@ -12,6 +12,7 @@ class ProductsValidator:
       "sku": self.validate_sku,
       "category_id": self.validate_is_number,
       "stock": self.validate_is_number,
+      "sort": self.validate_sort_parameter,
     }
 
 
@@ -54,6 +55,15 @@ class ProductsValidator:
     return sku
 
 
+  def validate_sort_parameter(self, sort_parameter: str) -> str:
+    allowed_values = {"newest", "oldest", "price-asc", "price-desc"}
+
+    if sort_parameter not in allowed_values:
+      raise ValidationError(f"Invalid sort value: '{sort_parameter}'")
+
+    return sort_parameter
+
+
   def _validate_dict_data(self, data : dict):
     validate_data = {}
     for key, value in data.items():
@@ -67,7 +77,7 @@ class ProductsValidator:
 
   def validate_filters(self, params : dict) -> dict:
     filters = {}
-    allowed_keys = {"id", "name", "price", "sku", "category_id", "stock"}
+    allowed_keys = {"id", "name", "price", "sku", "category_id", "stock", "sort"}
 
     for key in params:
       if key not in allowed_keys:
@@ -90,6 +100,9 @@ class ProductsValidator:
 
     if "stock" in params:
       filters["stock"] = self.validate_is_number(params["stock"])
+
+    if "sort" in params:
+      filters["sort"] = self.validate_sort_parameter(params["sort"])
 
     return filters
 
