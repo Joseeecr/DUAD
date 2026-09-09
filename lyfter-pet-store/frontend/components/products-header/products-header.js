@@ -3,11 +3,13 @@ export function createProductsCounter(productCount, totalProducts) {
 }
 
 export function createProductsSortSelect(){
-  return `<div class="order-by">
-          <label for="select-date">Ordenar por:</label>
-          <select name="date" id="select-date">
-          <option value="desc">Más recientes</option>
-          <option value="asc">Menos recientes</option>
+  return `<div class="sort-by-container">
+          <label for="sort-by">Ordenar por:</label>
+          <select name="sort-by" id="sort-by">
+          <option value="newest">Más recientes</option>
+          <option value="oldest">Menos recientes</option>
+          <option value="price-asc">Precio: Menor a Mayor</option>
+          <option value="price-desc">Precio: Mayor a Menor</option>
           </select>
           </div>`
           
