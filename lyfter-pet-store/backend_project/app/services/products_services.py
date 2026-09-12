@@ -43,7 +43,10 @@ class ProductsService:
     if "stock" in filters:
       stmt = stmt.where(products_table.c.stock == filters["stock"])
 
-    if "sort" in filters:
+    if "sort" not in filters:
+      stmt = stmt.order_by(products_table.c.entry_date.desc())
+
+    else:
       if filters["sort"] == "newest":
         stmt = stmt.order_by(products_table.c.entry_date.desc())
 
