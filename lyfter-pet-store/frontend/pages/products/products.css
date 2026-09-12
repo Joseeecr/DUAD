@@ -13,11 +13,11 @@
   }
 
 
-  .order-by{
+  .sort-by-container{
     display: flex;
     gap: 1rem;
 
-    #select-date{
+    #sort-by{
       padding: 0 .8rem;
       border-radius: 12px;
       border: solid 2px var(--border-ligth-gray);

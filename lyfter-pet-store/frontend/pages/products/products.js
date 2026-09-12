@@ -6,10 +6,17 @@ import {createProductsHeader} from '../../components/products-header/products-he
 
 const PRODUCTS_PER_PAGE = 6;
 let currentPage = 1;
+let currentSort = "newest";
 
-async function getProducts() {
+
+async function getProducts(sortParameter) {
   try {
-    const response = await baseApiUrlInstance.get("/products/");
+    const response = await baseApiUrlInstance.get("/products/", {
+      params: {
+        sort: sortParameter
+      }
+    });
+
     return response.data;
 
   } catch (error) {
@@ -38,21 +45,23 @@ function renderProducts(products, productsCardsContainer){
   productsCardsContainer.innerHTML = config.map((card) => createCard(card)).join(" ");
 }
 
-const products = await getProducts();
+
+let products = await getProducts();
 const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
 const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
 const productsHeaderContainer = document.querySelector('[data-component="products-header"]');
+
 
 function renderPage(){
   const currentProducts  = getProductsForPage(products, currentPage, PRODUCTS_PER_PAGE);
   const totalPages = calculateTotalPages(products);
   const pagination = createPagination(totalPages, currentPage);
-  const productsHeader = createProductsHeader(currentProducts.length, products.length);
-
+  const productsHeader = createProductsHeader(currentProducts.length, products.length, currentSort);
+  
   productsHeaderContainer.innerHTML = productsHeader;
   
   productsPaginationContainer.innerHTML = pagination;
-
+  
   renderProducts(currentProducts, productsCardsContainer);
 }
 
@@ -60,9 +69,18 @@ renderPage()
 
 productsPaginationContainer.addEventListener("click", (event) => {
   const button = event.target;
-
+  
   if (button.tagName === "BUTTON"){
     currentPage = Number(button.dataset.page)
     renderPage()
   }
 })
+
+
+productsHeaderContainer.addEventListener("change", async (event) => {
+  currentSort = event.target.value;
+  console.log("change:", currentSort);
+  products = await getProducts(currentSort);
+  renderPage();
+});
+

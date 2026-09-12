@@ -1,4 +1,4 @@
-from flask import Blueprint,request
+from flask import Blueprint, request
 from app.cache.cache_utils import check_cache, invalidate_cache
 from app.cache.cache_instance import cache_manager
 from app.controllers.products_controller import ProductsController
@@ -17,7 +17,7 @@ products_controller = ProductsController(products_service)
 products_bp = Blueprint("products", __name__, url_prefix="/products")
 
 @products_bp.route("/", methods=['GET'])
-@admin_only
+# @admin_only
 @check_cache("products", cache_manager, request, ttl=600)
 def get_products():
   return products_controller.get_products()

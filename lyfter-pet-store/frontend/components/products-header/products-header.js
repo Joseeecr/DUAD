@@ -2,23 +2,36 @@ export function createProductsCounter(productCount, totalProducts) {
   return `<span>Mostrando <strong>${productCount}</strong> de <strong>${totalProducts} productos</strong></span>`
 }
 
-export function createProductsSortSelect(){
+
+function createSortOptions(currentSort){
+  const sortOptions = [
+    { value: "newest", label: "Más recientes" },
+    { value: "oldest", label: "Menos recientes" },
+    { value: "price-asc", label: "Precio: Menor a Mayor" },
+    { value: "price-desc", label: "Precio: Mayor a Menor" }
+  ];
+
+  const options = sortOptions.map((option) => {
+    const selected = option.value === currentSort ? "selected" : "";
+    return `<option value="${option.value}" ${selected}>${option.label}</option>`}).join("")
+  }
+
+export function createProductsSortSelect(currentSort){
+  const test =  createSortOptions(currentSort);
+  console.log(test)
   return `<div class="sort-by-container">
           <label for="sort-by">Ordenar por:</label>
           <select name="sort-by" id="sort-by">
-          <option value="newest">Más recientes</option>
-          <option value="oldest">Menos recientes</option>
-          <option value="price-asc">Precio: Menor a Mayor</option>
-          <option value="price-desc">Precio: Mayor a Menor</option>
+          ${createSortOptions(currentSort)}
           </select>
           </div>`
           
 }
 
-export function createProductsHeader(productCount, totalProducts) {
+export function createProductsHeader(productCount, totalProducts, currentSort) {
     return `  
         ${createProductsCounter(productCount, totalProducts)}
   
-        ${createProductsSortSelect()}
+        ${createProductsSortSelect(currentSort)}
     `
 }
