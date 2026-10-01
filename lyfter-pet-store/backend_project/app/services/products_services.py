@@ -19,7 +19,6 @@ class ProductsService:
       products_table.c.name,
       products_table.c.price,
       products_table.c.sku,
-      products_table.c.category_id,
       products_table.c.stock,
       products_table.c.entry_date,
       products_table.c.image
@@ -36,9 +35,6 @@ class ProductsService:
 
     if "sku" in filters:
       stmt = stmt.where(products_table.c.sku == filters["sku"])
-
-    if "category_id" in filters:
-      stmt = stmt.where(products_table.c.category_id == filters["category_id"])
 
     if "stock" in filters:
       stmt = stmt.where(products_table.c.stock == filters["stock"])
