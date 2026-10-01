@@ -11,14 +11,13 @@ function createSortOptions(currentSort){
     { value: "price-desc", label: "Precio: Mayor a Menor" }
   ];
 
-  const options = sortOptions.map((option) => {
+  return sortOptions.map((option) => {
     const selected = option.value === currentSort ? "selected" : "";
     return `<option value="${option.value}" ${selected}>${option.label}</option>`}).join("")
   }
 
+
 export function createProductsSortSelect(currentSort){
-  const test =  createSortOptions(currentSort);
-  console.log(test)
   return `<div class="sort-by-container">
           <label for="sort-by">Ordenar por:</label>
           <select name="sort-by" id="sort-by">
@@ -27,6 +26,7 @@ export function createProductsSortSelect(currentSort){
           </div>`
           
 }
+
 
 export function createProductsHeader(productCount, totalProducts, currentSort) {
     return `  
