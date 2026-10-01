@@ -101,7 +101,7 @@
 /* aside css */
 
 .fieldset{
-  padding: 1rem;
+  padding: 1rem 0 1.5rem 1rem;
   margin-top: 1rem;
   border: solid 1px var(--border-ligth-gray);
   border-radius: 12px;
@@ -123,15 +123,6 @@
     margin-top: .5rem;
   }
 
-  .border-bottom{
-    border-bottom: 1.5px solid var(--light-gray);
-  }
-
-  .money-range{
-    display: flex;
-    justify-content: space-between;
-  }
-
   .aside-checkbox-categories{
     .filter-value{
       display: flex;
@@ -143,33 +134,4 @@
         cursor: pointer;
       }
     }
-  }
-
-  .tags-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tag {
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-medium);
-  }
-
-  .tag-organic {
-    background-color: #f0f3ff;
-    color: #3b52d4;
-  }
-
-    .tag-premium {
-      background-color: #f7f0e6;
-      color: #8c6828;
-    }
-
-    .tag-novelty {
-      background-color: #e8f5f3;
-      color: #0d838a;
-    }
-}
+  }}
