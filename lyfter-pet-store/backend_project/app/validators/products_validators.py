@@ -10,7 +10,7 @@ class ProductsValidator:
       "name": self.validate_product_name,
       "price": self.validate_price,
       "sku": self.validate_sku,
-      "category_id": self.validate_is_number,
+      "category_id": self.validate_category_id,
       "stock": self.validate_is_number,
       "sort": self.validate_sort_parameter,
     }
@@ -22,6 +22,20 @@ class ProductsValidator:
       return value
     except ValueError:
       raise ValidationError("Only numbers are allowed")
+
+
+  def validate_category_id(self, category_ids : list) -> list:
+    category_filters = []
+
+    for value in category_ids:
+      try:
+        value = int(value)
+        category_filters.append(value)
+
+      except ValueError:
+        raise ValidationError("Category IDs must be integers")
+
+    return category_filters
 
 
   def validate_product_name(self, value : str) -> str:
@@ -96,7 +110,7 @@ class ProductsValidator:
       filters["sku"] = self.validate_sku(params["sku"])
 
     if "category_id" in params:
-      filters["category_id"] = self.validate_is_number(params["category_id"])
+      filters["category_id"] = self.validate_category_id(params["category_id"])
 
     if "stock" in params:
       filters["stock"] = self.validate_is_number(params["stock"])
