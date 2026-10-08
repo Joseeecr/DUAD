@@ -7,13 +7,17 @@ import {createProductsHeader} from '../../components/products-header/products-he
 const PRODUCTS_PER_PAGE = 6;
 let currentPage = 1;
 let currentSort = "newest";
+let selectedCategoryIds  = [];
 
-
-async function getProducts(sortParameter) {
+async function getProducts(filters) {
   try {
     const response = await baseApiUrlInstance.get("/products/", {
       params: {
-        sort: sortParameter
+        sort: filters.sortParameter,
+        category_id: filters.categoryIds
+      },
+      paramsSerializer: {
+        indexes: null
       }
     });
 
@@ -39,17 +43,22 @@ function calculateTotalPages(products){
 
 
 function renderProducts(products, productsCardsContainer){
-  
+
   const config = products.map((product) => createCardConfig(product));
-  
+
   productsCardsContainer.innerHTML = config.map((card) => createCard(card)).join(" ");
 }
 
 
-let products = await getProducts();
+let products = await getProducts({
+    sortParameter: currentSort,
+    categoryIds: selectedCategoryIds
+  });
+
 const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
 const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
 const productsHeaderContainer = document.querySelector('[data-component="products-header"]');
+const checkboxesContainer = document.querySelector('.aside-checkbox-categories');
 
 
 function renderPage(){
@@ -57,11 +66,11 @@ function renderPage(){
   const totalPages = calculateTotalPages(products);
   const pagination = createPagination(totalPages, currentPage);
   const productsHeader = createProductsHeader(currentProducts.length, products.length, currentSort);
-  
+
   productsHeaderContainer.innerHTML = productsHeader;
-  
+
   productsPaginationContainer.innerHTML = pagination;
-  
+
   renderProducts(currentProducts, productsCardsContainer);
 }
 
@@ -69,7 +78,7 @@ renderPage()
 
 productsPaginationContainer.addEventListener("click", (event) => {
   const button = event.target;
-  
+
   if (button.tagName === "BUTTON"){
     currentPage = Number(button.dataset.page)
     renderPage()
@@ -79,8 +88,31 @@ productsPaginationContainer.addEventListener("click", (event) => {
 
 productsHeaderContainer.addEventListener("change", async (event) => {
   currentSort = event.target.value;
-  console.log("change:", currentSort);
-  products = await getProducts(currentSort);
+  products = await getProducts({
+    sortParameter: currentSort,
+    categoryIds: selectedCategoryIds
+  });
+  currentPage = 1;
   renderPage();
 });
 
+
+
+
+checkboxesContainer.addEventListener("change", async (event) => {
+  if (event.target.classList.contains('category-filter')) {
+    const categoryCheckboxes  = checkboxesContainer.querySelectorAll('.category-filter')
+
+    const selectedCategoryCheckboxes  = [...categoryCheckboxes].filter((checkbox) => checkbox.checked)
+
+    selectedCategoryIds  = selectedCategoryCheckboxes.map((checkbox) => checkbox.value)
+    
+    products = await getProducts({
+      sortParameter: currentSort,
+      categoryIds: selectedCategoryIds
+    });
+
+    currentPage = 1;
+    renderPage();
+  }
+})
