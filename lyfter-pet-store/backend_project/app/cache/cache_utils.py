@@ -13,6 +13,10 @@ def check_cache(base_key, cache_manager, request = None, ttl= 600):
 
       else:
         params = request.args.to_dict()
+
+        if "category_id" in request.args:
+          params["category_id"] = request.args.getlist("category_id")
+        
         final_cache_key = cache_manager.make_cache_key(f"{base_key}:all", params)
 
       cached = cache_manager.get_data(final_cache_key)
