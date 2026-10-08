@@ -5,7 +5,7 @@ import { cardImage } from "./card-image.js"
 export function createCard(props) {
   return `
     <div class="product-card">
-      ${cardImage(props.productImage)}
+      ${cardImage(props.productImage, props.card.stock)}
       <div class="card-info">
         ${cardTitle(props.card.title)}
         ${cardPrice(props.card.price)}
