@@ -37,8 +37,28 @@
     border: solid 1px var(--border-ligth-gray);
     border-radius: 12px;
 
-    .card-image{
-      border-radius: 12px 12px 0 0;
+    .card-image-container {
+      position: relative;
+
+      .card-image {
+        border-radius: 12px 12px 0 0;
+      }
+      
+      .stock-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background-color: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);  /* Soporte para Safari */
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
     }
 
     .card-info{
