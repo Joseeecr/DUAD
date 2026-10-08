@@ -1,5 +1,5 @@
 from sqlalchemy import select
-from app.db.models import products_table
+from app.db.models import products_table, categories_table, product_categories_table
 from app.exceptions.exceptions import NotFoundError, ValidationError
 import random
 import string
@@ -54,6 +54,21 @@ class ProductsService:
 
       elif filters["sort"] == "price-asc":
         stmt = stmt.order_by(products_table.c.price.asc())
+
+    if "category_id" in filters:
+      stmt = stmt.join(
+        product_categories_table,
+        products_table.c.id == product_categories_table.c.product_id
+      )
+
+      stmt = stmt.join(
+        categories_table,
+        product_categories_table.c.category_id == categories_table.c.id
+      )
+      stmt = stmt.where(
+        categories_table.c.id.in_(filters["category_id"])
+      )
+      stmt = stmt.distinct()
 
     result = self.product_repository.get_products(stmt)
   
