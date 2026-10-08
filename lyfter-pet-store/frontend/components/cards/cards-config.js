@@ -7,7 +7,8 @@ export function createCardConfig(product) {
     card: {
       title: product.name,
       price: product.price,
-      button: 'Ver detalles'
+      button: 'Ver detalles',
+      stock: product.stock
     }
   };
 }
