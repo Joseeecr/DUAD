@@ -36,7 +36,8 @@ product_categories_table = Table(
   "product_categories",
   metadata_obj,
   Column("id", Integer, primary_key=True),
-  Column("name", String(50), nullable=False, unique=True)
+  Column("product_id", Integer, ForeignKey("pets_eccomerce.products.id")),
+  Column("category_id", Integer, ForeignKey("pets_eccomerce.categories.id")),
 )
 
 cart_table = Table(
@@ -92,6 +93,23 @@ payment_method_table = Table(
   Column("id", Integer, primary_key=True),
   Column("payment_method", Enum("sinpe", "card", "cash", name="payment_method_enum"), nullable=False)
 )
+
+categories_table = Table(
+  "categories",
+  metadata_obj,
+  Column("id", Integer, primary_key=True),
+  Column("name", String(100), nullable=False)
+)
+
+
+# product_categories_table = Table(
+#   "product_categories",
+#   metadata_obj,
+#   Column("id", Integer, primary_key=True),
+#   Column("product_id", Integer, ForeignKey("pets_eccomerce.products.id")),
+#   Column("category_id", Integer, ForeignKey("pets_eccomerce.categories.id")),
+# )
+
 
 if __name__ == "__main__":
   metadata_obj.create_all(engine)
