@@ -7,8 +7,10 @@ class ProductsController:
 
   def get_products(self):
     try:
-
       params = request.args.to_dict()
+      if "category_id" in request.args:
+        params["category_id"] = request.args.getlist("category_id")
+
       products = self.products_service.list_products(params)
       return jsonify(products), 200
 
@@ -17,6 +19,7 @@ class ProductsController:
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
+      print("This the error: ", e)
       return jsonify({"error": "Internal server error"}), 500
 
 
