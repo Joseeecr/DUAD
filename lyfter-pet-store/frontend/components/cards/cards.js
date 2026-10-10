@@ -1,6 +1,8 @@
 import { cardTitle } from "./card-title.js"
 import { cardPrice } from "./card-price.js"
 import { cardImage } from "./card-image.js"
+import { cardButton } from "./card-button.js"
+
 
 export function createCard(props) {
   return `
@@ -9,7 +11,7 @@ export function createCard(props) {
       <div class="card-info">
         ${cardTitle(props.card.title)}
         ${cardPrice(props.card.price)}
-        <button class="btn see-details">${props.card.button}</button>
+        ${cardButton(props.card.button, props.card.productLink)}
       </div>
     </div>
   `
