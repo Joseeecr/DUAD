@@ -80,6 +80,10 @@
         background-color: var(--color-primary);
         border-radius: 22px;
         border: transparent;
+
+        &:hover{
+          cursor: pointer;
+        }
       }
     }
   }
