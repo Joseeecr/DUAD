@@ -1,5 +1,7 @@
 from flask import request, jsonify
 from app.exceptions.exceptions import ValidationError, NotFoundError
+import logging
+logger = logging.getLogger(__name__)
 
 class ProductsController:
   def __init__(self, products_service):
@@ -19,7 +21,7 @@ class ProductsController:
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
     except Exception as e:
-      print("This the error: ", e)
+      logger.exception("Error when getting the products")
       return jsonify({"error": "Internal server error"}), 500
 
 
@@ -29,9 +31,12 @@ class ProductsController:
       product = self.products_service.get_product_by_id(id)
       return jsonify(product), 200
 
+    except ValidationError as e:
+      return jsonify({"error": str(e)}), 400
     except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
-    except Exception as e:
+    except Exception:
+      logger.exception("Error when getting individual product")
       return jsonify({"error": "Internal server error"}), 500
 
 
@@ -44,8 +49,9 @@ class ProductsController:
 
     except ValidationError as e:
       return jsonify({"error": str(e)}), 400
-    except Exception as e:
-      return jsonify({"error": str(e)}), 500
+    except Exception:
+      logger.exception("Error while adding products")
+      return jsonify({"error": "Internal server error"}), 500
 
 
   def update_by_admin(self, id):
@@ -55,15 +61,19 @@ class ProductsController:
       return jsonify({"message": "product successfully updated"}), 200
     except ValidationError as e:
       return jsonify({"error": str(e)}), 422
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
-    except Exception as e:
-      return jsonify({"error": str(e)}), 500
+    except Exception:
+      logger.exception("Error while updating product")
+      return jsonify({"error": "Internal server error"}), 500
 
 
   def delete_product(self, id):
     try:
       self.products_service.delete_product(id)
       return jsonify(), 204
-    except ValueError as e:
+    except NotFoundError as e:
       return jsonify({"error": str(e)}), 404
+    except Exception:
+      logger.exception("Error while deleting product")
+      return jsonify({"error": "Internal server error"}), 500
