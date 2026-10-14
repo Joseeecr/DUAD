@@ -25,7 +25,6 @@ products_table = Table(
   Column("price", Numeric(10, 2), nullable=False),
   Column("sku", String(8), nullable=False, unique=True),
   CheckConstraint("char_length(sku) = 8", name="sku_8_characters"),
-  Column("category_id", ForeignKey("product_categories.id"), nullable=False),
   Column("stock", Integer, nullable=False, default=0),
   Column("entry_date", DateTime, server_default=func.now()),
   Column("image", String(500)),
@@ -100,16 +99,6 @@ categories_table = Table(
   Column("id", Integer, primary_key=True),
   Column("name", String(100), nullable=False)
 )
-
-
-# product_categories_table = Table(
-#   "product_categories",
-#   metadata_obj,
-#   Column("id", Integer, primary_key=True),
-#   Column("product_id", Integer, ForeignKey("pets_eccomerce.products.id")),
-#   Column("category_id", Integer, ForeignKey("pets_eccomerce.categories.id")),
-# )
-
 
 if __name__ == "__main__":
   metadata_obj.create_all(engine)
