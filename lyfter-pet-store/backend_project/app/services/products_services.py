@@ -111,7 +111,7 @@ class ProductsService:
     products = self.product_repository.get_product_by_id(products_id)
 
     if not products:
-      raise ValueError("Product not found")
+      raise NotFoundError("Product not found")
     
     validate_data = self.products_validator.validate_update_products(data)
 
@@ -122,7 +122,7 @@ class ProductsService:
     product = self.product_repository.get_product_by_id(product_id)
 
     if not product:
-      raise ValueError("products not found")
+      raise NotFoundError("Product not found")
 
     product_deleted = self.product_repository.delete_product(product_id)
     
