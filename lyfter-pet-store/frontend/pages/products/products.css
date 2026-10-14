@@ -74,12 +74,13 @@
 
       }
 
-      .btn.see-details{
+      .see-details{
         padding: .5rem 0;
         color:#ffffff;
         background-color: var(--color-primary);
         border-radius: 22px;
         border: transparent;
+        text-align: center;
 
         &:hover{
           cursor: pointer;
