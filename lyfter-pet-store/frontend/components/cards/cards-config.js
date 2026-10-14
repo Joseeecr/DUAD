@@ -9,7 +9,7 @@ export function createCardConfig(product) {
       price: product.price,
       button: 'Ver detalles',
       stock: product.stock,
-      productLink: `${BASE_API_URL}/product-detail.html?id=${product.id}`
+      productLink: `/frontend/pages/product-detail/index.html?id=${product.id}`
     }
   };
 }
