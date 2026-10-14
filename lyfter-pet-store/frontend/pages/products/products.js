@@ -76,6 +76,7 @@ function renderPage(){
 
 renderPage()
 
+
 productsPaginationContainer.addEventListener("click", (event) => {
   const button = event.target;
 
@@ -95,8 +96,6 @@ productsHeaderContainer.addEventListener("change", async (event) => {
   currentPage = 1;
   renderPage();
 });
-
-
 
 
 checkboxesContainer.addEventListener("change", async (event) => {
