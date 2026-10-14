@@ -1,8 +1,5 @@
 export function cardButton(detailsText, link) {
   return `
-  <button class="btn see-details">
-    ${detailsText}
-    <a class="product-link" href=${link}></a>
-  </button>
+  <a class="btn see-details product-link" href="${link}">${detailsText}</a>
   `
 }
