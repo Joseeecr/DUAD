@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../assets/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../assets/favicon/favicon.svg"
+    />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../../assets/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <title>Product Details | PawStore</title>
+    <link rel-preconnect href="https://fonts.googleapis.com" />
+    <link rel-preconnect href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="./product-detail.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      type="module"
+      src="../../components/navbar/navbar-config.js"
+    ></script>
+    <script type="module" src="./product-detail.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <div data-component="navbar"></div>
+    </header>
+    <main class="entry-content">
+      <div class="product-content" data-component="product-content">
+        <div
+          class="product-image-container"
+          data-component="product-image-container"
+        ></div>
+        <div
+          class="product-info-container"
+          data-component="product-info-container"
+        ></div>
+      </div>
+    </main>
+  </body>
+</html>
