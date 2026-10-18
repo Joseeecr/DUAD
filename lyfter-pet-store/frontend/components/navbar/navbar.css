@@ -30,6 +30,11 @@
     margin-inline: 1rem;
     font-weight: var(--font-weight-medium);
     color: var(--dark-gray);
+    transition: transform .2s;
+
+    &:hover{
+      transform: scale(1.1);
+    } 
   }
 
   .navbar-actions {
