@@ -9,7 +9,7 @@ export function createCard(props) {
     <div class="product-card">
       ${cardImage(props.productImage, props.card.stock)}
       <div class="card-info">
-        ${cardTitle(props.card.title)}
+        ${cardTitle(props.card.title, props.card.productLink)}
         ${cardPrice(props.card.price)}
         ${cardButton(props.card.button, props.card.productLink)}
       </div>
