@@ -15,17 +15,6 @@
     display: flex;
   }
 
-  .brand-logo{
-    align-items: center;
-    color: var(--color-primary);
-    font-weight: var(--font-weight-medium);
-    gap: .2rem;
-
-    .brand-name{
-      font-size: 1.2rem;
-    }
-  }
-
   .navbar-link{
     margin-inline: 1rem;
     font-weight: var(--font-weight-medium);
