@@ -1,4 +1,4 @@
-import { brand } from './brand/brand.js'
+import { brand } from '../brand/brand.js'
 import { navbarActions } from './actions/navbar-actions.js'
 import { navLinks } from './nav-links/nav-links.js'
 
