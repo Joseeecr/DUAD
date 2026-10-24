@@ -2,12 +2,13 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  flex: 1
 }
 
 .product-content{
   display: flex;
   gap: 2rem;
-  margin-top: 1rem;
+  margin-top: 2.5rem;
 }
 
 
