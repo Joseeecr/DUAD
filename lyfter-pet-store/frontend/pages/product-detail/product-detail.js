@@ -1,30 +1,20 @@
 import { baseApiUrlInstance } from "../../config/api.js";
 import { BASE_API_URL } from "../../config/api.js"
 
-let loadingState = "loading";
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get("id");
-
-async function getProduct() {
-  try {
-    const response = await baseApiUrlInstance.get(`/products/${myParam}`);
-
-    return response.data;
-
-  } catch (error) {
-    console.log(error.response || error);
-    return error.response || error;
-  };
-}
-
-
-let product = await getProduct()
-
-const productContainer = document.querySelector('[data-component="product-content"]');
+const statusElement = document.querySelector(".status-element");
 const productImage = document.querySelector('[data-component="product-image-container"]');
 const productInfoContainer = document.querySelector('[data-component="product-info-container"]');
 
-function renderPage(){
+
+async function getProduct() {
+  const response = await baseApiUrlInstance.get(`/products/${myParam}`);
+  return response.data;
+}
+
+
+function renderPage(product){
 
   productImage.innerHTML = `<image class="product-image" src=${BASE_API_URL}${product.image}></image>`;
 
@@ -34,7 +24,48 @@ function renderPage(){
                                     <a class="add-to-cart btn" href="#">Añadir al carrito</a>
                                     <a class="back-to-products btn" href="/frontend/pages/products/index.html">Volver al catálogo</a>
                                     `
-
 }
 
-renderPage();
+
+function showProductNotFoundError() {
+  statusElement.innerHTML = `<p class="error">No encontramos el producto que buscas.</p>`
+}
+
+
+function showNoHttpResponseError() {
+  statusElement.innerHTML = `<p class="error">No pudimos conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.</p>`
+}
+
+
+function showProductLoadError() {
+  statusElement.innerHTML = `<p class="error">Ocurrió un problema al cargar el producto. Inténtalo de nuevo.</p>`
+}
+
+
+async function initPage() {
+  try {
+    let product = await getProduct();
+    renderPage(product);
+    productImage.classList.remove("is-hidden");
+    productInfoContainer.classList.remove("is-hidden");
+    statusElement.hidden = true
+  } 
+
+  catch (error) {
+    console.log(error.response || error);
+
+    if(!error.response){
+      showNoHttpResponseError();
+    }
+
+    else if(error.response.status === 404) {
+      showProductNotFoundError();
+    }
+
+    else if(error.response.status >= 500) {
+      showProductLoadError();
+    }
+  }
+}
+
+initPage();
