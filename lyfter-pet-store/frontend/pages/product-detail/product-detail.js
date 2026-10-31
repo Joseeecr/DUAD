@@ -1,5 +1,6 @@
 import { baseApiUrlInstance } from "../../config/api.js";
 import { BASE_API_URL } from "../../config/api.js"
+import {showErrorMessage} from '../../components/status-message/status-message.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get("id");
@@ -27,21 +28,6 @@ function renderPage(product){
 }
 
 
-function showProductNotFoundError() {
-  statusElement.innerHTML = `<p class="error">No encontramos el producto que buscas.</p>`
-}
-
-
-function showNoHttpResponseError() {
-  statusElement.innerHTML = `<p class="error">No pudimos conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.</p>`
-}
-
-
-function showProductLoadError() {
-  statusElement.innerHTML = `<p class="error">Ocurrió un problema al cargar el producto. Inténtalo de nuevo.</p>`
-}
-
-
 async function initPage() {
   try {
     let product = await getProduct();
@@ -55,15 +41,15 @@ async function initPage() {
     console.log(error.response || error);
 
     if(!error.response){
-      showNoHttpResponseError();
+      showErrorMessage(statusElement, "No pudimos conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.");
     }
 
     else if(error.response.status === 404) {
-      showProductNotFoundError();
+      showErrorMessage(statusElement, "No encontramos el producto que buscas.");
     }
 
     else if(error.response.status >= 500) {
-      showProductLoadError();
+      showErrorMessage(statusElement, "Ocurrió un problema al cargar el producto. Inténtalo de nuevo.");
     }
   }
 }
