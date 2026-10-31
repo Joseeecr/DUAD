@@ -3,30 +3,33 @@ import { createCardConfig } from "../../components/cards/cards-config.js";
 import {createCard} from '../../components/cards/cards.js'
 import {createPagination} from '../../components/pagination/pagination.js'
 import {createProductsHeader} from '../../components/products-header/products-header.js'
+import {showErrorMessage} from '../../components/status-message/status-message.js'
 
+const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
+const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
+const productsHeaderContainer = document.querySelector('[data-component="products-header"]');
+const checkboxesContainer = document.querySelector('.aside-checkbox-categories');
+const statusElement = document.querySelector('.status-element');
 const PRODUCTS_PER_PAGE = 6;
 let currentPage = 1;
 let currentSort = "newest";
 let selectedCategoryIds  = [];
+let products = []
+
 
 async function getProducts(filters) {
-  try {
-    const response = await baseApiUrlInstance.get("/products/", {
-      params: {
-        sort: filters.sortParameter,
-        category_id: filters.categoryIds
-      },
-      paramsSerializer: {
-        indexes: null
-      }
-    });
+  
+  const response = await baseApiUrlInstance.get("/products/", {
+    params: {
+      sort: filters.sortParameter,
+      category_id: filters.categoryIds
+    },
+    paramsSerializer: {
+      indexes: null
+    }
+  });
 
-    return response.data;
-
-  } catch (error) {
-    console.log(error.response || error);
-    return error.response || error;
-  };
+  return response.data;
 }
 
 
@@ -50,17 +53,6 @@ function renderProducts(products, productsCardsContainer){
 }
 
 
-let products = await getProducts({
-    sortParameter: currentSort,
-    categoryIds: selectedCategoryIds
-  });
-
-const productsCardsContainer = document.querySelector('[data-component="products-cards"]');
-const productsPaginationContainer = document.querySelector('[data-component="pagination"]');
-const productsHeaderContainer = document.querySelector('[data-component="products-header"]');
-const checkboxesContainer = document.querySelector('.aside-checkbox-categories');
-
-
 function renderPage(){
   const currentProducts  = getProductsForPage(products, currentPage, PRODUCTS_PER_PAGE);
   const totalPages = calculateTotalPages(products);
@@ -74,8 +66,6 @@ function renderPage(){
   renderProducts(currentProducts, productsCardsContainer);
 }
 
-renderPage()
-
 
 productsPaginationContainer.addEventListener("click", (event) => {
   const button = event.target;
@@ -87,14 +77,10 @@ productsPaginationContainer.addEventListener("click", (event) => {
 })
 
 
-productsHeaderContainer.addEventListener("change", async (event) => {
+productsHeaderContainer.addEventListener("change", (event) => {
   currentSort = event.target.value;
-  products = await getProducts({
-    sortParameter: currentSort,
-    categoryIds: selectedCategoryIds
-  });
   currentPage = 1;
-  renderPage();
+  loadProducts();
 });
 
 
@@ -105,13 +91,38 @@ checkboxesContainer.addEventListener("change", async (event) => {
     const selectedCategoryCheckboxes  = [...categoryCheckboxes].filter((checkbox) => checkbox.checked)
 
     selectedCategoryIds  = selectedCategoryCheckboxes.map((checkbox) => checkbox.value)
-    
+    currentPage = 1;
+    loadProducts();
+  }
+})
+
+
+async function loadProducts() {
+  try {
     products = await getProducts({
       sortParameter: currentSort,
       categoryIds: selectedCategoryIds
     });
 
-    currentPage = 1;
-    renderPage();
+    renderPage()
+    statusElement.hidden = true
   }
-})
+
+  catch (error) {
+    console.log(error.response || error);
+
+    if(!error.response){
+      showErrorMessage(statusElement, "No pudimos conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.");
+    }
+
+    else if(error.response.status === 404) {
+      showErrorMessage(statusElement, "No encontramos los productos que buscas.");
+    }
+
+    else if(error.response.status >= 500) {
+      showErrorMessage(statusElement, "Ocurrió un problema al cargar el producto. Inténtalo de nuevo.");
+    }
+  }
+}
+
+loadProducts();
