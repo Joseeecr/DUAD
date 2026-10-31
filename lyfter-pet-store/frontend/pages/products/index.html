@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="../../components/navbar/navbar.css" />
     <link rel="stylesheet" href="../../components/footer/footer.css" />
     <link rel="stylesheet" href="../../components/brand/brand.css" />
+    <link rel="stylesheet" href="../../components/status-message/status-message.css"/>
     <link rel="stylesheet" href="../../styles/main.css" />
     <link rel="stylesheet" href="./products.css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -42,6 +43,10 @@
     <script
       type="module"
       src="../../components/footer/footer-config.js"
+    ></script>
+    <script
+      type="module"
+      src="../../components/status-message/status-message.js"
     ></script>
     <script type="module" src="./products.js"></script>
   </head>
@@ -71,6 +76,10 @@
         </fieldset>
       </aside>
       <section class="products-listing">
+        <div class="status-element">
+          <span class="loading-spinner"></span>
+          Cargando Productos...
+        </div>
         <div class="products-header" data-component="products-header"></div>
         <div class="products-cards" data-component="products-cards"></div>
         <div class="products-pagination" data-component="pagination"></div>
