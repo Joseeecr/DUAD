@@ -17,14 +17,12 @@ products_controller = ProductsController(products_service)
 products_bp = Blueprint("products", __name__, url_prefix="/products")
 
 @products_bp.route("/", methods=['GET'])
-# @admin_only
 @check_cache("products", cache_manager, request, ttl=600)
 def get_products():
   return products_controller.get_products()
 
 
 @products_bp.route("/<int:id>", methods=['GET'])
-@admin_only
 @check_cache("products", cache_manager, ttl=300)
 def get_products_by_id(id):
   return products_controller.get_product_id(id)
