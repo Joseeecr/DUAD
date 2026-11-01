@@ -16,3 +16,7 @@
 .footer-container .brand-logo{
   display: flex;
 }
+
+.footer-copyright{
+  color: var(--text-secondary);
+}

@@ -1,8 +1,9 @@
 /* Colors */
 :root {
-  --dark-gray: #59595a; 
+  --dark-gray: #444655; 
   --light-gray: #c3c3c7;
   --mariner: #264dd9;
+  --light-mariner: #4568f3;
   --border-ligth-gray: #0000001a;
   --error: #B42318;
 }
@@ -11,6 +12,7 @@
 /* Semantic Colors */
 :root{
   --color-primary: var(--mariner);
+  --text-secondary: var(--dark-gray)
 }
 
 

@@ -32,6 +32,11 @@
   .product-title{
     font-weight: var(--font-weight-bold);
   }
+
+  .product-description{
+    color: var(--text-secondary);
+  }
+
   .product-price{
     font-size: 1.6rem;
     font-weight: var(--font-weight-bold);
