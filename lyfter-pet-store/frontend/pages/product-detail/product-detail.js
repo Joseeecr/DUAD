@@ -17,7 +17,7 @@ async function getProduct() {
 
 function renderPage(product){
 
-  productImage.innerHTML = `<image class="product-image" src=${BASE_API_URL}${product.image}></image>`;
+  productImage.innerHTML = `<img class="product-image" src=${BASE_API_URL}${product.image}/>`;
 
   productInfoContainer.innerHTML = `<h1 class="product-title">${product.name}</h1> 
                                     <span class="product-price">$${product.price}</span>
