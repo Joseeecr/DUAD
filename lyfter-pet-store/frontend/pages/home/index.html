@@ -30,15 +30,67 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../components/footer/footer.css" />
+    <link rel="stylesheet" href="../../components/brand/brand.css" />
+    <link
+      rel="stylesheet"
+      href="../../components/status-message/status-message.css"
+    />
+    <link rel="stylesheet" href="./home.css" />
     <link rel="stylesheet" href="../../styles/main.css" />
     <script
       type="module"
       src="../../components/navbar/navbar-config.js"
     ></script>
+    <script
+      type="module"
+      src="../../components/footer/footer-config.js"
+    ></script>
+    <script
+      type="module"
+      src="../../components/status-message/status-message.js"
+    ></script>
+    <script type="module" src="./home.js"></script>
   </head>
   <body>
     <header id="header">
       <div data-component="navbar"></div>
     </header>
+    <main class="entry-content">
+      <section class="home-hero" aria-labelledby="home-title">
+        <div class="home-content">
+          <div class="home-description-container">
+            <span class="home-eyebrow">¡Bienvenido a PawStore!</span>
+
+            <h1 class="home-title" id="home-title">
+              Tu destino online para encontrar lo mejor para tus mascotas
+            </h1>
+
+            <p class="home-description">
+              Desde alimentos premium y juguetes resistentes hasta accesorios de
+              lujo y servicios de salud. Todo lo que tus compañeros peludos
+              necesitan.
+            </p>
+
+            <a
+              class="btn btn-primary home-cta"
+              href="/frontend/pages/products/index.html"
+            >
+              Ver productos
+            </a>
+          </div>
+
+          <div class="home-image-container">
+            <img
+              class="home-image"
+              src="../../assets/images/home/hero-image.webp"
+              alt="Un perro y un gato disfrutando de sus juguetes"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer" data-component="footer"></footer>
   </body>
 </html>
