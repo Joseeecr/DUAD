@@ -1,0 +1,59 @@
+.entry-content{ 
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.contact-content{
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.contact-title{
+  font-weight: var(--font-weight-bold);
+}
+.contact-body{
+  display: flex;
+}
+
+.contact-information{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.contact-schedule{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.contact-image{
+  filter: contrast(110%) brightness(105%);
+}
+
+.email{
+  color: var(--color-primary);
+}
+
+.phone-number{
+  font-weight: var(--font-weight-bold);
+}
+
+.schedule-list{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.schedule-item:not(:last-child){
+  font-weight: var(--font-weight-bold);
+}
+
+.schedule-item:last-child{
+  color: var(--light-gray);
+}
