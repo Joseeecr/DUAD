@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../assets/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../assets/favicon/favicon.svg"
+    />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../../assets/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <title>PawStore - Contacto</title>
+    <link rel-preconnect href="https://fonts.googleapis.com" />
+    <link rel-preconnect href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../components/footer/footer.css" />
+    <link rel="stylesheet" href="../../components/brand/brand.css" />
+    <link rel="stylesheet" href="./contact.css" />
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <script
+      type="module"
+      src="../../components/navbar/navbar-config.js"
+    ></script>
+    <script
+      type="module"
+      src="../../components/footer/footer-config.js"
+    ></script>
+  </head>
+  <body>
+    <header id="header">
+      <div data-component="navbar"></div>
+    </header>
+    <main class="entry-content">
+      <section class="contact-content" aria-labelledby="contact-title">
+        <header class="contact-header">
+          <h1 class="contact-title" id="contact-title">Contáctanos</h1>
+          <p class="contact-description">
+            ¿Tienes alguna pregunta sobre nuestros productos? Estamos aquí para
+            ayudarte.
+          </p>
+        </header>
+
+        <div class="contact-body">
+          <div class="contact-information">
+            <section class="contact-method" aria-labelledby="email-title">
+              <h2 id="email-title">Correo electrónico</h2>
+              <a class="email" href="mailto:contacto@pawstore.com"> contacto@pawstore.com </a>
+            </section>
+
+            <section class="contact-method" aria-labelledby="phone-title">
+              <h2 id="phone-title">Teléfono</h2>
+              <a class="phone-number" href="tel:+50600000000"> +506 0000-0000 </a>
+            </section>
+          </div>
+
+          <div class="contact-image-container">
+            <img
+              class="contact-image"
+              src="../../assets/images/contact/hero-image.webp"
+              alt="Un perro y un gato mirando hacia la cámara"
+            />
+          </div>
+          <section class="contact-schedule" aria-labelledby="schedule-title">
+            <h2 id="schedule-title">Horario de atención</h2>
+
+            <dl class="schedule-list">
+              <div class="schedule-item">
+                <dt>Lunes a viernes</dt>
+                <dd>8:00 a.m. - 6:00 p.m.</dd>
+              </div>
+
+              <div class="schedule-item">
+                <dt>Sábados</dt>
+                <dd>8:00 a.m. - 3:00 p.m.</dd>
+              </div>
+
+              <div class="schedule-item">
+                <dt>Domingos</dt>
+                <dd>Cerrado</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="footer" data-component="footer"></footer>
+  </body>
+</html>
